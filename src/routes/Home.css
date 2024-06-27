@@ -1,0 +1,21 @@
+#home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    padding: 20px;
+    color : #1C3554;
+}
+
+#home-container .title {
+    font-size: 3em;
+    margin-bottom: 20px;
+}
+
+#home-container .paragraph {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}

@@ -1,0 +1,110 @@
+.letters-container {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 200px;
+    background-color: transparent;
+    padding: 20px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    font-size: 18px;
+    display: block;
+}
+
+.sidebar ul li a:hover {
+    color: #1C3554;
+}
+
+.main-content {
+    flex: 1;
+    padding: 40px;
+}
+
+.letters-form {
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 50px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.uploaded-files {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #f9f9f9;
+}
+
+.file-item p {
+    margin: 0 0 0 10px;
+    font-size: 14px;
+}
+
+.file-input {
+    display: none;
+}
+
+.add-button {
+    background-color: transparent;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    margin-bottom: 20px; /* Attempted margin-bottom */
+}
+
+.add-button:hover {
+    background-color: #FFECB3;
+}
+
+.add-button svg {
+    margin-right: 5px;
+}
+
+.spacing {
+    height: 20px; 
+}
