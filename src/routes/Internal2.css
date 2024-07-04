@@ -1,0 +1,45 @@
+.section-user {
+    margin-left : 200px;
+  }
+  
+  .section-user h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .section-user table {
+    width: 80%;
+    border-collapse: collapse;
+  }
+  
+  .section-user th,
+  .section-user td {
+    border-collapse: collapse;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .section-user th {
+    font-weight: bold;
+  }
+  
+  .section-user tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  
+  .section-user .chart-up {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .section-user .chart-down {
+    color: red;
+    font-weight: bold;
+  }
+  
+  .section-user td small {
+    color: #666;
+    font-size: 12px;
+  }
+  

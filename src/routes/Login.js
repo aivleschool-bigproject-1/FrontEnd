@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './Login.css';
 
 const Login = () => {
@@ -56,7 +57,7 @@ const Login = () => {
                 </div>
                 <button type="submit" className="login-button">로그인</button>
             </form>
-            <a href="/forgot-password" className="forgot-password-link">비밀번호 찾기</a>
+            <Link to="/forgot-password" className="forgot-password-link">비밀번호 찾기</Link>
         </div>
     );
 };

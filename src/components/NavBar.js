@@ -6,19 +6,18 @@ const Navbar = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const handleLogout = () => {
-        // Implement your logout logic here
         setIsLoggedIn(false);
     };
 
     return (
         <nav className="navbar">
             <div className="navbar-logo">
-                <Link to="/">LogoIpsum</Link>
+                <Link to="/">BODA</Link>
             </div>
             <div className="navbar-links">
-                <Link to="/letter">이력서관리</Link>
-                <Link to="/interview">모의면접</Link>
-                <Link to="/article">면접대비</Link>
+                <Link to="/">홈</Link>
+                <Link to="/external">현장</Link>
+                <Link to="/internal">사무실</Link>
             </div>
             <div className="navbar-actions">
                 {isLoggedIn ? (

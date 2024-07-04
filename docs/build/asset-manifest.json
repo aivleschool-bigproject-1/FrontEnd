@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/BigProject/static/css/main.8e47225c.css",
+    "main.js": "/BigProject/static/js/main.93f3605c.js",
+    "index.html": "/BigProject/index.html",
+    "main.8e47225c.css.map": "/BigProject/static/css/main.8e47225c.css.map",
+    "main.93f3605c.js.map": "/BigProject/static/js/main.93f3605c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8e47225c.css",
+    "static/js/main.93f3605c.js"
+  ]
+}

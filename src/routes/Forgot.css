@@ -1,0 +1,53 @@
+.password-reset-container {
+    width: 80%;
+    max-width: 700px;
+    margin: 100px auto;
+    padding: 40px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.password-reset-container h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.password-reset-form .form-group {
+    margin-bottom: 20px;
+}
+
+.password-reset-form label {
+    display: block;
+    margin: 20px auto 10px auto;
+    font-weight: bold;
+    margin-left: 125px;
+}
+
+.password-reset-form input {
+    width: 60%;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 0 auto 30px auto;
+    display: block;
+}
+
+.password-reset-button {
+    width: 65%;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #1C3554;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    display: block;
+    margin: 40px auto;
+}
+
+.password-reset-button:hover {
+    background-color: #0c1723;
+}
+
