@@ -35,12 +35,12 @@ const SignUpForm = () => {
             <h1>Sign Up</h1>
             <form onSubmit={handleSubmit} className="signup-form">
                 <div className="form-group">
-                    <label htmlFor="username">회사</label>
+                    <label htmlFor="username">이름</label>
                     <input
                         type="text"
                         id="username"
                         name="username"
-                        placeholder="회사명을 입력해주세요"
+                        placeholder="이름을 입력해주세요"
                         value={formData.username}
                         onChange={handleChange}
                     />

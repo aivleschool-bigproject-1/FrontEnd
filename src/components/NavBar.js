@@ -18,6 +18,7 @@ const Navbar = () => {
                 <Link to="/">홈</Link>
                 <Link to="/external">현장</Link>
                 <Link to="/internal">사무실</Link>
+                <Link to="/board">게시판</Link>
             </div>
             <div className="navbar-actions">
                 {isLoggedIn ? (

@@ -14,10 +14,12 @@ import Loading from './components/Loading';
 import CCTVGrid from './components/CCTVGrid';
 import Sidebar from './components/Sidebar';
 import PasswordReset from './routes/Forgot';
+import Board from './routes/Board';
 import './App.css';
 import './Transitions.css';
+import Dashboard from './routes/DashBoard';
 
-const AnimatedRoutes = () => {
+const AnimatedRoutes = ({ currentUser }) => {
   return (
     <TransitionGroup>
       <CSSTransition classNames="fade" timeout={500}>
@@ -25,6 +27,7 @@ const AnimatedRoutes = () => {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/board" element={<Board currentUser={currentUser} />} />
           <Route path="/forgot-password" element={<PasswordReset />} />
           <Route path="/external/*" element={<External />}>
             <Route path="section1" element={<External1 />} />
@@ -34,6 +37,7 @@ const AnimatedRoutes = () => {
             <Route path="section1" element={<CCTVGrid />} />
             <Route path="section2" element={<Internal2 />} />
           </Route>
+          <Route path="/profile" element={<Dashboard />} />
         </Routes>
       </CSSTransition>
     </TransitionGroup>
@@ -42,11 +46,28 @@ const AnimatedRoutes = () => {
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
+    const fetchCurrentUser = async () => {
+      try {
+        // 하드코딩된 사용자 데이터
+        const user = {
+          id: 1,
+          name: '박현빈'
+        };
+        setCurrentUser(user);
+      } catch (error) {
+        console.error('Failed to fetch current user:', error);
+      } finally {
+        // 로딩 시간 3초로 설정
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 3000);
+      }
+    };
+
+    fetchCurrentUser();
   }, []);
 
   return (
@@ -55,7 +76,7 @@ const App = () => {
       <div className="app-container">
         <Sidebar />
         <div className="content-container">
-          {isLoading ? <Loading /> : <AnimatedRoutes />}
+          {isLoading ? <Loading /> : <AnimatedRoutes currentUser={currentUser} />}
         </div>
       </div>
     </Router>
