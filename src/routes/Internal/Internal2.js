@@ -24,17 +24,31 @@ const Internal2 = () => {
                 <thead>
                     <tr>
                         <th>사원명</th>
-                        <th>집중도</th>
-                        <th>차트</th>
+                        <th>거북목</th>
+                        <th>스트레스</th>
+                        <th>심장박동</th>
                     </tr>
                 </thead>
                 <tbody>
                     {users.map((user, index) => (
                         <tr key={index}>
                             <td>{user.name} <br /><small>{user.location}</small></td>
-                            <td>{user.focus}</td>
                             <td>
-                                {user.chart === 'up' ? (
+                                {user.turtleNeck === 'up' ? (
+                                    <span className="chart-up">⬆</span>
+                                ) : (
+                                    <span className="chart-down">⬇</span>
+                                )}
+                            </td>
+                            <td>
+                                {user.stress === 'high' ? (
+                                    <span className="chart-up">⬆</span>
+                                ) : (
+                                    <span className="chart-down">⬇</span>
+                                )}
+                            </td>
+                            <td>
+                                {user.heartRate === 'high' ? (
                                     <span className="chart-up">⬆</span>
                                 ) : (
                                     <span className="chart-down">⬇</span>
