@@ -18,6 +18,10 @@ import Board from './routes/Board/Board';
 import './App.css';
 import './Transitions.css';
 import Dashboard from './routes/DashBoard';
+import axios from 'axios';
+import AuthProvider from './Context/AuthContext';
+
+axios.defaults.baseURL = 'http://localhost:8080';
 
 const AnimatedRoutes = ({ currentUser }) => {
   return (
@@ -71,15 +75,17 @@ const App = () => {
   }, []);
 
   return (
-    <Router basename={process.env.PUBLIC_URL}>
-      <Navbar />
-      <div className="app-container">
-        <Sidebar />
-        <div className="content-container">
-          {isLoading ? <Loading /> : <AnimatedRoutes currentUser={currentUser} />}
+    <AuthProvider>
+      <Router basename={process.env.PUBLIC_URL}>
+        <Navbar />
+        <div className="app-container">
+          <Sidebar />
+          <div className="content-container">
+            {isLoading ? <Loading /> : <AnimatedRoutes currentUser={currentUser} />}
+          </div>
         </div>
-      </div>
-    </Router>
+      </Router>
+    </AuthProvider>
   );
 };
 

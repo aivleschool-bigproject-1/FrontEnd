@@ -1,0 +1,54 @@
+.container {
+  margin-left: 200px;
+  padding: 20px;
+}
+
+.grid-container {
+  display: grid;
+  margin-left : 180px;
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 10px;
+  width: 80%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.grid-item {
+  position: relative;
+  padding-top: 56.25%;
+}
+
+.grid-item video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.enlarged-video {
+  text-align: center;
+  margin-left: 180px;
+}
+
+.enlarged-video video {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  margin: auto;
+}
+
+
+.back-button {
+  width: 35%;
+  padding: 15px; 
+  border: none;
+  border-radius: 5px;
+  background-color: #1C3554;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  display: block;
+  margin: 40px auto;
+}

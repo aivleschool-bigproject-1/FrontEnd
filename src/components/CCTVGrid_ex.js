@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './CCTVGrid.css';
+import './CCTVGrid_ex.css';
 
 const CCTVGrid_ex = () => {
   const [selectedVideo, setSelectedVideo] = useState(null);

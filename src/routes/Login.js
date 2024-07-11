@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import axios from 'axios';
+import { AuthContext } from '../Context/AuthContext';
 import './Login.css';
 
 const Login = () => {
     const [formData, setFormData] = useState({
-        email: '',
+        username: '',
         password: ''
     });
+    const navigate = useNavigate();
+    const { login } = useContext(AuthContext);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -16,29 +20,41 @@ const Login = () => {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Handle form submission logic here (e.g., API call)
-        console.log(formData);
-        // Reset form after submission if needed
+        try {
+            const response = await axios.post('/login', formData, {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                withCredentials: true,
+            });
+
+            console.log('로그인 성공:', response.data);
+            localStorage.setItem('token', response.data.token);
+            login();
+            navigate('/');
+        } catch (error) {
+            console.error('로그인 실패:', error);
+        }
         setFormData({
-            email: '',
+            username: '',
             password: ''
         });
     };
 
     return (
         <div className="login-container">
-            <h1>Login</h1>
+            <h1>로그인</h1>
             <form onSubmit={handleSubmit} className="login-form">
                 <div className="form-group">
-                    <label htmlFor="email">이메일</label>
+                    <label htmlFor="username">아이디</label>
                     <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="이메일을 입력해주세요"
-                        value={formData.email}
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="아이디를 입력해주세요"
+                        value={formData.username}
                         onChange={handleChange}
                         required
                     />
@@ -58,6 +74,14 @@ const Login = () => {
                 <button type="submit" className="login-button">로그인</button>
             </form>
             <Link to="/forgot-password" className="forgot-password-link">비밀번호 찾기</Link>
+            <div className="login-buttons-container">
+                <div className="login-button-naver" style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/images/naver.png'})` }}>
+                    <a href="http://localhost:8080/oauth2/authorization/naver"></a> 
+                </div>
+                <div className="login-button-google" style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/images/google.png'})` }}>
+                    <a href="http://localhost:8080/oauth2/authorization/google"></a>
+                </div>
+            </div>
         </div>
     );
 };

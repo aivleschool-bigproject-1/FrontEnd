@@ -1,67 +1,61 @@
-/*import React, { useState, useEffect, useRef } from 'react';
+import React, { useRef, useState } from 'react';
+import Webcam from 'react-webcam';
 import './CCTVGrid.css';
 
-const CCTVGrid = () => {
-  const [selectedVideo, setSelectedVideo] = useState(null);
-  const [webcamStream, setWebcamStream] = useState(null);
+const SingleWebcam = ({ id, isExpanded, onClick }) => {
   const webcamRef = useRef(null);
 
-  const videoSources = [
-    { src: 'cctv_feed1.mp4' },
-    { src: 'cctv_feed2.mp4' },
-    { src: 'cctv_feed3.mp4' }
-  ];
+  return (
+    <div 
+      className={`grid-item ${isExpanded ? 'expanded' : ''}`} 
+      onClick={() => onClick(id)}
+    >
+      <Webcam
+        audio={false}
+        ref={webcamRef}
+        className="webcam-video"
+      />
+    </div>
+  );
+};
 
-  useEffect(() => {
-    if (navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices.getUserMedia({ video: true })
-        .then((stream) => {
-          setWebcamStream(stream);
-          if (webcamRef.current) {
-            webcamRef.current.srcObject = stream;
-            webcamRef.current.muted = true;
-          }
-        })
-        .catch((error) => {
-          console.error("Error accessing webcam: ", error);
-        });
-    }
-    return () => {
-      if (webcamStream) {
-        webcamStream.getTracks().forEach(track => track.stop());
-      }
-    };
-  }, [webcamStream]);
+const WebcamComponent = () => {
+  const [expandedWebcam, setExpandedWebcam] = useState(null);
 
-  const handleVideoClick = (video) => {
-    setSelectedVideo(video);
+  const handleExpand = (id) => {
+    setExpandedWebcam(id);
   };
 
-  const handleBackClick = () => {
-    setSelectedVideo(null);
+  const handleClose = () => {
+    setExpandedWebcam(null);
   };
 
   return (
-    <div className="cctv-container">
-      {selectedVideo ? (
-        <div className="enlarged-video">
-          <video src={selectedVideo.src} controls autoPlay loop muted></video>
-          <button onClick={handleBackClick} className="back-button">전체보기</button>
+    <div className="container">
+      {expandedWebcam === null ? (
+        <div className="grid-container">
+          {[1, 2, 3, 4].map(id => (
+            <SingleWebcam 
+              key={id} 
+              id={id} 
+              isExpanded={false} 
+              onClick={handleExpand} 
+            />
+          ))}
         </div>
       ) : (
-        <div className="grid-container">
-          {videoSources.map((video, index) => (
-            <div className="grid-item" key={index} onClick={() => handleVideoClick(video)}>
-              <video src={video.src} controls autoPlay loop muted></video>
-            </div>
-          ))}
-          <div className="grid-item" onClick={() => handleVideoClick({ src: 'webcam' })}>
-            <video ref={webcamRef} autoPlay muted></video>
+        <div className="fullscreen">
+          <div className="webcam-video-container">
+            <Webcam
+              audio={false}
+              className="webcam-video"
+            />
           </div>
+          <button className="close-button" onClick={handleClose}>전체보기</button>
         </div>
       )}
     </div>
   );
 };
 
-export default CCTVGrid;*/
+export default WebcamComponent;

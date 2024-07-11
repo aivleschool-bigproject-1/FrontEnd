@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../Context/AuthContext'; 
 import './NavBar.css';
 
 const Navbar = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const { isLoggedIn, logout } = useContext(AuthContext);
 
     const handleLogout = () => {
-        setIsLoggedIn(false);
+        logout();
     };
 
     return (
