@@ -2,6 +2,7 @@ import React from 'react';
 import { ResponsiveLine } from '@nivo/line';
 import './DashBoard.css';
 import UserProfile from './UserProfile';
+import CCTVGrid_profile from '../components/CCTVGrid_profile';
 
 const data = [
     {
@@ -40,6 +41,7 @@ const data = [
 
 const Dashboard = () => (
     <div className="dashboard-container">
+        <CCTVGrid_profile />
         <UserProfile />
         <div className="chart-wrapper">
             <div className="monitoring-container">

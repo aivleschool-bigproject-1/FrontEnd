@@ -2,12 +2,11 @@ import React from 'react';
 import './UserProfile.css';
 
 const UserProfile = ({ data }) => (
-    <div className="profile-container">
+    <div className="user-profile-container">
         <div className="profile-header">
-            <img className="avatar" src="images/profile.png" alt="User Avatar" />
             <div className="user-details">
-                <h2 className="user-name">Bessie Cooper</h2>
-                <p className="user-info">UI/UX Designer - Austin, TX</p>
+                <h2 className="user-name">Karina</h2>
+                <p className="user-info">Sectoin7 worker - Austin, TX</p>
             </div>
         </div>
     </div>

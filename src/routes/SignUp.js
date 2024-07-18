@@ -31,7 +31,7 @@ const SignUpForm = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:8080/join', {
+            const response = await axios.post('/join', {
                 username: formData.username,
                 email: formData.email,
                 password: formData.password

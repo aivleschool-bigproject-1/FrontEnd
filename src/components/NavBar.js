@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../Context/AuthContext'; 
+import { AuthContext } from '../Context/AuthContext';
 import './NavBar.css';
 
 const Navbar = () => {
@@ -13,19 +13,21 @@ const Navbar = () => {
     return (
         <nav className="navbar">
             <div className="navbar-logo">
-                <Link to="/">BODA</Link>
+                <Link to="/">BODA
+                    <img src={`${process.env.PUBLIC_URL}/images/boda.png`} alt="Hat" className="boda-image" />
+                </Link>
             </div>
             <div className="navbar-links">
                 <Link to="/">홈</Link>
                 <Link to="/external">현장</Link>
                 <Link to="/internal">사무실</Link>
-                <Link to="/board">게시판</Link>
+                <Link to="/boards">게시판</Link>
             </div>
             <div className="navbar-actions">
                 {isLoggedIn ? (
                     <>
-                        <button onClick={handleLogout} className="navbar-logout">Logout</button>
                         <Link to="/profile" className="navbar-profile">My Profile</Link>
+                        <button onClick={handleLogout} className="navbar-logout">Logout</button>
                     </>
                 ) : (
                     <>

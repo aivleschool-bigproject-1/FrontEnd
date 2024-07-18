@@ -1,33 +1,32 @@
-.profile-container {
+/* UserProfile.css */
+
+.user-profile-container {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center; 
     margin: 20px;
-}
-
-.profile-header {
+  }
+  
+  .profile-header {
     display: flex;
     align-items: center;
-    margin-top : 10px;
-}
-
-.avatar {
-    border-radius: 50%;
-    width: 100px;
-    height: 100px;
-    margin-right: 20px;
-}
-
-.user-details {
+    justify-content: center; 
+  }
+  
+  .user-details {
     display: flex;
     flex-direction: column;
-}
-
-.user-name {
+    align-items: center; 
+  }
+  
+  .user-name {
     margin: 0;
-}
-
-.user-info {
+    text-align: center; 
+  }
+  
+  .user-info {
     margin: 0;
-}
-
+    text-align: center; 
+  }
+  

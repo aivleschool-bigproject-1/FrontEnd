@@ -17,7 +17,7 @@ const External = () => {
     {
       icon: "⚠️",
       title: "위험 감지",
-      description: ["중장비 작업 반경 내 작업자를 인식하는", "위험을 감지합니다."]
+      description: ["작업자를 인식하는", "위험을 감지합니다."]
     },
     {
       icon: "🦺",
@@ -33,11 +33,6 @@ const External = () => {
       icon: "🔥",
       title: "화재 감지",
       description: ["작업장 내의 화재를 감지합니다."]
-    },
-    {
-      icon: "💤",
-      title: "집중력 감지",
-      description: ["작업 중 집중력 저하를 감지하여", "관리자에게 보고합니다."]
     }
   ];
 
@@ -65,7 +60,7 @@ const External = () => {
 
 const Card = ({ icon, title, description }) => {
   return (
-    <div className="card">
+    <div className="card-ex">
       <div className="icon">{icon}</div>
       <h3>{title}</h3>
       {description.map((line, index) => (

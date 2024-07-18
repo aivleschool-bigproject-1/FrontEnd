@@ -1,23 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './Comment.css';
 
-const CommentSection = () => {
+const CommentSection = ({ boardId }) => {
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState('');
+
+  useEffect(() => {
+    fetchComments();
+  }, []);
+
+  const fetchComments = async () => {
+    try {
+      const response = await axios.get(`/comments/${boardId}`);
+      setComments(response.data);
+    } catch (error) {
+      console.error('Failed to fetch comments:', error);
+    }
+  };
 
   const handleInputChange = (e) => {
     setCommentText(e.target.value);
   };
 
-  const handleAddComment = () => {
+  const handleAddComment = async () => {
     if (commentText.trim()) {
-      setComments([...comments, commentText]);
-      setCommentText('');
+      try {
+        await axios.post(`/comments/${boardId}`, { text: commentText });
+        setCommentText('');
+        fetchComments(); 
+      } catch (error) {
+        console.error('Failed to add comment:', error);
+      }
     }
   };
-  const handleDeleteComment = (index) => {
-    const newComments = comments.filter((_, i) => i !== index);
-    setComments(newComments);
+
+  const handleDeleteComment = async (commentId) => {
+    try {
+      await axios.delete(`/comments/${boardId}/${commentId}`);
+      fetchComments(); 
+    } catch (error) {
+      console.error('Failed to delete comment:', error);
+    }
   };
 
   return (
@@ -25,10 +49,10 @@ const CommentSection = () => {
       <h3>댓글</h3>
       <div className="comment-list">
         {comments.length > 0 ? (
-          comments.map((comment, index) => (
-            <div key={index} className="comment-item">
-              {comment}
-              <button onClick={() => handleDeleteComment(index)}>삭제</button>
+          comments.map((comment) => (
+            <div key={comment.id} className="comment-item">
+              {comment.text}
+              <button onClick={() => handleDeleteComment(comment.id)}>삭제</button>
             </div>
           ))
         ) : (
