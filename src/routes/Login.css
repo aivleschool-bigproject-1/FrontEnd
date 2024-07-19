@@ -15,7 +15,7 @@
 }
 
 .login-form .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }
 
 .login-form label {
@@ -44,7 +44,7 @@
     font-size: 20px;
     cursor: pointer;
     display: block;
-    margin: 40px auto;
+    margin: 20px auto;
 }
 
 .login-button:hover {
@@ -70,7 +70,7 @@
     background-position: center;
     cursor: pointer;
     padding: 0;
-    background-color: transparent; /* 배경 투명 */
+    background-color: transparent; 
 }
 
 .login-button-naver a, .login-button-google a {

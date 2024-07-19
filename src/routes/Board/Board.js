@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import NoticeForm from './NoticeForm';
-import Notice from './Notice';
 import { gsap } from 'gsap';
 import axios from 'axios';
 import './Board.css';
 
 const Board = () => {
   const [notices, setNotices] = useState([]);
+  const [showForm, setShowForm] = useState(false);
   const token = localStorage.getItem('Authorization');
   const username = localStorage.getItem('Username');
 
@@ -43,6 +44,7 @@ const Board = () => {
 
       console.log('Notice added:', response.data);
       setNotices([response.data, ...notices]);
+      setShowForm(false); // 폼을 숨김
       animateNotice(response.data.id);
     } catch (error) {
       console.error('Error adding notice:', error);
@@ -110,22 +112,46 @@ const Board = () => {
   };
 
   return (
-    <div>
-      <NoticeForm addNotice={addNotice} />
-      {notices.length === 0 ? (
-        <p className="no-notices-message">문의 및 건의 사항을 등록해주세요</p>
-      ) : (
-        notices.map((notice) => (
-          <Notice
-            key={notice.id}
-            notice={notice}
-            currentUser={{ username }} // 사용자 정보를 prop으로 전달
-            updateNotice={updateNotice}
-            deleteNotice={deleteNotice}
-          />
-        ))
-      )}
+    <div className="board">
+      
+      <div className="board-container">
+        <table>
+          <thead>
+            <tr>
+              <th>번호</th>
+              <th>제목</th>
+              <th>사용자</th>
+              <th>내용</th>
+            </tr>
+          </thead>
+          <tbody>
+            {notices.length === 0 ? (
+              <tr>
+                <td colSpan="5" className="no-notices-message">문의 및 건의 사항을 등록해주세요</td>
+              </tr>
+            ) : (
+              notices.map((notice, index) => (
+                <tr id={`notice-${notice.id}`} key={notice.id}>
+                  <td>{index + 1}</td>
+                  <td>
+                    <Link to={`/articles/${notice.id}`}>{notice.title}</Link>
+                  </td>
+                  <td>{notice.username}</td>
+                  <td>{notice.content.length > 10 ? `${notice.content.substring(0, 10)}...` : notice.content}</td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+      <div className="write-button-container">
+        <button onClick={() => setShowForm(!showForm)}>
+          {showForm ? '닫기' : '글쓰기'}
+        </button>
+      </div>
+      {showForm && <NoticeForm addNotice={addNotice} />}
     </div>
+    
   );
 };
 

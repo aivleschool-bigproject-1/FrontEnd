@@ -26,8 +26,8 @@ const Navbar = () => {
             <div className="navbar-actions">
                 {isLoggedIn ? (
                     <>
-                        <Link to="/profile" className="navbar-profile">My Profile</Link>
                         <button onClick={handleLogout} className="navbar-logout">Logout</button>
+                        <Link to="/profile" className="navbar-profile">My Profile</Link>
                     </>
                 ) : (
                     <>

@@ -2,20 +2,32 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Comment.css';
 
-const CommentSection = ({ boardId }) => {
+const CommentSection = ({ articleId }) => {
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const username = localStorage.getItem('Username'); // 사용자의 이름을 로컬 스토리지에서 가져옴
 
   useEffect(() => {
     fetchComments();
-  }, []);
+  }, [articleId]);
 
   const fetchComments = async () => {
+    setLoading(true);
     try {
-      const response = await axios.get(`/comments/${boardId}`);
+      const response = await axios.get(`/api/articles/${articleId}/comments`);
       setComments(response.data);
+      setError(''); // Clear any previous error
     } catch (error) {
+      setError(
+        error.response && error.response.status === 404
+          ? '댓글을 찾을 수 없습니다.'
+          : '댓글을 가져오는 데 실패했습니다.'
+      );
       console.error('Failed to fetch comments:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -26,32 +38,54 @@ const CommentSection = ({ boardId }) => {
   const handleAddComment = async () => {
     if (commentText.trim()) {
       try {
-        await axios.post(`/comments/${boardId}`, { text: commentText });
+        setLoading(true);
+        await axios.post(`/api/articles/${articleId}/comments`, {
+          body: commentText,
+          username: username,
+          articleId: articleId
+        });
         setCommentText('');
-        fetchComments(); 
+        fetchComments();
       } catch (error) {
+        setError(
+          error.response && error.response.status === 404
+            ? '댓글을 추가할 수 없습니다.'
+            : '댓글을 추가하는 데 실패했습니다.'
+        );
         console.error('Failed to add comment:', error);
+      } finally {
+        setLoading(false);
       }
     }
   };
 
   const handleDeleteComment = async (commentId) => {
     try {
-      await axios.delete(`/comments/${boardId}/${commentId}`);
-      fetchComments(); 
+      setLoading(true);
+      await axios.delete(`/api/comments/${commentId}`);
+      fetchComments();
     } catch (error) {
+      setError(
+        error.response && error.response.status === 404
+          ? '댓글을 삭제할 수 없습니다.'
+          : '댓글을 삭제하는 데 실패했습니다.'
+      );
       console.error('Failed to delete comment:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="comment-section">
       <h3>댓글</h3>
+      {loading && <div className="loading-message">Loading...</div>}
+      {error && <div className="error-message">{error}</div>}
       <div className="comment-list">
         {comments.length > 0 ? (
           comments.map((comment) => (
             <div key={comment.id} className="comment-item">
-              {comment.text}
+              {comment.body}
               <button onClick={() => handleDeleteComment(comment.id)}>삭제</button>
             </div>
           ))
@@ -66,7 +100,7 @@ const CommentSection = ({ boardId }) => {
           placeholder="댓글을 입력하세요"
           rows="4"
         ></textarea>
-        <button onClick={handleAddComment}>추가</button>
+        <button onClick={handleAddComment} disabled={loading}>추가</button>
       </div>
     </div>
   );

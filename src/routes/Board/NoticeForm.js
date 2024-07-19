@@ -35,7 +35,7 @@ const NoticeForm = ({ addNotice }) => {
       console.error('로그인 필요');
       return;
     }
-    console.log('Sending notice data:', noticeData); // 콘솔 로그 추가
+    console.log('Sending notice data:', noticeData); 
     addNotice(noticeData);
     setNoticeData({ title: '', content: '', username: noticeData.username });
   };
@@ -47,17 +47,17 @@ const NoticeForm = ({ addNotice }) => {
         name="title"
         value={noticeData.title}
         onChange={handleChange}
-        placeholder="Title"
+        placeholder="제목"
         required
       />
       <textarea
         name="content"
         value={noticeData.content}
         onChange={handleChange}
-        placeholder="Content"
+        placeholder="내용"
         required
       ></textarea>
-      <button type="submit">Add Notice</button>
+      <button type="submit">등록하기</button>
     </form>
   );
 };

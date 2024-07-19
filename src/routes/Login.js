@@ -38,7 +38,7 @@ const Login = () => {
             console.log('로그인 성공:', response.data);
             // 서버 응답 헤더에서 Authorization 값과 Username 값 추출
             const token = response.headers['authorization'];
-            const username = response.headers['username'];
+            const username = response.data;
             console.log('추출한 토큰:', token);
             console.log('추출한 사용자 이름:', username);
 
