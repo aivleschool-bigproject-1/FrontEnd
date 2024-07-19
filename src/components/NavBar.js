@@ -7,6 +7,7 @@ const Navbar = () => {
     const { isLoggedIn, logout } = useContext(AuthContext);
 
     const handleLogout = () => {
+        localStorage.removeItem('Username');
         logout();
     };
 

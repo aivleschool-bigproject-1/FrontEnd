@@ -1,4 +1,4 @@
-import React from 'react';
+/*import React from 'react';
 import './CCTVGrid_profile.css';
 import VideoPlayer_profile from './VideoPlayer_profile';
 
@@ -7,9 +7,13 @@ const CCTVGrid_profile = () => {
 
   return (
     <div className="grid-container-profile">
-      <VideoPlayer_profile url={videoSource} />
+      <h2>사무실 CCTV</h2>
+      <div className="video-container">
+        <VideoPlayer_profile url={videoSource} />
+      </div>
     </div>
   );
 };
 
 export default CCTVGrid_profile;
+*/

@@ -113,7 +113,6 @@ const Board = () => {
 
   return (
     <div className="board">
-      
       <div className="board-container">
         <table>
           <thead>
@@ -121,13 +120,12 @@ const Board = () => {
               <th>번호</th>
               <th>제목</th>
               <th>사용자</th>
-              <th>내용</th>
             </tr>
           </thead>
           <tbody>
             {notices.length === 0 ? (
               <tr>
-                <td colSpan="5" className="no-notices-message">문의 및 건의 사항을 등록해주세요</td>
+                <td colSpan="3" className="no-notices-message">문의 및 건의 사항을 등록해주세요</td>
               </tr>
             ) : (
               notices.map((notice, index) => (
@@ -137,7 +135,6 @@ const Board = () => {
                     <Link to={`/articles/${notice.id}`}>{notice.title}</Link>
                   </td>
                   <td>{notice.username}</td>
-                  <td>{notice.content.length > 10 ? `${notice.content.substring(0, 10)}...` : notice.content}</td>
                 </tr>
               ))
             )}
@@ -151,7 +148,6 @@ const Board = () => {
       </div>
       {showForm && <NoticeForm addNotice={addNotice} />}
     </div>
-    
   );
 };
 

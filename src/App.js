@@ -6,7 +6,6 @@ import Home from './routes/Home';
 import External from './routes/External/External';
 import External1 from './routes/External/External1';
 import External2 from './routes/External/External2';
-import Internal2 from './routes/Internal/Internal2';
 import Internal from './routes/Internal/Internal';
 import Login from './routes/Login';
 import SignUp from './routes/SignUp';
@@ -25,7 +24,8 @@ import AccountDeletion from './routes/AccountDeletion';
 import AuthProvider from './Context/AuthContext';
 import BorderDetail from './routes/Board/BoardDetail'
 import EditArticle from './routes/Board/EditArticle';
-
+import Internal2 from './routes/Internal/Internal2';
+import ChartDetail from './routes/ChartDetail';
 axios.defaults.baseURL = 'http://localhost:8080';
 
 const AnimatedRoutes = ({ currentUser }) => {
@@ -37,6 +37,8 @@ const AnimatedRoutes = ({ currentUser }) => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/boards" element={<Board currentUser={currentUser} />} />
+          <Route path="/dashboard/:username" element={<Dashboard />} />
+          <Route path="/dashboarddetail" element={<ChartDetail />} />
           <Route path="/articles/:id" element={<BorderDetail />} />
           <Route path="/articles/:id/edit" element={<EditArticle />} />
           <Route path="/forgot-password" element={<PasswordReset />} />
@@ -48,7 +50,7 @@ const AnimatedRoutes = ({ currentUser }) => {
           </Route>
           <Route path="/internal/*" element={<Internal />}>
             <Route path="section1" element={<CCTVGrid_in />} />
-            <Route path="section2" element={<Dashboard />} />
+            <Route path="section2" element={<Internal2 />} />
           </Route>
           <Route path="/profile" element={<Profile />} />
         </Routes>
@@ -91,4 +93,3 @@ const App = () => {
 };
 
 export default App;
-

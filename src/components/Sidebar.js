@@ -22,7 +22,6 @@ const Sidebar = () => {
       {isExternal && (
         <>
           <Link to="/external/section1" className="sidebar-link">전체 CCTV</Link>
-          <Link to="/external/section2" className="sidebar-link">저장된 CCTV</Link>
         </>
       )}
     </div>

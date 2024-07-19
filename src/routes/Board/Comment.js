@@ -8,6 +8,7 @@ const CommentSection = ({ articleId }) => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const username = localStorage.getItem('Username'); // 사용자의 이름을 로컬 스토리지에서 가져옴
+  const token = localStorage.getItem('Authorization'); // JWT 토큰을 로컬 스토리지에서 가져옴
 
   useEffect(() => {
     fetchComments();
@@ -16,7 +17,11 @@ const CommentSection = ({ articleId }) => {
   const fetchComments = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`/api/articles/${articleId}/comments`);
+      const response = await axios.get(`/api/articles/${articleId}/comments`, {
+        headers: {
+          'Authorization': `${token}`, // JWT 토큰을 헤더에 추가
+        },
+      });
       setComments(response.data);
       setError(''); // Clear any previous error
     } catch (error) {
@@ -39,11 +44,19 @@ const CommentSection = ({ articleId }) => {
     if (commentText.trim()) {
       try {
         setLoading(true);
-        await axios.post(`/api/articles/${articleId}/comments`, {
-          body: commentText,
-          username: username,
-          articleId: articleId
-        });
+        await axios.post(
+          `/api/articles/${articleId}/comments`,
+          {
+            body: commentText,
+            username: username,
+            articleId: articleId,
+          },
+          {
+            headers: {
+              'Authorization': `${token}`,
+            },
+          }
+        );
         setCommentText('');
         fetchComments();
       } catch (error) {
@@ -62,7 +75,11 @@ const CommentSection = ({ articleId }) => {
   const handleDeleteComment = async (commentId) => {
     try {
       setLoading(true);
-      await axios.delete(`/api/comments/${commentId}`);
+      await axios.delete(`/api/comments/${commentId}`, {
+        headers: {
+          'Authorization': `${token}`, // JWT 토큰을 헤더에 추가
+        },
+      });
       fetchComments();
     } catch (error) {
       setError(
@@ -78,7 +95,6 @@ const CommentSection = ({ articleId }) => {
 
   return (
     <div className="comment-section">
-      <h3>댓글</h3>
       {loading && <div className="loading-message">Loading...</div>}
       {error && <div className="error-message">{error}</div>}
       <div className="comment-list">
@@ -100,7 +116,9 @@ const CommentSection = ({ articleId }) => {
           placeholder="댓글을 입력하세요"
           rows="4"
         ></textarea>
-        <button onClick={handleAddComment} disabled={loading}>추가</button>
+        <button onClick={handleAddComment} disabled={loading}>
+          추가
+        </button>
       </div>
     </div>
   );

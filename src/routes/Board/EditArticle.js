@@ -4,6 +4,7 @@ import axios from 'axios';
 import './EditArticle.css';
 
 const EditArticle = () => {
+  const token = localStorage.getItem('Authorization');
   const { id } = useParams();
   const navigate = useNavigate();
   const [article, setArticle] = useState({
@@ -18,7 +19,14 @@ const EditArticle = () => {
 
   const fetchArticle = async () => {
     try {
-      const response = await axios.get(`/api/articles/${id}`);
+      if (!token) {
+        throw new Error('No token found');
+      }
+      const response = await axios.get(`/api/articles/${id}`, {
+        headers: {
+          'Authorization': `${token}`, // JWT 토큰을 헤더에 추가
+        },
+      });
       setArticle(response.data);
     } catch (error) {
       console.error('Error fetching article:', error);
@@ -40,7 +48,7 @@ const EditArticle = () => {
       }, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': localStorage.getItem('Authorization'),
+          'Authorization': `${token}`, // JWT 토큰을 헤더에 추가
         },
       });
       navigate('/boards');

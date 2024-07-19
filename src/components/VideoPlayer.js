@@ -8,6 +8,12 @@ const VideoPlayer = ({ url }) => {
     const video = videoRef.current;
     let hls;
 
+    const handleInteraction = () => {
+      video.play().catch((error) => {
+        console.error('Error attempting to play video:', error);
+      });
+    };
+
     if (Hls.isSupported()) {
       hls = new Hls({
         liveSyncDurationCount: 3,
@@ -22,7 +28,8 @@ const VideoPlayer = ({ url }) => {
       hls.attachMedia(video);
 
       hls.on(Hls.Events.MEDIA_ATTACHED, () => {
-        video.play();
+        document.addEventListener('click', handleInteraction, { once: true });
+        document.addEventListener('keydown', handleInteraction, { once: true });
       });
 
       hls.on(Hls.Events.LEVEL_LOADED, (event, data) => {
@@ -54,12 +61,15 @@ const VideoPlayer = ({ url }) => {
         if (hls) {
           hls.destroy();
         }
+        document.removeEventListener('click', handleInteraction);
+        document.removeEventListener('keydown', handleInteraction);
       };
     } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
       video.src = url;
       video.autoplay = true;
       video.addEventListener('loadedmetadata', () => {
-        video.play();
+        document.addEventListener('click', handleInteraction, { once: true });
+        document.addEventListener('keydown', handleInteraction, { once: true });
       });
     }
 
@@ -67,14 +77,12 @@ const VideoPlayer = ({ url }) => {
       if (hls) {
         hls.destroy();
       }
+      document.removeEventListener('click', handleInteraction);
+      document.removeEventListener('keydown', handleInteraction);
     };
   }, [url]);
 
   return <video ref={videoRef} style={{ width: '1000px' }} controls />;
-
 };
 
 export default VideoPlayer;
-
-
-
