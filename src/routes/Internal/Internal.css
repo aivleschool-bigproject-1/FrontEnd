@@ -1,20 +1,20 @@
-.internal-container {
+.internalContainer {
     display: flex;
     margin-left: 50px;
 }
 
-.content-in {
+.contentIn {
     flex-grow: 1;
     padding: 20px;
 }
 
-.card-container-in {
+.cardContainerIn {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
 }
 
-.card-in {
+.cardIn {
     border: 1px solid #ddd;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -23,19 +23,23 @@
     padding: 20px;
     text-align: center;
     background-color: #fff;
+    color: black; /* Ensure the card text is black */
 }
 
 .icon {
     font-size: 50px;
     margin-bottom: 20px;
+    color: black; /* Ensure the icon color is black */
 }
 
-h3 {
+.cardIn h3 {
     font-size: 24px;
     margin-bottom: 10px;
+    color: black; /* Ensure the h3 color is black */
 }
 
-p {
+.cardIn p {
     font-size: 16px;
     margin: 5px 0;
+    color: black; /* Ensure the paragraph color is black */
 }

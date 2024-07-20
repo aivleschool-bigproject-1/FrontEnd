@@ -15,5 +15,4 @@ const CCTVGrid_profile = () => {
   );
 };
 
-export default CCTVGrid_profile;
-*/
+export default CCTVGrid_profile;*/
