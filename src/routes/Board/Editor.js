@@ -51,38 +51,37 @@ const Editor = ({onChange, initialValue}) => {
         onChange(value);
     }, [onChange]);
 
-    return <div>
-        <ReactQuill
-            ref={quillRef}
-            value={initialValue}
-            modules={{
-                toolbar: {
-                    container: [
-                        [{header: [1, 2, false]}],
-                        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                        [
-                            {list: 'ordered'},
-                            {list: 'bullet'},
-                            {indent: '-1'},
-                            {indent: '+1'},
-                        ],
-                        ['image'],
-                        ['clean'],
+    return <ReactQuill
+        ref={quillRef}
+        value={initialValue}
+        placeholder={"content"}
+        modules={{
+            toolbar: {
+                container: [
+                    [{header: [1, 2, false]}],
+                    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                    [
+                        {list: 'ordered'},
+                        {list: 'bullet'},
+                        {indent: '-1'},
+                        {indent: '+1'},
                     ],
-                    handlers: {
-                        image: imageHandler,
-                    },
+                    ['image'],
+                    ['clean'],
+                ],
+                handlers: {
+                    image: imageHandler,
                 },
-            }}
-            formats={[
-                'header',
-                'bold', 'italic', 'underline', 'strike', 'blockquote',
-                'list', 'bullet', 'indent',
-                'link', 'image'
-            ]}
-            onChange={handleChange}
-        />
-    </div>
+            },
+        }}
+        formats={[
+            'header',
+            'bold', 'italic', 'underline', 'strike', 'blockquote',
+            'list', 'bullet', 'indent',
+            'link', 'image'
+        ]}
+        onChange={handleChange}
+    />
 }
 
 export default Editor;
