@@ -13,8 +13,7 @@ const Editor = ({onChange, initialValue}) => {
         const response = await axios.post('/s3-upload', image, {
             headers: {
                 'Content-Type': 'multipart/form-data',
-                // TODO - user header 사용
-                'Authorization': 'JWTShield eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJCT0RBIiwiaWQiOjI2LCJleHAiOjE3MjE2Mzk4MTUsInVzZXJuYW1lIjoiYWRtaW4ifQ.mHIGpEpek13RiAE2Ia0-3o0MC0GsdpxSB4Umh5FkNcErTjk-DO1SPFzxGKMQ00rJzEFZZAqtczcGjpIzk3nvuA'
+                'Authorization': localStorage.getItem("Authorization")
             }
         });
 
