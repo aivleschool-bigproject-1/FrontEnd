@@ -12,10 +12,11 @@ import SignUp from './routes/SignUp';
 import Loading from './components/Loading';
 import Sidebar from './components/Sidebar';
 import PasswordReset from './routes/Forgot';
-import Board from './routes/Board/Board';
+import Posts from './routes/Board/Post';
 import './App.css';
 import './Transitions.css';
 import Profile from './routes/Profile';
+import CCTVGrid_profile from './components/CCTVGrid_profile';
 import axios from 'axios';
 import NewPassword from './routes/PasswordReset';
 import Dashboard from './routes/DashBoard';
@@ -25,8 +26,8 @@ import AuthProvider from './Context/AuthContext';
 import BorderDetail from './routes/Board/BoardDetail'
 import EditArticle from './routes/Board/EditArticle';
 import Internal2 from './routes/Internal/Internal2';
-import ChartDetail from './routes/ChartDetail';
 axios.defaults.baseURL = 'http://localhost:8080';
+
 
 const AnimatedRoutes = ({ currentUser }) => {
   return (
@@ -36,9 +37,8 @@ const AnimatedRoutes = ({ currentUser }) => {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/boards" element={<Board currentUser={currentUser} />} />
+          <Route path="/boards" element={<Posts currentUser={currentUser} />} />
           <Route path="/dashboard/:username" element={<Dashboard />} />
-          <Route path="/dashboarddetail" element={<ChartDetail />} />
           <Route path="/articles/:id" element={<BorderDetail />} />
           <Route path="/articles/:id/edit" element={<EditArticle />} />
           <Route path="/forgot-password" element={<PasswordReset />} />

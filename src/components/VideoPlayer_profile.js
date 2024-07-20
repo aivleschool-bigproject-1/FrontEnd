@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import Hls from 'hls.js';
 
-const VideoPlayer_Profile = ({ url, token }) => {
+const VideoPlayer_Profile = ({ url }) => {
   const videoRef = useRef(null);
 
   useEffect(() => {
@@ -21,10 +21,7 @@ const VideoPlayer_Profile = ({ url, token }) => {
         lowLatencyMode: true,
         maxLiveSyncPlaybackRate: 1.5,
         enableWorker: true,
-        debug: true,
-        xhrSetup: (xhr) => {
-          xhr.setRequestHeader('Authorization', token);
-        }
+        debug: true
       });
 
       hls.loadSource(url);
@@ -84,7 +81,7 @@ const VideoPlayer_Profile = ({ url, token }) => {
       document.removeEventListener('click', handleInteraction);
       document.removeEventListener('keydown', handleInteraction);
     };
-  }, [url, token]);
+  }, [url]);
 
   return <video ref={videoRef} style={{ width: '800px', height: '450px' }} controls />;
 };

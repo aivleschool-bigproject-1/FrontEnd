@@ -1,0 +1,143 @@
+.posts-container {
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.posts-title {
+  font-size: 2em;
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.create-post-form {
+  margin-bottom: 20px;
+}
+
+.create-post-form input,
+.create-post-form textarea {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  font-size: 1em;
+}
+
+.create-post-form button {
+  padding: 10px 20px;
+  font-size: 1em;
+  color: #fff;
+  background-color: #333;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.create-post-form button:hover {
+  background-color: #555;
+}
+
+.posts-list {
+  list-style: none;
+  padding: 0;
+}
+
+.post-item {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  padding: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.post-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.post-title {
+  font-size: 1.5em;
+  color: #333;
+  margin: 0 0 10px 0;
+}
+
+.post-content {
+  font-size: 1em;
+  color: #666;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.no-posts-message {
+  text-align: center;
+  font-size: 1.2em;
+  color: #777;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.page-button {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  color: #333;
+  padding: 10px 15px;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.page-button:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+.page-button.active {
+  background-color: #333;
+  color: #fff;
+}
+
+.post-details {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.post-details h2 {
+  font-size: 2em;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.post-details p {
+  font-size: 1.2em;
+  color: #666;
+  line-height: 1.6;
+}
+
+.post-details button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1em;
+  color: #fff;
+  background-color: #333;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.post-details button:hover {
+  background-color: #555;
+}

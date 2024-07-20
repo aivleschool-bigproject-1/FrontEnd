@@ -4,15 +4,15 @@ import { motion } from 'framer-motion';
 import Footer from '../components/Footer';
 
 const images1 = [
-  "images/1.jpg",
-  "images/2.jpg",
-  "images/3.jpg"
+  { src: "images/1.jpg", description: ["현장 감시 CCTV 설치", "24/7 실시간 모니터링", "사고 발생 시 즉각 알림"] },
+  { src: "images/2.jpg", description: ["내근 업무 모니터링", "근무 시간 체크", "작업 효율성 분석"] },
+  { src: "images/3.jpg", description: ["외근 업무 모니터링", "GPS 트래킹", "작업 경로 분석"] }
 ];
 
 const images2 = [
-  "images/4.jpg",
-  "images/5.jpg",
-  "images/6.jpg"
+  { src: "images/4.jpg", description: ["개인별 사무실 CCTV", "개인 공간 보호", "업무 집중도 향상"] },
+  { src: "images/5.jpg", description: ["공동 작업 공간 모니터링", "협업 효율성 증가", "안전 관리 강화"] },
+  { src: "images/6.jpg", description: ["사무실 내 건강 관리", "스트레스 모니터링", "피로도 측정"] }
 ];
 
 const Home = () => {
@@ -39,10 +39,9 @@ const Home = () => {
       <div
         className="background-section"
         style={{
-          background: `url(${process.env.PUBLIC_URL}/images/10.jpg) no-repeat center center`,
           backgroundSize: 'cover',
           width: '100%',
-          height: '110vh',
+          height: '100vh',
           position: 'relative'
         }}
       >
@@ -82,7 +81,7 @@ const Home = () => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 1 }}
           >
-            철저한 현장 감시 CCTV
+            철저한 현장 CCTV
           </motion.h3>
           <motion.p
             className="second"
@@ -90,7 +89,7 @@ const Home = () => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 1, delay: 0.5 }}
           >
-            실시간 현장 감시를 통해 사고 발견 시간을 줄입니다
+            실시간 현장 감시를 통해 사고 발견 시간을 줄이고 사무실 내 직원들의 건강관리를 책임집니다
           </motion.p>
           <div className="cards-container">
             {images1.map((image, index) => (
@@ -106,14 +105,12 @@ const Home = () => {
                 }}
                 viewport={{ once: true, amount: 0.5 }}
               >
-                <img src={`${process.env.PUBLIC_URL}/${image}`} alt={`Card ${index + 1}`} className="card-image" />
-                <motion.div
-                  className="card-content"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 1.5, delay: index * 0.6 }}
-                >
-                </motion.div>
+                <img src={`${process.env.PUBLIC_URL}/${image.src}`} alt={`Card ${index + 1}`} className="card-image" />
+                <div className="card-content">
+                  {image.description.map((desc, i) => (
+                    <div key={i} className="card-description">{desc}</div>
+                  ))}
+                </div>
               </motion.div>
             ))}
           </div>
@@ -169,14 +166,12 @@ const Home = () => {
                 }}
                 viewport={{ once: true, amount: 0.5 }}
               >
-                <img src={`${process.env.PUBLIC_URL}/${image}`} alt={`Card ${index + 4}`} className="card-image" />
-                <motion.div
-                  className="card-content"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 1.5, delay: index * 0.6 }}
-                >
-                </motion.div>
+                <img src={`${process.env.PUBLIC_URL}/${image.src}`} alt={`Card ${index + 4}`} className="card-image" />
+                <div className="card-content">
+                  {image.description.map((desc, i) => (
+                    <div key={i} className="card-description">{desc}</div>
+                  ))}
+                </div>
               </motion.div>
             ))}
           </div>
