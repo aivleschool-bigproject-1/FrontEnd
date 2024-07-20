@@ -24,9 +24,9 @@ import CCTVGrid_in from './components/CCTVGrid_in';
 import AccountDeletion from './routes/AccountDeletion';
 import AuthProvider from './Context/AuthContext';
 import BorderDetail from './routes/Board/BoardDetail'
-import EditArticle from './routes/Board/EditArticle';
 import Internal2 from './routes/Internal/Internal2';
 import CreatePostForm from './routes/Board/CreatePostForm';
+
 axios.defaults.baseURL = 'http://localhost:8080';
 
 
@@ -42,7 +42,6 @@ const AnimatedRoutes = ({ currentUser }) => {
           <Route path="/create-post" element={<CreatePostForm />} />
           <Route path="/dashboard/:username" element={<Dashboard />} />
           <Route path="/articles/:id" element={<BorderDetail />} />
-          <Route path="/articles/:id/edit" element={<EditArticle />} />
           <Route path="/forgot-password" element={<PasswordReset />} />
           <Route path="/delete" element={<AccountDeletion />} />
           <Route path="/password-reset" element={<NewPassword />} />

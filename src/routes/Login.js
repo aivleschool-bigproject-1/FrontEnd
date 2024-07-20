@@ -39,14 +39,10 @@ const Login = () => {
             // 서버 응답 헤더에서 Authorization 값과 Username 값 추출
             const token = response.headers['authorization'];
             const username = response.data;
-            console.log('추출한 토큰:', token);
-            console.log('추출한 사용자 이름:', username);
 
             if (token) {
                 localStorage.setItem('Authorization', token);
                 localStorage.setItem('Username', username);
-                console.log('토큰 저장 확인:', localStorage.getItem('Authorization'));
-                console.log('사용자 이름 저장 확인:', localStorage.getItem('Username'));
                 login();
                 navigate('/');
             } else {

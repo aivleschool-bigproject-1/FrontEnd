@@ -1,0 +1,9 @@
+.quill-editor img,
+.post-content img {
+  max-width: 50%;
+  height: auto;
+}
+
+.ql-container {
+  width: 100%;
+}

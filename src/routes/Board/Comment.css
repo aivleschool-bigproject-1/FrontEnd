@@ -3,19 +3,35 @@
 }
 
 .create-comment-form {
+  position: relative;
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
 }
 
-.create-comment-form textarea {
-  resize: none;
-  padding: 10px;
-  margin-bottom: 10px;
+.textarea-wrapper {
+  position: relative;
+  width: 100%;
 }
 
-.create-comment-form button {
-  align-self: flex-start;
+.create-comment-form textarea {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box; 
+  resize: none;
+}
+
+.create-comment-form .submit-comment {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #1C3554;
+  font-size: 1rem; 
+  line-height: 1;
 }
 
 .comments-list {
@@ -24,6 +40,7 @@
 }
 
 .comment-item {
+  position: relative;
   border-bottom: 1px solid #ddd;
   padding: 10px 0;
 }
@@ -32,6 +49,12 @@
   margin: 0 0 10px;
 }
 
-.comment-item button {
-  margin-right: 10px;
+.comment-item .delete-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #1C3554;
+  font-size: 1.5rem; 
 }

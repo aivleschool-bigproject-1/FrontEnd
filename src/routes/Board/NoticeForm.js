@@ -52,7 +52,7 @@ const NoticeForm = ({addNotice}) => {
         }
 
         setNoticeData({title: '', content: '', username: noticeData.username});
-        navigate('/boards'); // TODO - 게시글로 이동
+        navigate('/boards'); 
     }, [noticeData]);
 
     useEffect(() => {

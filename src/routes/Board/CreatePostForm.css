@@ -1,0 +1,62 @@
+.page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.create-post-container {
+  width: 60%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.create-post-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.create-post-form input.title-input {
+  width: 64%; 
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 4px;
+  font-size: 1rem; 
+}
+
+.create-post-form input.title-input::placeholder {
+  font-size: 0.9rem; 
+}
+
+.create-post-form .ql-container {
+  width: 100%; 
+  height: 200px;
+  margin-bottom: 10px;
+}
+
+.create-post-form button {
+  width: 40%; 
+  padding: 10px;
+  margin: 10px 5px;
+  font-size: 1rem;
+  color: #1C3554;
+  background-color: transparent;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button-group-create {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.button-group-create button {
+  margin: 0 10px;
+}

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Comment.css';
+import { FaPaperPlane } from 'react-icons/fa'; // Ensure you have react-icons installed
+import { FaTimes } from 'react-icons/fa'; // Use the FaTimes icon for delete
 
 const Comments = ({ postId }) => {
   const [comments, setComments] = useState([]);
@@ -16,7 +18,7 @@ const Comments = ({ postId }) => {
     try {
       const response = await axios.get(`http://localhost:8080/comments/${postId}`, {
         headers: {
-          'Authorization': `${token}`,
+          Authorization: `${token}`,
         },
       });
       setComments(response.data);
@@ -41,7 +43,7 @@ const Comments = ({ postId }) => {
       await axios.post('http://localhost:8080/comment', commentData, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `${token}`,
+          Authorization: `${token}`,
         },
       });
       fetchComments();
@@ -55,7 +57,7 @@ const Comments = ({ postId }) => {
     try {
       await axios.delete(`http://localhost:8080/comment/${commentId}`, {
         headers: {
-          'Authorization': `${token}`,
+          Authorization: `${token}`,
         },
       });
       fetchComments();
@@ -67,14 +69,18 @@ const Comments = ({ postId }) => {
   return (
     <div className="comments-container">
       <form onSubmit={handleCreateComment} className="create-comment-form">
-        <textarea
-          name="content"
-          placeholder="Write a comment..."
-          value={newComment.content}
-          onChange={handleInputChange}
-          required
-        />
-        <button type="submit">Submit</button>
+        <div className="textarea-wrapper">
+          <textarea
+            name="content"
+            placeholder="자유롭게 의견을 작성해주세요"
+            value={newComment.content}
+            onChange={handleInputChange}
+            required
+          />
+          <button type="submit" className="submit-comment">
+            <FaPaperPlane />
+          </button>
+        </div>
       </form>
       {comments.length > 0 ? (
         <ul className="comments-list">
@@ -82,13 +88,15 @@ const Comments = ({ postId }) => {
             <li key={comment.id} className="comment-item">
               <p className="comment-content">{comment.content}</p>
               {comment.writerId === username && (
-                <button onClick={() => handleDeleteComment(comment.id)}>Delete</button>
+                <span className="delete-icon" onClick={() => handleDeleteComment(comment.id)}>
+                  <FaTimes />
+                </span>
               )}
             </li>
           ))}
         </ul>
       ) : (
-        <p className="no-comments-message">No comments available</p>
+        <p className="no-comments-message">댓글이 없습니다</p>
       )}
     </div>
   );
