@@ -1,127 +1,105 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Comment.css';
+import { FaPaperPlane } from 'react-icons/fa'; // Ensure you have react-icons installed
+import { FaTimes } from 'react-icons/fa'; // Use the FaTimes icon for delete
 
-const CommentSection = ({ articleId }) => {
+const Comments = ({ postId }) => {
   const [comments, setComments] = useState([]);
-  const [commentText, setCommentText] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-  const username = localStorage.getItem('Username'); // 사용자의 이름을 로컬 스토리지에서 가져옴
-  const token = localStorage.getItem('Authorization'); // JWT 토큰을 로컬 스토리지에서 가져옴
+  const [newComment, setNewComment] = useState({ content: '' });
+  const token = localStorage.getItem('Authorization');
+  const username = localStorage.getItem('Username');
 
   useEffect(() => {
     fetchComments();
-  }, [articleId]);
+  }, [postId]);
 
   const fetchComments = async () => {
-    setLoading(true);
     try {
-      const response = await axios.get(`/api/articles/${articleId}/comments`, {
+      const response = await axios.get(`http://localhost:8080/comments/${postId}`, {
         headers: {
-          'Authorization': `${token}`, // JWT 토큰을 헤더에 추가
+          Authorization: `${token}`,
         },
       });
       setComments(response.data);
-      setError(''); // Clear any previous error
     } catch (error) {
-      setError(
-        error.response && error.response.status === 404
-          ? '댓글을 찾을 수 없습니다.'
-          : '댓글을 가져오는 데 실패했습니다.'
-      );
-      console.error('Failed to fetch comments:', error);
-    } finally {
-      setLoading(false);
+      console.error('Error fetching comments:', error);
     }
   };
 
   const handleInputChange = (e) => {
-    setCommentText(e.target.value);
+    const { name, value } = e.target;
+    setNewComment(prevState => ({ ...prevState, [name]: value }));
   };
 
-  const handleAddComment = async () => {
-    if (commentText.trim()) {
-      try {
-        setLoading(true);
-        await axios.post(
-          `/api/articles/${articleId}/comments`,
-          {
-            body: commentText,
-            username: username,
-            articleId: articleId,
-          },
-          {
-            headers: {
-              'Authorization': `${token}`,
-            },
-          }
-        );
-        setCommentText('');
-        fetchComments();
-      } catch (error) {
-        setError(
-          error.response && error.response.status === 404
-            ? '댓글을 추가할 수 없습니다.'
-            : '댓글을 추가하는 데 실패했습니다.'
-        );
-        console.error('Failed to add comment:', error);
-      } finally {
-        setLoading(false);
-      }
+  const handleCreateComment = async (e) => {
+    e.preventDefault();
+    try {
+      const commentData = {
+        content: newComment.content,
+        postId: postId,
+      };
+
+      await axios.post('http://localhost:8080/comment', commentData, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `${token}`,
+        },
+      });
+      fetchComments();
+      setNewComment({ content: '' });
+    } catch (error) {
+      console.error('Error adding comment:', error);
     }
   };
 
   const handleDeleteComment = async (commentId) => {
     try {
-      setLoading(true);
-      await axios.delete(`/api/comments/${commentId}`, {
+      await axios.delete(`http://localhost:8080/comment/${commentId}`, {
         headers: {
-          'Authorization': `${token}`, // JWT 토큰을 헤더에 추가
+          Authorization: `${token}`,
         },
       });
       fetchComments();
     } catch (error) {
-      setError(
-        error.response && error.response.status === 404
-          ? '댓글을 삭제할 수 없습니다.'
-          : '댓글을 삭제하는 데 실패했습니다.'
-      );
-      console.error('Failed to delete comment:', error);
-    } finally {
-      setLoading(false);
+      console.error('Error deleting comment:', error);
     }
   };
 
   return (
-    <div className="comment-section">
-      {loading && <div className="loading-message">Loading...</div>}
-      {error && <div className="error-message">{error}</div>}
-      <div className="comment-list">
-        {comments.length > 0 ? (
-          comments.map((comment) => (
-            <div key={comment.id} className="comment-item">
-              {comment.body}
-              <button onClick={() => handleDeleteComment(comment.id)}>삭제</button>
-            </div>
-          ))
-        ) : (
-          <div className="no-comments-message">아직 댓글이 없습니다.</div>
-        )}
-      </div>
-      <div className="comment-input-container">
-        <textarea
-          value={commentText}
-          onChange={handleInputChange}
-          placeholder="댓글을 입력하세요"
-          rows="4"
-        ></textarea>
-        <button onClick={handleAddComment} disabled={loading}>
-          추가
-        </button>
-      </div>
+    <div className="comments-container">
+      <form onSubmit={handleCreateComment} className="create-comment-form">
+        <div className="textarea-wrapper">
+          <textarea
+            name="content"
+            placeholder="자유롭게 의견을 작성해주세요"
+            value={newComment.content}
+            onChange={handleInputChange}
+            required
+          />
+          <button type="submit" className="submit-comment">
+            <FaPaperPlane />
+          </button>
+        </div>
+      </form>
+      {comments.length > 0 ? (
+        <ul className="comments-list">
+          {comments.map(comment => (
+            <li key={comment.id} className="comment-item">
+              <p className="comment-content">{comment.content}</p>
+              {comment.writerId === username && (
+                <span className="delete-icon" onClick={() => handleDeleteComment(comment.id)}>
+                  <FaTimes />
+                </span>
+              )}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="no-comments-message">댓글이 없습니다</p>
+      )}
     </div>
   );
 };
 
-export default CommentSection;
+export default Comments;
