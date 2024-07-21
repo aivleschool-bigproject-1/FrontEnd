@@ -36,3 +36,8 @@
 .sidebar-link:hover {
     background-color: #e2e6ea;
 }
+
+.main-content {
+    margin-left: 220px;
+    padding: 20px;
+  }

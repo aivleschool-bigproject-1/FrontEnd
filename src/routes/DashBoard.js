@@ -62,7 +62,7 @@ const Dashboard = () => {
             });
         };
         
-        // 기존의 filterDataByDateRange 함수를 변경
+
         const fetchData = async () => {
             if (!token) {
                 setError('Authorization token not found');

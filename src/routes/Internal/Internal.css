@@ -1,8 +1,5 @@
-/* Internal.css */
-
 .internal-container {
     display: flex;
-    margin-left: 50px;
 }
 
 .internal-content {
@@ -13,7 +10,6 @@
 .internal-card-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
 }
 
 .internal-card {
