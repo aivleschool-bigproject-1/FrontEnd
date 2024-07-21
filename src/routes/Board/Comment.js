@@ -68,16 +68,17 @@ const Comments = ({postId}) => {
         }
     };
 
-    return (
-        <div className="comments-container">
-            <form onSubmit={handleCreateComment} className="create-comment-form">
-                <div className="textarea-wrapper">
+  return (
+    <div className="comments-container">
+      <form onSubmit={handleCreateComment} className="create-comment-form">
+        <div className="textarea-wrapper">
           <textarea
-              name="content"
-              placeholder="자유롭게 의견을 작성해주세요"
-              value={newComment.content}
-              onChange={handleInputChange}
-              required
+          className='textarea-inner'
+            name="content"
+            placeholder="자유롭게 의견을 작성해주세요"
+            value={newComment.content}
+            onChange={handleInputChange}
+            required
           />
                     <button type="submit" className="submit-comment">
                         <FaPaperPlane/>

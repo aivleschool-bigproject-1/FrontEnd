@@ -1,17 +1,44 @@
-import React, {useContext} from 'react';
-import {Link, useNavigate} from 'react-router-dom';
-import {AuthContext} from '../Context/AuthContext';
+import React, { useEffect, useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { AuthContext } from '../Context/AuthContext';
 import './NavBar.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
 
 const Navbar = () => {
-    const {isLoggedIn, logout} = useContext(AuthContext);
+    const { isLoggedIn, logout } = useContext(AuthContext);
     const navigate = useNavigate();
+    const [user, setUser] = useState(null);
 
     const handleLogout = () => {
         localStorage.removeItem('Username');
         logout();
         navigate('/');
     };
+
+    const fetchUser = async () => {
+        const token = localStorage.getItem('Authorization');
+        try {
+            const response = await axios.get('/user', {
+                headers: {
+                    'Authorization': `${token}`
+                }
+            });
+            setUser(response.data);
+            console.log(response.data);
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+        }
+    };
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            fetchUser();
+        } else {
+            setUser(null);
+        }
+    }, [isLoggedIn]);
 
     return (
         <nav className="navbar">
@@ -27,11 +54,19 @@ const Navbar = () => {
                 <Link to="/posts">게시판</Link>
             </div>
             <div className="navbar-actions">
-
-            {isLoggedIn ? (
+                {isLoggedIn ? (
                     <>
-                        <button onClick={handleLogout} className="navbar-logout">Logout</button>
-                        <Link to="/profile" className="navbar-profile">My Profile</Link>
+                        {user && user.role === 'ROLE_ADMIN' ? (
+                            <button className="navbar-admin">Admin</button>
+                        ) : (
+                            <Link className="navbar-username">{user && user.username}</Link>
+                        )}
+                        <Link onClick={handleLogout} className="navbar-logout">
+                            <FontAwesomeIcon icon={faSignOutAlt} />
+                        </Link>
+                        <Link to="/profile" className="navbar-profile">
+                            <FontAwesomeIcon icon={faUser} />
+                        </Link>
                     </>
                 ) : (
                     <>

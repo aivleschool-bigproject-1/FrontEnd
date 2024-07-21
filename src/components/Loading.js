@@ -19,7 +19,9 @@ const Loading = () => {
   return (
     <div style={styles.container}>
       <img src={`${process.env.PUBLIC_URL}/images/loading.gif`} alt="Loading..." style={styles.gif} />
-      <LoadingBar />
+      <div style={styles.loadingBarContainer}>
+        <LoadingBar />
+      </div>
     </div>
   );
 };
@@ -36,6 +38,11 @@ const styles = {
   gif: {
     width: '150px',
     height: '150px',
+    marginBottom: '-50px', // 이미지와 로딩 바 사이의 간격 조정
+  },
+  loadingBarContainer: {
+    display: 'flex',
+    justifyContent: 'center',
   }
 };
 
