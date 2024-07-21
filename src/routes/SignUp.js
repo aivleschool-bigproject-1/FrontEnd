@@ -27,7 +27,7 @@ const SignUpForm = () => {
         e.preventDefault();
 
         if (formData.password !== formData.repassword) {
-            setErrorMessage('Passwords do not match');
+            setErrorMessage('비밀번호가 일치하지 않습니다');
             return;
         }
 
@@ -51,8 +51,12 @@ const SignUpForm = () => {
             });
             navigate('/login', { state: { message: '회원가입이 완료되었습니다!' } });
         } catch (error) {
-            if (error.response && error.response.data) {
-                setErrorMessage('Registration failed: ' + error.response.data.message);
+            if (error.response) {
+                if (error.response.status === 409) {
+                    setErrorMessage('이미 가입된 사용자입니다.');
+                } else {
+                    setErrorMessage('Internal server error');
+                }
             } else {
                 setErrorMessage('Registration failed: ' + error.message);
             }
@@ -82,7 +86,7 @@ const SignUpForm = () => {
                         type="text"
                         id="name"
                         name="name"
-                        placeholder="아이디를 입력해주세요"
+                        placeholder="이름을 입력해주세요"
                         value={formData.name}
                         onChange={handleChange}
                         required
