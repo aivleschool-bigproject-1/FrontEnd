@@ -28,4 +28,6 @@
 
 .event-logs li p {
   margin: 5px 0;
+  color : #1C3554;
+  font-size : 16px;
 }
