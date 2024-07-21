@@ -6,6 +6,7 @@ import './SignUp.css';
 const SignUpForm = () => {
     const [formData, setFormData] = useState({
         username: '',
+        name: '',
         email: '',
         password: '',
         repassword: ''
@@ -33,6 +34,7 @@ const SignUpForm = () => {
         try {
             const response = await axios.post('/join', {
                 username: formData.username,
+                name: formData.name,
                 email: formData.email,
                 password: formData.password
             }, {
@@ -42,6 +44,7 @@ const SignUpForm = () => {
             setErrorMessage('');
             setFormData({
                 username: '',
+                name:'',
                 email: '',
                 password: '',
                 repassword: ''
@@ -69,6 +72,18 @@ const SignUpForm = () => {
                         name="username"
                         placeholder="아이디를 입력해주세요"
                         value={formData.username}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="name">이름</label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="아이디를 입력해주세요"
+                        value={formData.name}
                         onChange={handleChange}
                         required
                     />
