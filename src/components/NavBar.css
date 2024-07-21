@@ -54,9 +54,10 @@
 
 .navbar-login,
 .navbar-logout,
+.navbar-profile,
 .navbar-actions a,
 .navbar-actions button {
-    margin-left: 20px; 
+    margin-left: 25px; /* Default margin */
     padding: 5px 10px; /* Match the padding of links */
     border-radius: 5px;
     text-decoration: none;
@@ -70,12 +71,7 @@
     background-color: #fff; /* Ensure background is the same */
 }
 
-.navbar-login:hover,
-.navbar-logout:hover,
-.navbar-actions a:hover {
-    background-color: #FDBD40;
-    color: #1C3554;
-}
+
 
 .search-bar {
     display: flex;
@@ -108,21 +104,96 @@
     color: #1C3554;
 }
 
+/* Aspect ratio based media queries */
+@media (aspect-ratio: 16/9) {
+    .navbar-links a,
+    .navbar-login,
+    .navbar-logout,
+    .navbar-profile,
+    .navbar-actions a,
+    .navbar-actions button {
+        margin: 0 20px; /* Adjust margin for 16:9 aspect ratio */
+    }
+}
+
+@media (aspect-ratio: 4/3) {
+    .navbar-links a,
+    .navbar-login,
+    .navbar-logout,
+    .navbar-profile,
+    .navbar-actions a,
+    .navbar-actions button {
+        margin: 0 15px; /* Adjust margin for 4:3 aspect ratio */
+    }
+}
+
+@media (aspect-ratio: 1/1) {
+    .navbar-links a,
+    .navbar-login,
+    .navbar-logout,
+    .navbar-profile,
+    .navbar-actions a,
+    .navbar-actions button {
+        margin: 0 10px; /* Adjust margin for 1:1 aspect ratio */
+    }
+}
+
+@media (aspect-ratio: 21/9) {
+    .navbar-links a,
+    .navbar-login,
+    .navbar-logout,
+    .navbar-profile,
+    .navbar-actions a,
+    .navbar-actions button {
+        margin: 0 30px; /* Adjust margin for 21:9 aspect ratio */
+    }
+}
+
+
 
 @media (max-width: 768px) {
     .navbar-links a {
-        margin: 0 5px; 
-        font-size: 10px;
-        padding: 5px;
+        margin: 0 10px; /* Adjust margin for smaller screens */
+        font-size: 14px;
+        padding: 5px; /* Match padding for smaller screens */
     }
 
     .navbar-actions a,
     .navbar-actions button,
     .navbar-login,
-    .navbar-logout {
-        margin-left: 5px;
+    .navbar-logout,
+    .navbar-profile {
+        margin-left: 10px; /* Adjust margin for smaller screens */
         font-size: 14px;
-        padding: 5px;
+        padding: 5px; /* Match padding for smaller screens */
+    }
+
+    .navbar-logo a {
+        font-size: 1.2em;
+    }
+
+    .navbar-logo img {
+        top: -6px;
+        left: 10px;
+        width: 25px;
+    }
+}
+
+@media (max-width: 516px) {
+    .navbar-links a {
+        margin: 0 5px; /* Adjust margin for smaller screens */
+        font-size: 8px;
+        padding: 5px; /* Match padding for smaller screens */
+    }
+
+    .navbar-actions a,
+    .navbar-actions button,
+    .navbar-login,
+    .navbar-logout,
+    .navbar-profile {
+        margin-left: 5px; /* Adjust margin for smaller screens */
+        font-size:8px;
+        padding: 5px; /* Match padding for smaller screens */
     }
 
     .navbar-logo a {

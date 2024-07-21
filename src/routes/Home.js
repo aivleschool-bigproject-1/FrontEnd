@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import './Home.css';
 import { motion } from 'framer-motion';
 import Footer from '../components/Footer';
@@ -17,6 +17,18 @@ const images2 = [
 
 const Home = () => {
   const containerRef = useRef(null);
+  const [username, setUsername] = useState('');
+  const [token, setToken] = useState('');
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem('Authorization');
+    const storedUsername = localStorage.getItem('Username');
+
+    if (storedToken && storedUsername) {
+      setToken(storedToken);
+      setUsername(storedUsername);
+    }
+  }, []);
 
   const splitText = (text) => {
     return text.split('').map((char, index) => (
