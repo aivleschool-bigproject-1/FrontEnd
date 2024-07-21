@@ -9,8 +9,12 @@ const CCTVGrid_ex = () => {
 
   return (
     <div className="grid-container">
-      <VideoPlayer url={videoSource} />
-      <EventLogs cameraId={cameraId} />
+      <div className="video-player">
+        <VideoPlayer url={videoSource} />
+      </div>
+      <div className="event-logs">
+        <EventLogs cameraId={cameraId} />
+      </div>
     </div>
   );
 };
