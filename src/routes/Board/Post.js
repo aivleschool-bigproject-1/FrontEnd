@@ -138,7 +138,7 @@ const Posts = () => {
         return parse(html, {
             replace: (domNode) => {
                 if (domNode.name === 'img') {
-                    return null; // Remove image element
+                    return null; 
                 }
                 if (domNode.children) {
                     return domToReact(domNode.children);
@@ -227,7 +227,7 @@ const Posts = () => {
                                     ))}
                                 </ul>
                             ) : (
-                                <p className="no-posts-message">No posts available</p>
+                                <p className="no-posts-message">게시글이 없습니다</p>
                             )}
                             <div className="pagination">
                                 {Array.from({ length: totalPages }, (_, index) => (
