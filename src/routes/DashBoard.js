@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { Line, Bar } from 'react-chartjs-2';
-import 'chart.js/auto';
+import { Line, Bar } from 'react-chartjs-2'; // react-chartjs-2에서 Line과 Bar 가져오기
+import { Chart as ChartJS, registerables } from 'chart.js'; // chart.js에서 Chart 객체 가져오기
+import annotationPlugin from 'chartjs-plugin-annotation';
 import moment from 'moment';
 import 'chartjs-adapter-moment'; // 어댑터를 임포트합니다.
 import Modal from '../routes/Modal'; // 경로 수정
 import VideoPlayer_Profile from '../components/VideoPlayer_profile';
 import CustomCalendar from '../components/CustomCalendar'; // 추가
 import '../routes/DashBoard.css';
+
+ChartJS.register(...registerables, annotationPlugin);
 
 const Dashboard = () => {
     const { username } = useParams();
@@ -22,17 +25,16 @@ const Dashboard = () => {
     const [modalContent, setModalContent] = useState(null);
     const [modalChartType, setModalChartType] = useState('line');
     const [videoUrl, setVideoUrl] = useState(null);
-    const token = localStorage.getItem('Authorization');
-
+    
     const now = new Date();
     const kstNow = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Seoul' }));
     const firstDayOfMonth = new Date(kstNow.getFullYear(), kstNow.getMonth(), 1);
     const lastDayOfMonth = new Date(kstNow.getFullYear(), kstNow.getMonth() + 1, 0);
+    
+    const [startDate, setStartDate] = useState(new Date(firstDayOfMonth.toLocaleString('en-US', { timeZone: 'Asia/Seoul' })));
+    const [endDate, setEndDate] = useState(new Date(lastDayOfMonth.toLocaleString('en-US', { timeZone: 'Asia/Seoul' })));
 
-    const [startDate, setStartDate] = useState(firstDayOfMonth);
-    const [endDate, setEndDate] = useState(lastDayOfMonth);
-
-
+    const token = localStorage.getItem('Authorization');
 
     useEffect(() => {
         const fetchVideoUrl = async () => {
@@ -96,13 +98,22 @@ const Dashboard = () => {
                 const stressLabels = Array.from({ length: 24 }, (_, i) => moment({ hour: i }).format('HH:mm'));
                 const stressIndices = groupDataByHour(filteredStressData, 'stressIndex');
 
+                const getColorForValue = (value) => {
+                    const ratio = value / 100; // Assuming max value is 100
+                    const r = Math.floor(255 * ratio);
+                    const g = Math.floor(255 * (1 - ratio));
+                    return `rgb(${r},${g},0)`;
+                };
+
+                const stressColors = stressIndices.map(value => getColorForValue(value));
+
                 setStressChartData({
                     labels: stressLabels,
                     datasets: [
                         {
                             data: stressIndices,  // label을 제거합니다.
                             borderColor: 'rgb(75, 192, 192)',
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            backgroundColor: stressIndices.map(value => getColorForValue(value)),
                             tension: 0.4
                         }
                     ]
@@ -119,7 +130,7 @@ const Dashboard = () => {
                         {
                             data: badPostureTimes,
                             borderColor: 'rgb(192, 75, 75)',
-                            backgroundColor: 'rgba(192, 75, 75, 0.2)',
+                            backgroundColor: badPostureTimes.map(value => getColorForValue(value)),
                             tension: 0.4
                         }
                     ]
@@ -131,7 +142,7 @@ const Dashboard = () => {
                         {
                             data: maxStresses,
                             borderColor: 'rgb(75, 75, 192)',
-                            backgroundColor: 'rgba(75, 75, 192, 0.2)',
+                            backgroundColor: maxStresses.map(value => getColorForValue(value)),
                             tension: 0.4
                         }
                     ]
@@ -143,7 +154,7 @@ const Dashboard = () => {
                         {
                             data: minStresses,
                             borderColor: 'rgb(75, 192, 75)',
-                            backgroundColor: 'rgba(75, 192, 75, 0.2)',
+                            backgroundColor: minStresses.map(value => getColorForValue(value)),
                             tension: 0.4
                         }
                     ]
@@ -192,11 +203,10 @@ const Dashboard = () => {
                         if (hour === 12) return '오후 12시';
                         if (hour === 18) return '오후 6시';
                         return '';
-                    }
-                },
-                title: {
-                    display: true,
-                    text: '시간'
+                    },
+                    autoSkip: false,
+                    maxRotation: 0, // 최대 회전 각도를 0으로 설정하여 수평으로 표시
+                    minRotation: 0  // 최소 회전 각도를 0으로 설정하여 수평으로 표시
                 },
                 grid: {
                     display: false
@@ -204,10 +214,6 @@ const Dashboard = () => {
             },
             y: {
                 beginAtZero: true,
-                title: {
-                    display: true,
-                    text: '지수'
-                },
                 grid: {
                     display: false
                 }
@@ -216,6 +222,64 @@ const Dashboard = () => {
         plugins: {
             legend: {
                 display: false  // 범례를 숨깁니다.
+            },
+            annotation: {
+                annotations: {
+                    line1: {
+                        type: 'line',
+                        yMin: 25,
+                        yMax: 25,
+                        borderColor: 'rgba(169, 169, 169, 0.5)', // 옅은 회색
+                        borderWidth: 1,
+                        label: {
+                            content: '낮음',
+                            enabled: true,
+                            position: 'start',
+                            backgroundColor: 'rgba(0, 0, 0, 0.7)', // 더 진한 배경색
+                            color: 'white', // 글자색 흰색
+                            font: {
+                                size: 12, // 글자 크기 조정
+                                weight: 'bold' // 글자 두께 조정
+                            }
+                        }
+                    },
+                    line2: {
+                        type: 'line',
+                        yMin: 50,
+                        yMax: 50,
+                        borderColor: 'rgba(169, 169, 169, 0.5)', // 옅은 회색
+                        borderWidth: 1,
+                        label: {
+                            content: '평균',
+                            enabled: true,
+                            position: 'start',
+                            backgroundColor: 'rgba(0, 0, 0, 0.7)', // 더 진한 배경색
+                            color: 'white', // 글자색 흰색
+                            font: {
+                                size: 12, // 글자 크기 조정
+                                weight: 'bold' // 글자 두께 조정
+                            }
+                        }
+                    },
+                    line3: {
+                        type: 'line',
+                        yMin: 75,
+                        yMax: 75,
+                        borderColor: 'rgba(169, 169, 169, 0.5)', // 옅은 회색
+                        borderWidth: 1,
+                        label: {
+                            content: '높음',
+                            enabled: true,
+                            position: 'start',
+                            backgroundColor: 'rgba(0, 0, 0, 0.7)', // 더 진한 배경색
+                            color: 'white', // 글자색 흰색
+                            font: {
+                                size: 12, // 글자 크기 조정
+                                weight: 'bold' // 글자 두께 조정
+                            }
+                        }
+                    }
+                }
             }
         }
     };
@@ -247,7 +311,7 @@ const Dashboard = () => {
             <div className="video-player-container">
                 {videoUrl && <VideoPlayer_Profile url={videoUrl} />}
             </div>
-            <h2 className="chart-title">스트레스 및 건강 기록 차트</h2>
+            <h2 className="chart-title">Health Monitoring</h2>
             <CustomCalendar
                 startDateProp={startDate}
                 endDateProp={endDate}
@@ -262,19 +326,19 @@ const Dashboard = () => {
                 ) : (
                     <>
                         <div className="chart" onClick={() => handleChartClick(stressChartData, 'line')}>
-                            <h3>스트레스 차트</h3>
+                            <h3>Stress</h3>
                             <Line data={stressChartData} options={commonChartOptions} />
                         </div>
                         <div className="chart" onClick={() => handleChartClick(healthChartData1, 'bar')}>
-                            <h3>잘못된 자세</h3>
+                            <h3>Bad Posture</h3>
                             <Bar data={healthChartData1} options={postureChartOptions} />
                         </div>
                         <div className="chart" onClick={() => handleChartClick(healthChartData2, 'bar')}>
-                            <h3>최대 스트레스</h3>
+                            <h3>Max Stress</h3>
                             <Bar data={healthChartData2} options={stressChartOptions} />
                         </div>
                         <div className="chart" onClick={() => handleChartClick(healthChartData3, 'bar')}>
-                            <h3>최소 스트레스</h3>
+                            <h3>Min Stress</h3>
                             <Bar data={healthChartData3} options={stressChartOptions} />
                         </div>
                     </>

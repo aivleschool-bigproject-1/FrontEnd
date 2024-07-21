@@ -19,6 +19,7 @@
     "base-64": "^1.0.0",
     "chart.js": "^4.4.3",
     "chartjs-adapter-moment": "^1.0.1",
+    "chartjs-plugin-annotation": "^3.0.1",
     "date-fns": "^3.6.0",
     "framer-motion": "^11.3.0",
     "gsap": "^3.12.5",
