@@ -167,11 +167,7 @@ const Dashboard = () => {
     return (
         <div className="dashboard-container">
             <div className="video-player-container">
-                {videoUrl ? (
-                    <VideoPlayer_Profile url={videoUrl} token={token} />
-                ) : (
-                    <p>비디오 로딩 중...</p>
-                )}
+                {videoUrl && <VideoPlayer_Profile url={videoUrl} />}
             </div>
             <h2 className="chart-title">스트레스 및 건강 기록 차트</h2>
             <CustomCalendar
