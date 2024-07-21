@@ -3,8 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../Context/AuthContext';
 import './NavBar.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
 
 const Navbar = () => {
     const { isLoggedIn, logout } = useContext(AuthContext);
@@ -59,14 +57,10 @@ const Navbar = () => {
                         {user && user.role === 'ROLE_ADMIN' ? (
                             <button className="navbar-admin">Admin</button>
                         ) : (
-                            <Link className="navbar-username">{user && user.username}</Link>
+                            <Link className="navbar-username">{user && `${user.name}님`}</Link>
                         )}
-                        <Link onClick={handleLogout} className="navbar-logout">
-                            <FontAwesomeIcon icon={faSignOutAlt} />
-                        </Link>
-                        <Link to="/profile" className="navbar-profile">
-                            <FontAwesomeIcon icon={faUser} />
-                        </Link>
+                        <Link onClick={handleLogout} className="navbar-logout">Logout</Link>
+                        <Link to="/profile" className="navbar-profile">My Profile</Link>
                     </>
                 ) : (
                     <>

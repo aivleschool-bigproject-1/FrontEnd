@@ -38,7 +38,7 @@
     text-decoration: none;
     font-weight: bold;
     transition: transform 0.3s ease, color 0.3s ease;
-    font-size: 16px; /* Ensure consistent font size */
+    font-size: 16px; 
     padding: 5px 10px; /* Match the padding of buttons */
     border-radius: 5px;
     background-color: #fff; /* Ensure background is the same */
