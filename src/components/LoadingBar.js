@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import './LoadingBar.css';
 
 const LoadingBar = () => {
   const [progress, setProgress] = useState(0);
@@ -12,25 +13,10 @@ const LoadingBar = () => {
   }, []);
 
   return (
-    <div style={styles.container}>
-      <div style={{ ...styles.progress, width: `${progress}%` }}></div>
+    <div className="loader">
+      <div className="load"></div>
     </div>
   );
-};
-
-const styles = {
-  container: {
-    width: '10%',
-    height: '10px',
-    backgroundColor: '#FDBD40',
-    borderRadius: '5px',
-    overflow: 'hidden',
-  },
-  progress: {
-    height: '100%',
-    backgroundColor: '#1C3554',
-    transition: 'width 0.03s ease-in-out',
-  }
 };
 
 export default LoadingBar;

@@ -70,7 +70,8 @@ const Comments = ({ postId }) => {
     <div className="comments-container">
       <form onSubmit={handleCreateComment} className="create-comment-form">
         <div className="textarea-wrapper">
-          <textarea
+          <textarea 
+          className='textarea-inner'
             name="content"
             placeholder="자유롭게 의견을 작성해주세요"
             value={newComment.content}

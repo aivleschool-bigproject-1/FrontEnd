@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import './Home.css';
 import { motion } from 'framer-motion';
+import Modal from 'react-modal';
 import Footer from '../components/Footer';
 
 const images1 = [
@@ -15,20 +16,64 @@ const images2 = [
   { src: "images/6.jpg", description: ["사무실 내 건강 관리", "스트레스 모니터링", "피로도 측정"] }
 ];
 
+const StarRating = ({ onClose }) => {
+  const [rating, setRating] = useState(0);
+
+  return (
+    <div className="rating-container">
+      <div className="rating">
+        {[5, 4, 3, 2, 1].map((star) => (
+          <React.Fragment key={star}>
+            <input
+              type="radio"
+              id={`star${star}`}
+              name="rating"
+              value={star}
+              checked={rating === star}
+              onChange={() => setRating(star)}
+            />
+            <label htmlFor={`star${star}`}>
+              <svg viewBox="0 0 24 24">
+                <polygon points="12,17.27 18.18,21 15.64,14.14 21,9.27 14.09,8.63 12,2 9.91,8.63 3,9.27 8.36,14.14 5.82,21" />
+              </svg>
+            </label>
+          </React.Fragment>
+        ))}
+      </div>
+      <button className="rating-button" onClick={onClose}>제출</button>
+    </div>
+  );
+};
+
 const Home = () => {
   const containerRef = useRef(null);
   const [username, setUsername] = useState('');
   const [token, setToken] = useState('');
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   useEffect(() => {
-    const storedToken = localStorage.getItem('Authorization');
-    const storedUsername = localStorage.getItem('Username');
-
-    if (storedToken && storedUsername) {
-      setToken(storedToken);
-      setUsername(storedUsername);
+    const queryParams = new URLSearchParams(window.location.search);
+    const tokenFromUrl = queryParams.get('token');
+    const usernameFromUrl = queryParams.get('username');
+    console.log('Token from URL:', tokenFromUrl);
+    console.log('Username from URL:', usernameFromUrl);
+    if (tokenFromUrl && usernameFromUrl) {
+      localStorage.setItem('Authorization', tokenFromUrl);
+      localStorage.setItem('Username', usernameFromUrl);
+      setToken(tokenFromUrl);
+      setUsername(usernameFromUrl);
     }
+
+    const timer = setTimeout(() => {
+      setModalIsOpen(true);
+    }, 3000);
+
+    return () => clearTimeout(timer);
   }, []);
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
 
   const splitText = (text) => {
     return text.split('').map((char, index) => (
@@ -48,6 +93,19 @@ const Home = () => {
 
   return (
     <div id="home-container" ref={containerRef} style={{ overflow: 'hidden' }}>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Star Rating"
+        overlayClassName="Modal__Overlay"
+        className="Modal__Content"
+      >
+        <div className="Modal__Header">
+          <h2>BODA의 별점을 매겨주세요</h2>
+          <button className="Modal__CloseButton" onClick={closeModal}>&times;</button>
+        </div>
+        <StarRating onClose={closeModal} />
+      </Modal>
       <div
         className="background-section"
         style={{
