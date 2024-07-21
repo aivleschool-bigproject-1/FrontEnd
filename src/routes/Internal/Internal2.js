@@ -8,7 +8,7 @@ const Internal2 = () => {
     
     const navigate = useNavigate();
     const handleRowClick = (username) => {
-        navigate(`/dashboard/${username}`);
+        navigate(`/internal/dashboard/${username}`);
     };
 
     useEffect(() => {

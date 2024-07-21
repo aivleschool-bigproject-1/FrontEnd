@@ -1,11 +1,14 @@
-.App {
-  text-align: center;
+
+.sidebar {
+  width: 200px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.main-content {
+  margin-left: 220px;
+  padding: 20px;
 }
+
+
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {

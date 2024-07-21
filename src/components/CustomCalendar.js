@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import './CustomCalendar.css';
 
 const CustomCalendar = ({ startDateProp, endDateProp, onStartDateChange, onEndDateChange }) => {
     const [startDate, setStartDate] = useState(startDateProp);
@@ -17,14 +18,13 @@ const CustomCalendar = ({ startDateProp, endDateProp, onStartDateChange, onEndDa
         onEndDateChange(kstEnd);
     };
     
-
     return (
-        <div>
-            <button onClick={() => setOpen(!open)}>
+        <div className="date-picker-container">
+            <button className="calendar-button" onClick={() => setOpen(!open)}>
                 {startDate && endDate ? `${startDate.toISOString().slice(0, 10)} - ${endDate.toISOString().slice(0, 10)}` : 'Select Date Range'}
             </button>
             {open && (
-                <div>
+                <div className="calendar-popup">
                     <DatePicker
                         selected={startDate}
                         onChange={handleChange}
