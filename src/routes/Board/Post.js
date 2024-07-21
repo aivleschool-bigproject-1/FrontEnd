@@ -196,6 +196,8 @@ const Posts = () => {
                                 <div className="post-content">
                                     <ReactQuill value={selectedPost.content} readOnly={true} theme="bubble" />
                                 </div>
+                              
+                                <Comments postId={selectedPost.id} />
                                 {selectedPost.writerId === username && (
                                     <div className="button-group">
                                         <button className="post-edit-button" onClick={() => handleEditPost(selectedPost)}>
@@ -206,7 +208,6 @@ const Posts = () => {
                                         </button>
                                     </div>
                                 )}
-                                <Comments postId={selectedPost.id} />
                                 <div className="post-back-button-container">
                                     <button className="post-back-button" onClick={() => setSelectedPost(null)}>
                                         목록으로 돌아가기
@@ -222,28 +223,6 @@ const Posts = () => {
                                         <li key={post.id} className="post-item" onClick={() => fetchPostDetails(post.id)}>
                                             <h2 className="post-title">{post.title}</h2>
                                             <div className="post-content">{removeImages(post.content)}</div>
-                                            {post.writerId === username && (
-                                                <div className="button-group">
-                                                    <button
-                                                        className="post-edit-button"
-                                                        onClick={(e) => {
-                                                            e.stopPropagation();
-                                                            handleEditPost(post);
-                                                        }}
-                                                    >
-                                                        수정
-                                                    </button>
-                                                    <button
-                                                        className="post-delete-button"
-                                                        onClick={(e) => {
-                                                            e.stopPropagation();
-                                                            handleDeletePost(post.id);
-                                                        }}
-                                                    >
-                                                        삭제
-                                                    </button>
-                                                </div>
-                                            )}
                                         </li>
                                     ))}
                                 </ul>

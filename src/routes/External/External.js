@@ -39,9 +39,9 @@ const External = () => {
   return (
     <div className="external-container">
       <Sidebar />
-      <div className="content">
+      <div className="external-content">
         {!(isSection1 || isSection2) && (
-          <div className="card-container">
+          <div className="external-card-container">
             {descriptions.map((item, index) => (
               <Card 
                 key={index}
@@ -60,11 +60,11 @@ const External = () => {
 
 const Card = ({ icon, title, description }) => {
   return (
-    <div className="card-ex">
-      <div className="icon">{icon}</div>
-      <h3>{title}</h3>
+    <div className="external-card">
+      <div className="external-icon">{icon}</div>
+      <h3 className="external-card-title">{title}</h3>
       {description.map((line, index) => (
-        <p key={index}>{line}</p>
+        <p key={index} className="external-card-description">{line}</p>
       ))}
     </div>
   );
