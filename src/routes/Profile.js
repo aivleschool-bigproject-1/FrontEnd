@@ -27,10 +27,11 @@ const Profile = () => {
     return (
         <div className="container">
             <div className="profile-container">
-                <h1>회원정보 수정</h1>
+                <h1>회원정보</h1>
                 {user ? (
                     <div className="profile-info">
                         <p><strong>아이디:</strong> {user.username}</p>
+                        <p><strong>이름:</strong> {user.name}</p>
                         <p><strong>이메일:</strong> {user.email}</p>
                     </div>
                 ) : (
