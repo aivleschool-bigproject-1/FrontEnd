@@ -33,7 +33,7 @@
     text-align: center;
 }
 
-.sidebar-link:hover {
+.sidebar-link:hover, .sidebar-link.active {
     background-color: #e2e6ea;
 }
 
