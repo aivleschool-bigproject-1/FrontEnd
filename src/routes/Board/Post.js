@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import parse, { domToReact } from 'html-react-parser';
+import parse, {domToReact} from 'html-react-parser';
 import './Post.css';
-import Comments from './Comment'; 
-import Editor from './Editor'; 
+import Comments from './Comment';
+import Editor from './Editor';
 
 const Posts = () => {
     const [posts, setPosts] = useState([]);
@@ -14,7 +14,7 @@ const Posts = () => {
     const [currentPage, setCurrentPage] = useState(0);
     const [selectedPost, setSelectedPost] = useState(null);
     const [showCreateForm, setShowCreateForm] = useState(false);
-    const [newPost, setNewPost] = useState({ title: '', content: '' });
+    const [newPost, setNewPost] = useState({title: '', content: ''});
     const [isEditing, setIsEditing] = useState(false);
 
     const token = localStorage.getItem('Authorization');
@@ -61,12 +61,12 @@ const Posts = () => {
     };
 
     const handleInputChange = (value) => {
-        setNewPost((prevState) => ({ ...prevState, content: value }));
+        setNewPost((prevState) => ({...prevState, content: value}));
     };
 
     const handleTitleChange = (e) => {
-        const { name, value } = e.target;
-        setNewPost((prevState) => ({ ...prevState, [name]: value }));
+        const {name, value} = e.target;
+        setNewPost((prevState) => ({...prevState, [name]: value}));
     };
 
     const handleCreatePost = async (e) => {
@@ -85,7 +85,7 @@ const Posts = () => {
             });
             fetchPosts();
             setShowCreateForm(false);
-            setNewPost({ title: '', content: '' });
+            setNewPost({title: '', content: ''});
         } catch (error) {
             console.error('Error adding post:', error);
         }
@@ -108,7 +108,7 @@ const Posts = () => {
     const handleEditPost = (post) => {
         setIsEditing(true);
         setSelectedPost(post);
-        setNewPost({ title: post.title, content: post.content });
+        setNewPost({title: post.title, content: post.content});
     };
 
     const handleUpdatePost = async (e) => {
@@ -128,7 +128,7 @@ const Posts = () => {
             fetchPosts();
             setIsEditing(false);
             setSelectedPost(null);
-            setNewPost({ title: '', content: '' });
+            setNewPost({title: '', content: ''});
         } catch (error) {
             console.error('Error updating post:', error);
         }
@@ -138,7 +138,7 @@ const Posts = () => {
         return parse(html, {
             replace: (domNode) => {
                 if (domNode.name === 'img') {
-                    return null; 
+                    return null;
                 }
                 if (domNode.children) {
                     return domToReact(domNode.children);
@@ -163,7 +163,7 @@ const Posts = () => {
                         onChange={handleTitleChange}
                         required
                     />
-                    <Editor initialValue={newPost.content} onChange={handleInputChange} />
+                    <Editor value={newPost.content} onChange={handleInputChange}/>
                     <button type="submit" className="create-post-submit">Create</button>
                 </form>
             )}
@@ -177,7 +177,7 @@ const Posts = () => {
                         onChange={handleTitleChange}
                         required
                     />
-                    <Editor initialValue={newPost.content} onChange={handleInputChange} />
+                    <Editor value={newPost.content} onChange={handleInputChange}/>
                     <div className="button-group">
                         <button className="post-edit-button" type="submit">
                             수정
@@ -194,16 +194,18 @@ const Posts = () => {
                             <div className="post-details">
                                 <h2>{selectedPost.title}</h2>
                                 <div className="post-content">
-                                    <ReactQuill value={selectedPost.content} readOnly={true} theme="bubble" />
+                                    <ReactQuill value={selectedPost.content} readOnly={true} theme="bubble"/>
                                 </div>
-                              
-                                <Comments postId={selectedPost.id} />
+
+                                <Comments postId={selectedPost.id}/>
                                 {selectedPost.writerId === username && (
                                     <div className="button-group">
-                                        <button className="post-edit-button" onClick={() => handleEditPost(selectedPost)}>
+                                        <button className="post-edit-button"
+                                                onClick={() => handleEditPost(selectedPost)}>
                                             수정
                                         </button>
-                                        <button className="post-delete-button" onClick={() => handleDeletePost(selectedPost.id)}>
+                                        <button className="post-delete-button"
+                                                onClick={() => handleDeletePost(selectedPost.id)}>
                                             삭제
                                         </button>
                                     </div>
@@ -220,7 +222,8 @@ const Posts = () => {
                             {posts.length > 0 ? (
                                 <ul className="posts-list">
                                     {posts.map((post) => (
-                                        <li key={post.id} className="post-item" onClick={() => fetchPostDetails(post.id)}>
+                                        <li key={post.id} className="post-item"
+                                            onClick={() => fetchPostDetails(post.id)}>
                                             <h2 className="post-title">{post.title}</h2>
                                             <div className="post-content">{removeImages(post.content)}</div>
                                         </li>
@@ -230,7 +233,7 @@ const Posts = () => {
                                 <p className="no-posts-message">게시글이 없습니다</p>
                             )}
                             <div className="pagination">
-                                {Array.from({ length: totalPages }, (_, index) => (
+                                {Array.from({length: totalPages}, (_, index) => (
                                     <button
                                         key={index}
                                         className={`page-button ${index === currentPage ? 'active' : ''}`}

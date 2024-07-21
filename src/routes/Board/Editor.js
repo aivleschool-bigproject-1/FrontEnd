@@ -1,10 +1,10 @@
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { useCallback, useRef } from 'react';
+import {useCallback, useRef} from 'react';
 import axios from 'axios';
 import './Editor.css'; // Ensure you import the custom CSS
 
-const Editor = ({ onChange, initialValue }) => {
+const Editor = ({onChange, value}) => {
     const quillRef = useRef(null);
 
     const uploadImage = useCallback(async (file) => {
@@ -52,24 +52,26 @@ const Editor = ({ onChange, initialValue }) => {
     }, [uploadImage]);
 
     const handleChange = useCallback((value) => {
+        console.log('editor input');
+        console.log(value);
         onChange(value);
     }, [onChange]);
 
     return (
         <ReactQuill
             ref={quillRef}
-            value={initialValue}
-            placeholder={"content"}
+            value={value}
+            placeholder={"내용을 입력해주세요."}
             modules={{
                 toolbar: {
                     container: [
-                        [{ header: [1, 2, false] }],
+                        [{header: [1, 2, false]}],
                         ['bold', 'italic', 'underline', 'strike', 'blockquote'],
                         [
-                            { list: 'ordered' },
-                            { list: 'bullet' },
-                            { indent: '-1' },
-                            { indent: '+1' },
+                            {list: 'ordered'},
+                            {list: 'bullet'},
+                            {indent: '-1'},
+                            {indent: '+1'},
                         ],
                         ['image'],
                         ['clean'],
