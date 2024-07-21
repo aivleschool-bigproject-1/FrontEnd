@@ -9,7 +9,7 @@ const External2 = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('https://example.com/api/videos'); // 실제 API URL로 변경해야 합니다.
+                const response = await axios.get('https://example.com/api/videos'); 
                 setVideos(response.data);
             } catch (error) {
                 console.error('Error fetching data:', error);

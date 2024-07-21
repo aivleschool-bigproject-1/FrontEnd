@@ -4,9 +4,9 @@ import { motion } from 'framer-motion';
 import Footer from '../components/Footer';
 
 const images1 = [
-  { src: "images/1.jpg", description: ["현장 감시 CCTV 설치", "24/7 실시간 모니터링", "사고 발생 시 즉각 알림"] },
-  { src: "images/2.jpg", description: ["내근 업무 모니터링", "근무 시간 체크", "작업 효율성 분석"] },
-  { src: "images/3.jpg", description: ["외근 업무 모니터링", "GPS 트래킹", "작업 경로 분석"] }
+  { src: "images/1.jpg", description: ["24/7 실시간 모니터링", "사고 발생 시 즉각 알림"] },
+  { src: "images/2.jpg", description: ["인원수 위반 감시", "근무 시간 체크", "작업 효율성 분석"] },
+  { src: "images/3.jpg", description: ["안전모 착용 감시", "현장 감시 CCTV 설치", "작업 환경 분석"] }
 ];
 
 const images2 = [
@@ -61,7 +61,7 @@ const Home = () => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 1 }}
           >
-            BODA는 공사장의 외근 및 내근 업무를 최첨단 솔루션을 통해 철저히 감시하여 여러분의 안전을 보장합니다
+            BODA는 외근 및 내근 업무를 최첨단 솔루션을 통해 철저히 감시하여 여러분의 안전을 보장합니다
           </motion.p>
           <motion.p
             className="paragraph"
@@ -89,7 +89,7 @@ const Home = () => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 1, delay: 0.5 }}
           >
-            실시간 현장 감시를 통해 사고 발견 시간을 줄이고 사무실 내 직원들의 건강관리를 책임집니다
+            실시간 현장 감시를 통해 사고 발견 시간을 줄여 직원들의 안전을 책임집니다
           </motion.p>
           <div className="cards-container">
             {images1.map((image, index) => (
@@ -150,7 +150,7 @@ const Home = () => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 1, delay: 0.5 }}
           >
-            사무실 내 안전을 위한 솔루션을 제공합니다
+            사무실 내 안전과 근무자의 건강을 위한 솔루션을 제공합니다
           </motion.p>
           <div className="cards-container">
             {images2.map((image, index) => (

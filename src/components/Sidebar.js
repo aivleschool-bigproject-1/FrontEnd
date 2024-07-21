@@ -8,7 +8,7 @@ const Sidebar = () => {
   const isExternal = location.pathname.startsWith('/external');
 
   if (!isInternal && !isExternal) {
-    return null; // 외부 및 내부 경로가 아닌 경우 사이드바를 렌더링하지 않음
+    return null; 
   }
 
   return (

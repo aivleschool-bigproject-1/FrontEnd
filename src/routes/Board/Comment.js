@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Comment.css';
-import { FaPaperPlane } from 'react-icons/fa'; // Ensure you have react-icons installed
-import { FaTimes } from 'react-icons/fa'; // Use the FaTimes icon for delete
+import { FaPaperPlane } from 'react-icons/fa'; 
+import { FaTimes } from 'react-icons/fa'; 
 
 const Comments = ({ postId }) => {
   const [comments, setComments] = useState([]);

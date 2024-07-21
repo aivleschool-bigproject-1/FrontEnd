@@ -28,9 +28,9 @@ const Internal = () => {
     return (
       <div className="internal-container">
         <Sidebar />
-        <div className="content">
+        <div className="internal-content">
           {!(isSection1 || isSection2) && (
-            <div className="card-container-in">
+            <div className="internal-card-container">
               {descriptions.map((item, index) => (
                 <Card 
                   key={index}
@@ -49,11 +49,11 @@ const Internal = () => {
   
   const Card = ({ icon, title, description }) => {
     return (
-      <div className="card-in">
-        <div className="icon">{icon}</div>
-        <h3>{title}</h3>
+      <div className="internal-card">
+        <div className="internal-icon">{icon}</div>
+        <h3 className="internal-card-title">{title}</h3>
         {description.map((line, index) => (
-          <p key={index}>{line}</p>
+          <p key={index} className="internal-card-description">{line}</p>
         ))}
       </div>
     );

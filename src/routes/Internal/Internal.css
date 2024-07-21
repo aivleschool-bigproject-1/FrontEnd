@@ -1,20 +1,22 @@
-.internalContainer {
+/* Internal.css */
+
+.internal-container {
     display: flex;
     margin-left: 50px;
 }
 
-.contentIn {
+.internal-content {
     flex-grow: 1;
     padding: 20px;
 }
 
-.cardContainerIn {
+.internal-card-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
 }
 
-.cardIn {
+.internal-card {
     border: 1px solid #ddd;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -23,23 +25,20 @@
     padding: 20px;
     text-align: center;
     background-color: #fff;
-    color: black; /* Ensure the card text is black */
 }
 
-.icon {
+.internal-icon {
     font-size: 50px;
     margin-bottom: 20px;
-    color: black; /* Ensure the icon color is black */
 }
 
-.cardIn h3 {
+.internal-card-title {
     font-size: 24px;
     margin-bottom: 10px;
-    color: black; /* Ensure the h3 color is black */
 }
 
-.cardIn p {
-    font-size: 16px;
+.internal-card-description {
+    font-size: 16px; 
+    color: #1C3554;  
     margin: 5px 0;
-    color: black; /* Ensure the paragraph color is black */
 }

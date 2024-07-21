@@ -25,7 +25,7 @@ const EventLogs = ({ cameraId }) => {
     <div className="event-logs">
       <ul>
         {logs.length === 0 ? (
-          <li>No logs available</li>
+          <li>감지되지 않았습니다</li>
         ) : (
           logs.map((log) => (
             <li key={log.id}>

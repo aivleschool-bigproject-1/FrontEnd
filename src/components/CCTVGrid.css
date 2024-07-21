@@ -41,7 +41,7 @@
   .fullscreen .webcam-video-container {
     position: relative;
     width: 80%;
-    padding-top: 45%; /* 16:9 aspect ratio */
+    padding-top: 45%; 
   }
   
   .fullscreen .webcam-video {

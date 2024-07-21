@@ -10,7 +10,7 @@ const Navbar = () => {
     const handleLogout = () => {
         localStorage.removeItem('Username');
         logout();
-        navigate('/'); // Redirect to home page after logout
+        navigate('/');
     };
 
     return (
