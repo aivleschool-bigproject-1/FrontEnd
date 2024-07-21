@@ -170,6 +170,11 @@ const PostDetailPage = () => {
                     </div>
                     <Comments postId={post.id}/>
                 </Card>}
+        <div style={{ marginTop: '20px', textAlign: 'center' }}>
+            <Button type="default" onClick={() => navigate('/posts')}>
+                목록
+            </Button>
+        </div>
     </div>
 }
 
