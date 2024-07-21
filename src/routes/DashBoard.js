@@ -54,13 +54,22 @@ const Dashboard = () => {
             }
         };
 
+        const filterStressDataByToday = (data) => {
+            const today = new Date();
+            return data.filter(item => {
+                const timestamp = new Date(item.logTimestamp);
+                return timestamp.toDateString() === today.toDateString();
+            });
+        };
+        
+        // 기존의 filterDataByDateRange 함수를 변경
         const fetchData = async () => {
             if (!token) {
                 setError('Authorization token not found');
                 setLoading(false);
                 return;
             }
-
+        
             try {
                 const [stressResponse, healthResponse] = await Promise.all([
                     axios.get(`/stress/${username}`, {
@@ -70,96 +79,96 @@ const Dashboard = () => {
                         headers: { 'Authorization': `${token}` }
                     })
                 ]);
-
+        
                 console.log("스트레스 응답 데이터:", stressResponse.data);
                 console.log("건강 기록 응답 데이터:", healthResponse.data);
-
+        
                 const filterDataByDateRange = (data) => {
                     return data.filter(item => {
                         const timestamp = new Date(item.logTimestamp);
                         return timestamp >= startDate && timestamp <= endDate;
                     });
                 };
-
+        
                 const groupDataByHour = (data, field) => {
                     const groupedData = new Array(24).fill(0);
                     data.forEach(item => {
                         const timestamp = new Date(item.logTimestamp);
                         const hour = timestamp.getHours();
-                        groupedData[hour] += item[field];
+                        groupedData[hour] = Math.max(groupedData[hour], item[field]);
                     });
                     return groupedData;
                 };
-
-                const filteredStressData = filterDataByDateRange(stressResponse.data);
+        
+                const filteredStressData = filterStressDataByToday(stressResponse.data); // 오늘 날짜로 필터링
                 const filteredHealthData = filterDataByDateRange(healthResponse.data);
-
+        
                 // 스트레스 데이터 처리
                 const stressLabels = Array.from({ length: 24 }, (_, i) => moment({ hour: i }).format('HH:mm'));
                 const stressIndices = groupDataByHour(filteredStressData, 'stressIndex');
-
-                const getColorForValue = (value) => {
-                    const ratio = value / 100; // Assuming max value is 100
-                    const r = Math.floor(255 * ratio);
-                    const g = Math.floor(255 * (1 - ratio));
-                    return `rgb(${r},${g},0)`;
-                };
-
-                const stressColors = stressIndices.map(value => getColorForValue(value));
-
+        
                 setStressChartData({
                     labels: stressLabels,
                     datasets: [
                         {
                             data: stressIndices,  // label을 제거합니다.
                             borderColor: 'rgb(75, 192, 192)',
-                            backgroundColor: stressIndices.map(value => getColorForValue(value)),
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)', // 고정된 색상
                             tension: 0.4
                         }
                     ]
                 });
-
+        
                 // 건강 기록 데이터 처리 (칼럼 3개)
                 const badPostureTimes = groupDataByHour(filteredHealthData, 'badPostureTime');
                 const maxStresses = groupDataByHour(filteredHealthData, 'maxStress');
                 const minStresses = groupDataByHour(filteredHealthData, 'minStress');
 
+                const getColorForValue = (value, range) => {
+                    const ratio = value / range; // Assuming max value is 100
+                    const r = Math.floor(255 * ratio);
+                    const g = Math.floor(255 * (1 - ratio));
+                    return `rgb(${r},${g},0)`;
+                };
+
+                const stressColors = stressIndices.map(value => getColorForValue(value));
+        
                 setHealthChartData1({
                     labels: stressLabels,
                     datasets: [
                         {
                             data: badPostureTimes,
                             borderColor: 'rgb(192, 75, 75)',
-                            backgroundColor: badPostureTimes.map(value => getColorForValue(value)),
+                            backgroundColor: badPostureTimes.map(value => getColorForValue(value, 60)),
                             tension: 0.4
                         }
                     ]
                 });
-
+        
                 setHealthChartData2({
                     labels: stressLabels,
                     datasets: [
                         {
                             data: maxStresses,
                             borderColor: 'rgb(75, 75, 192)',
-                            backgroundColor: maxStresses.map(value => getColorForValue(value)),
+                            backgroundColor: maxStresses.map(value => getColorForValue(value, 100)),
                             tension: 0.4
                         }
                     ]
                 });
-
+        
                 setHealthChartData3({
                     labels: stressLabels,
                     datasets: [
                         {
                             data: minStresses,
                             borderColor: 'rgb(75, 192, 75)',
-                            backgroundColor: minStresses.map(value => getColorForValue(value)),
+                            backgroundColor: minStresses.map(value => getColorForValue(value, 100)),
                             tension: 0.4
                         }
                     ]
                 });
-
+        
                 setLoading(false);
             } catch (error) {
                 console.error('Failed to fetch data:', error);
@@ -167,12 +176,57 @@ const Dashboard = () => {
                 setLoading(false);
             }
         };
+        
 
         if (username) {
             fetchData();
             fetchVideoUrl();
         }
+
+        const intervalId = setInterval(updateStressData, 60000); // 1분마다 업데이트
+
+        return () => clearInterval(intervalId); // 컴포넌트 언마운트 시 인터벌 정리
     }, [username, token, startDate, endDate]); // 여기에 startDate와 endDate 추가
+
+    // 데이터 업데이트 함수 추가
+    const updateStressData = async () => {
+        try {
+            const stressResponse = await axios.get(`/stress/${username}`, {
+                headers: { 'Authorization': `${token}` }
+            });
+
+            console.log("실시간 스트레스 응답 데이터:", stressResponse.data);
+
+            const now = new Date();
+            const recentData = stressResponse.data.filter(item => {
+                const timestamp = new Date(item.logTimestamp);
+                return timestamp >= startDate && timestamp <= endDate && timestamp.getMinutes() === now.getMinutes();
+            });
+
+            if (recentData.length > 0) {
+                const recentStressIndex = recentData.reduce((max, item) => item.stressIndex > max ? item.stressIndex : max, 0);
+                const timestamp = new Date(recentData[0].logTimestamp);
+
+                setStressChartData(prevData => {
+                    const updatedLabels = [...prevData.labels, timestamp.toLocaleTimeString()];
+                    const updatedData = [...prevData.datasets[0].data, recentStressIndex];
+
+                    return {
+                        ...prevData,
+                        labels: updatedLabels,
+                        datasets: [
+                            {
+                                ...prevData.datasets[0],
+                                data: updatedData
+                            }
+                        ]
+                    };
+                });
+            }
+        } catch (error) {
+            console.error('실시간 데이터를 가져오는 데 실패했습니다:', error);
+        }
+    };
 
     const handleChartClick = (chartData, chartType) => {
         setModalContent(chartData);
@@ -236,7 +290,7 @@ const Dashboard = () => {
                             enabled: true,
                             position: 'start',
                             backgroundColor: 'rgba(0, 0, 0, 0.7)', // 더 진한 배경색
-                            color: 'white', // 글자색 흰색
+                            color: 'black', // 글자색 흰색
                             font: {
                                 size: 12, // 글자 크기 조정
                                 weight: 'bold' // 글자 두께 조정
@@ -254,7 +308,7 @@ const Dashboard = () => {
                             enabled: true,
                             position: 'start',
                             backgroundColor: 'rgba(0, 0, 0, 0.7)', // 더 진한 배경색
-                            color: 'white', // 글자색 흰색
+                            color: 'black', // 글자색 흰색
                             font: {
                                 size: 12, // 글자 크기 조정
                                 weight: 'bold' // 글자 두께 조정
@@ -272,7 +326,7 @@ const Dashboard = () => {
                             enabled: true,
                             position: 'start',
                             backgroundColor: 'rgba(0, 0, 0, 0.7)', // 더 진한 배경색
-                            color: 'white', // 글자색 흰색
+                            color: 'black', // 글자색 흰색
                             font: {
                                 size: 12, // 글자 크기 조정
                                 weight: 'bold' // 글자 두께 조정
