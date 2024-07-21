@@ -1,11 +1,10 @@
-/* NavBar.css */
-
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
     background-color: #fff;
+    flex-wrap: wrap; 
 }
 
 .navbar-logo a {
@@ -30,10 +29,11 @@
 .navbar-links {
     display: flex;
     align-items: center;
+    flex-wrap: nowrap; 
 }
 
 .navbar-links a {
-    margin: 0 80px;
+    margin: 0 70px; 
     color: #1C3554;
     text-decoration: none;
     font-weight: bold;
@@ -44,11 +44,12 @@
 .navbar-actions {
     display: flex;
     align-items: center;
+    flex-wrap: nowrap; 
 }
 
 .navbar-actions a,
 .navbar-actions button {
-    margin-left: 15px;
+    margin-left: 20px; 
     padding: 5px 10px;
     border-radius: 5px;
     text-decoration: none;
@@ -97,4 +98,28 @@
 
 .search-bar button:hover {
     color: #1C3554;
+}
+
+@media (max-width: 768px) {
+    .navbar-links a {
+        margin: 0 5px; 
+        font-size: 14px;
+    }
+
+    .navbar-actions a,
+    .navbar-actions button {
+        margin-left: 5px;
+        font-size: 14px;
+        padding: 5px;
+    }
+
+    .navbar-logo a {
+        font-size: 1.2em;
+    }
+
+    .navbar-logo img {
+        top: -6px;
+        left: 10px;
+        width: 25px;
+    }
 }
