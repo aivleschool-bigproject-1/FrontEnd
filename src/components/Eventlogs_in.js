@@ -24,16 +24,12 @@ const EventLogs_in = ({ cameraId }) => {
   return (
     <div className="event-logs">
       <ul>
-        {logs.length === 0 ? (
-          <li>감지되지 않았습니다</li>
-        ) : (
-          logs.map((log) => (
+        {logs.map((log) => (
             <li key={log.id}>
               <p>{new Date(log.eventTime).toLocaleString()}</p>
               <p>{log.eventType}</p>
             </li>
-          ))
-        )}
+          ))}
       </ul>
     </div>
   );
