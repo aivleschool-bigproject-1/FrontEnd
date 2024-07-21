@@ -31,7 +31,7 @@ const Dashboard = () => {
                     headers: { 'Authorization': `${token}` }
                 });
                 console.log("비디오 URL 응답 데이터:", videoResponse.data);
-
+    
                 if (videoResponse.data) {
                     setVideoUrl(videoResponse.data);
                 } else {
@@ -41,14 +41,14 @@ const Dashboard = () => {
                 console.error('Failed to fetch video URL:', error);
             }
         };
-
+    
         const fetchData = async () => {
             if (!token) {
                 setError('Authorization token not found');
                 setLoading(false);
                 return;
             }
-
+    
             try {
                 const [stressResponse, healthResponse] = await Promise.all([
                     axios.get(`/stress/${username}`, {
@@ -58,15 +58,25 @@ const Dashboard = () => {
                         headers: { 'Authorization': `${token}` }
                     })
                 ]);
-
+    
                 console.log("스트레스 응답 데이터:", stressResponse.data);
                 console.log("건강 기록 응답 데이터:", healthResponse.data);
-
-                // 스트레스 데이터 처리
+    
+                const filterDataByDateRange = (data) => {
+                    return data.filter(item => {
+                        const timestamp = new Date(item.logTimestamp);
+                        return timestamp >= startDate && timestamp <= endDate;
+                    });
+                };
+    
+                const filteredStressData = filterDataByDateRange(stressResponse.data);
+                const filteredHealthData = filterDataByDateRange(healthResponse.data);
+    
+                // 필터링된 스트레스 데이터 처리
                 const stressLabels = [];
                 const stressIndices = [];
-
-                stressResponse.data.forEach(item => {
+    
+                filteredStressData.forEach(item => {
                     const timestamp = new Date(item.logTimestamp);
                     if (!isNaN(timestamp)) {
                         const formattedTime = timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -74,7 +84,7 @@ const Dashboard = () => {
                         stressIndices.push(item.stressIndex);
                     }
                 });
-
+    
                 setStressChartData({
                     labels: stressLabels,
                     datasets: [
@@ -87,14 +97,14 @@ const Dashboard = () => {
                         }
                     ]
                 });
-
-                // 건강 기록 데이터 처리 (칼럼 3개)
+    
+                // 필터링된 건강 기록 데이터 처리 (칼럼 3개)
                 const healthLabels = [];
                 const badPostureTimes = [];
                 const maxStresses = [];
                 const minStresses = [];
-
-                healthResponse.data.forEach(item => {
+    
+                filteredHealthData.forEach(item => {
                     const timestamp = new Date(item.logTimestamp);
                     if (!isNaN(timestamp)) {
                         const formattedTime = timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -104,7 +114,7 @@ const Dashboard = () => {
                         minStresses.push(item.minStress);
                     }
                 });
-
+    
                 setHealthChartData1({
                     labels: healthLabels,
                     datasets: [
@@ -117,7 +127,7 @@ const Dashboard = () => {
                         }
                     ]
                 });
-
+    
                 setHealthChartData2({
                     labels: healthLabels,
                     datasets: [
@@ -130,7 +140,7 @@ const Dashboard = () => {
                         }
                     ]
                 });
-
+    
                 setHealthChartData3({
                     labels: healthLabels,
                     datasets: [
@@ -143,7 +153,7 @@ const Dashboard = () => {
                         }
                     ]
                 });
-
+    
                 setLoading(false);
             } catch (error) {
                 console.error('Failed to fetch data:', error);
@@ -151,12 +161,12 @@ const Dashboard = () => {
                 setLoading(false);
             }
         };
-
+    
         if (username) {
             fetchData();
             fetchVideoUrl();
         }
-    }, [username, token]);
+    }, [username, token, startDate, endDate]);
 
     const handleChartClick = (chartData, chartType) => {
         setModalContent(chartData);
