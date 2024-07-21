@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Internal2.css';
 
 const Internal2 = () => {
     const [users, setUsers] = useState([]);
+    
+    const navigate = useNavigate();
+    const handleRowClick = (username) => {
+        navigate(`/dashboard/${username}`);
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -29,19 +34,15 @@ const Internal2 = () => {
             <table>
                 <thead>
                     <tr>
+                        <th>이름</th>
                         <th>이메일</th>
-                        <th>닉네임</th>
                     </tr>
                 </thead>
                 <tbody>
                     {users.map((user, index) => (
-                        <tr key={index}>
+                        <tr key={index} onClick={() => handleRowClick(user.username)} style={{ cursor: 'pointer' }}>
+                            <td>{user.name}</td>
                             <td>{user.email}</td>
-                            <td>
-                                <Link to={`/dashboard/${user.username}`} className="link-to-dashboard">
-                                    {user.username}
-                                </Link>
-                            </td>
                         </tr>
                     ))}
                 </tbody>
