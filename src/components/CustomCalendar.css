@@ -6,21 +6,38 @@
 }
 
 .calendar-button {
-  background-color: #2D4A70;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  font-family: inherit;
   cursor: pointer;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 0.8em 1.5em 0.8em 0.9em;
+  color: #1A2E49;
+  background: transparent; 
+  border: none;
+  letter-spacing: 0.05em;
+  border-radius: 16px;
   transition: background-color 0.3s ease, transform 0.3s ease;
-  font-size: 1em;
-  font-weight: 600;
-  margin-bottom: 20px;
 }
 
 
-.calendar-button:active {
-  background-color: transparent;
+.calendar-button svg {
+  margin-right: 3px;
+  transform: rotate(30deg);
+  transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.calendar-button span {
+  transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.calendar-button:hover svg {
+  transform: translateX(5px) rotate(90deg);
+}
+
+.calendar-button:hover span {
+  transform: translateX(7px);
 }
 
 .calendar-popup {
@@ -40,7 +57,6 @@
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
-
 
 .react-datepicker__day--selected, 
 .react-datepicker__day--in-range, 

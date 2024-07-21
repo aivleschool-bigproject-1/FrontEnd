@@ -365,7 +365,6 @@ const Dashboard = () => {
             <div className="video-player-container">
                 {videoUrl && <VideoPlayer_Profile url={videoUrl} />}
             </div>
-            <h2 className="chart-title">Health Monitoring</h2>
             <CustomCalendar
                 startDateProp={startDate}
                 endDateProp={endDate}
