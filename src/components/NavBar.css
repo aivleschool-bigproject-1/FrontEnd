@@ -4,7 +4,7 @@
     align-items: center;
     padding: 10px 20px;
     background-color: #fff;
-    flex-wrap: wrap; 
+    /* flex-wrap: wrap;  */
 }
 
 .navbar-logo a {
@@ -33,13 +33,18 @@
 }
 
 .navbar-links a {
-    margin: 0 70px; 
+    margin: 0 50px; 
     color: #1C3554;
     text-decoration: none;
     font-weight: bold;
     transition: transform 0.3s ease, color 0.3s ease;
     font-size: 16px; /* Ensure consistent font size */
+    padding: 5px 10px; /* Match the padding of buttons */
+    border-radius: 5px;
+    background-color: #fff; /* Ensure background is the same */
+    line-height: 1.5;
 }
+
 
 .navbar-actions {
     display: flex;
@@ -47,24 +52,27 @@
     flex-wrap: nowrap; 
 }
 
+.navbar-login,
+.navbar-logout,
 .navbar-actions a,
 .navbar-actions button {
     margin-left: 20px; 
-    padding: 5px 10px;
+    padding: 5px 10px; /* Match the padding of links */
     border-radius: 5px;
     text-decoration: none;
     color: #000;
     font-weight: bold;
-    font-size: 16px; 
+    font-size: 16px; /* Ensure consistent font size */
     line-height: 1.5;
     transition: background-color 0.3s ease, color 0.3s ease;
     border: none; 
     cursor: pointer;
-    background-color: #fff; 
+    background-color: #fff; /* Ensure background is the same */
 }
 
-.navbar-actions a:hover,
-.navbar-actions button:hover {
+.navbar-login:hover,
+.navbar-logout:hover,
+.navbar-actions a:hover {
     background-color: #FDBD40;
     color: #1C3554;
 }
@@ -100,14 +108,18 @@
     color: #1C3554;
 }
 
+
 @media (max-width: 768px) {
     .navbar-links a {
         margin: 0 5px; 
-        font-size: 14px;
+        font-size: 10px;
+        padding: 5px;
     }
 
     .navbar-actions a,
-    .navbar-actions button {
+    .navbar-actions button,
+    .navbar-login,
+    .navbar-logout {
         margin-left: 5px;
         font-size: 14px;
         padding: 5px;

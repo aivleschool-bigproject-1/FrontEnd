@@ -8,7 +8,6 @@ const Navbar = () => {
     const { isLoggedIn, logout } = useContext(AuthContext);
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
-    // const isAdmin = user.Role;
 
     const handleLogout = () => {
         localStorage.removeItem('Username');
@@ -16,24 +15,28 @@ const Navbar = () => {
         navigate('/');
     };
 
-    useEffect(() => {
-        const fetchUser = async () => {
-            const token = localStorage.getItem('Authorization');
-            try {
-                const response = await axios.get('/user', {
-                    headers: {
-                        'Authorization': `${token}`
-                    }
-                });
-                setUser(response.data);
-                console.log(response.data);
-            } catch (error) {
-                console.error('Error fetching user data:', error);
-            }
-        };
+    const fetchUser = async () => {
+        const token = localStorage.getItem('Authorization');
+        try {
+            const response = await axios.get('/user', {
+                headers: {
+                    'Authorization': `${token}`
+                }
+            });
+            setUser(response.data);
+            console.log(response.data);
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+        }
+    };
 
-        fetchUser();
-    }, []);
+    useEffect(() => {
+        if (isLoggedIn) {
+            fetchUser();
+        } else {
+            setUser(null);
+        }
+    }, [isLoggedIn]);
 
     return (
         <nav className="navbar">
@@ -49,13 +52,14 @@ const Navbar = () => {
                 <Link to="/boards">게시판</Link>
             </div>
             <div className="navbar-actions">
-                
                 {isLoggedIn ? (
                     <>
-                        {user && user.role === 'ROLE_ADMIN' && (
-                            <Link to="/admin" className="navbar-admin">Admin</Link>
+                        {user && user.role === 'ROLE_ADMIN' ? (
+                            <button className="navbar-admin">Admin</button>
+                        ) : (
+                            <Link className="navbar-username">{user && user.username}</Link>
                         )}
-                        <button onClick={handleLogout} className="navbar-logout">Logout</button>
+                        <Link onClick={handleLogout} className="navbar-logout">Logout</Link>
                         <Link to="/profile" className="navbar-profile">My Profile</Link>
                     </>
                 ) : (
