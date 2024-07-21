@@ -1,6 +1,7 @@
 import {Button, Card, Divider, Space, Table, Typography} from "antd";
 import {PictureOutlined} from '@ant-design/icons';
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState, useContext} from "react";
+import { AuthContext } from '../../Context/AuthContext';
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import moment from "moment";
@@ -12,9 +13,31 @@ const PostListPage = () => {
     const [pageNo, setPageNo] = useState(0);
     const navigate = useNavigate();
 
+    const { isLoggedIn, logout } = useContext(AuthContext);
+    const [user, setUser] = useState(null);
+
     useEffect(() => {
         fetchPosts(pageNo);
-    }, [pageNo]);
+        if (isLoggedIn) {
+            fetchUser();
+        } else {
+            setUser(null);
+        }
+    }, [pageNo, isLoggedIn]);
+
+    const fetchUser = async () => {
+        const token = localStorage.getItem('Authorization');
+        try {
+            const response = await axios.get('/user', {
+                headers: {
+                    'Authorization': `${token}`
+                }
+            });
+            setUser(response.data);
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+        }
+    };
 
     const fetchPosts = useCallback(async () => {
         try {
@@ -26,6 +49,7 @@ const PostListPage = () => {
             if (response.data && response.data.content) {
                 setPosts(response.data.content);
                 setTotalSize(response.data.totalElements);
+                console.log("posts:", response.data.content);
             } else {
                 console.error('Invalid response structure:', response.data);
             }
@@ -79,7 +103,7 @@ const PostListPage = () => {
     }, []);
 
     // 게시글 작성 버튼 클릭 핸들러
-    const handlePostCreat = useCallback(() => {
+    const handlePostCreate = useCallback(() => {
         navigate('/posts/new');
     }, []);
 
@@ -99,7 +123,9 @@ const PostListPage = () => {
             onChange={handleTableChange}
             title={() => (
                 <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-                    <Button type="primary" onClick={handlePostCreat}>게시글 작성하기</Button>
+                    {isLoggedIn && (
+                            <Button type="primary" onClick={handlePostCreate}>게시글 작성하기</Button>
+                        )}
                 </div>)
             }
         />
