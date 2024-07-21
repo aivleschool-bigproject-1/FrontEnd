@@ -9,11 +9,14 @@ const CustomCalendar = ({ startDateProp, endDateProp, onStartDateChange, onEndDa
 
     const handleChange = (dates) => {
         const [start, end] = dates;
-        setStartDate(start);
-        setEndDate(end);
-        onStartDateChange(start);
-        onEndDateChange(end);
+        const kstStart = start ? new Date(start.toLocaleString('en-US', { timeZone: 'Asia/Seoul' })) : null;
+        const kstEnd = end ? new Date(end.toLocaleString('en-US', { timeZone: 'Asia/Seoul' })) : null;
+        setStartDate(kstStart);
+        setEndDate(kstEnd);
+        onStartDateChange(kstStart);
+        onEndDateChange(kstEnd);
     };
+    
 
     return (
         <div>
