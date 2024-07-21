@@ -1,8 +1,7 @@
 import {Button, Card, Divider, Space, Table, Typography} from "antd";
 import {PictureOutlined} from '@ant-design/icons';
-import React, {useCallback, useEffect, useState, useContext} from "react";
-import { AuthContext } from '../../Context/AuthContext';
-import axios from "axios";
+import axios from 'axios';
+import React, {useCallback, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import moment from "moment";
 import 'moment-timezone';
@@ -12,32 +11,11 @@ const PostListPage = () => {
     const [totalSize, setTotalSize] = useState(0);
     const [pageNo, setPageNo] = useState(0);
     const navigate = useNavigate();
-
-    const { isLoggedIn, logout } = useContext(AuthContext);
-    const [user, setUser] = useState(null);
+    const token = localStorage.getItem('Authorization');
 
     useEffect(() => {
         fetchPosts(pageNo);
-        if (isLoggedIn) {
-            fetchUser();
-        } else {
-            setUser(null);
-        }
-    }, [pageNo, isLoggedIn]);
-
-    const fetchUser = async () => {
-        const token = localStorage.getItem('Authorization');
-        try {
-            const response = await axios.get('/user', {
-                headers: {
-                    'Authorization': `${token}`
-                }
-            });
-            setUser(response.data);
-        } catch (error) {
-            console.error('Error fetching user data:', error);
-        }
-    };
+    }, [pageNo]);
 
     const fetchPosts = useCallback(async () => {
         try {
@@ -49,7 +27,6 @@ const PostListPage = () => {
             if (response.data && response.data.content) {
                 setPosts(response.data.content);
                 setTotalSize(response.data.totalElements);
-                console.log("posts:", response.data.content);
             } else {
                 console.error('Invalid response structure:', response.data);
             }
@@ -123,7 +100,7 @@ const PostListPage = () => {
             onChange={handleTableChange}
             title={() => (
                 <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-                    {isLoggedIn && (
+                    {token && (
                             <Button type="primary" onClick={handlePostCreate}>게시글 작성하기</Button>
                         )}
                 </div>)
