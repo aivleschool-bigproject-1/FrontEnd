@@ -130,6 +130,10 @@
     transform-origin: 1px;
 }
 
+.hamburger-menu:hover span {
+    color: #3f75b7;
+}
+
 .hamburger-menu.hidden {
     display: none;
 }
@@ -177,6 +181,10 @@
         left: 20px;
         font-size: 1.5em;
         cursor: pointer;
+    }
+
+    .close-icon:hover {
+        color: #3f75b7;
     }
 
     .navbar-links,

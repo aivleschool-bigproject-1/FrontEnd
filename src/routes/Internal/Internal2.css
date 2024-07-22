@@ -38,6 +38,11 @@
   color: white;
 }
 
-.section-user tr:hover {
-  background-color: rgba(253, 189, 64, 0.3); 
+.section-user td:hover {
+  color: rgb(150, 153, 169); 
+}
+
+
+.section-user .name-cell {
+  text-align: center;
 }
