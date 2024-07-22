@@ -1,0 +1,70 @@
+/* General styling for the PostListPage component */
+.post-list-page {
+    padding: 20px;
+    background-color: #f0f2f5;
+  }
+  
+  /* Styling for the Card component */
+  .post-list-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  /* Styling for the table */
+  .post-list-table {
+    margin-top: 20px;
+  }
+  
+  .post-list-table .ant-table {
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .post-list-table .ant-table-thead > tr > th {
+    background-color: #fafafa;
+    font-weight: bold;
+  }
+  
+  .post-list-table .ant-table-tbody > tr > td {
+    background-color: #fff;
+  }
+  
+  /* Styling for the title link */
+  .post-title-link {
+    color: #1890ff;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+  .post-title-link:hover {
+    text-decoration: underline;
+  }
+  
+  /* Styling for the create post button */
+  .create-post-button {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+  }
+  
+
+  .ant-pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .ant-pagination .ant-pagination-item {
+    border-radius: 5px;
+  }
+  
+  .ant-pagination .ant-pagination-item-active {
+    background-color:#FDBD40;
+  }
+  
+  .ant-pagination .ant-pagination-item-link {
+    border-radius: 5px;
+  }
+  

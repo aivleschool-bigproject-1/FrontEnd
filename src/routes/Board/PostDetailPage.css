@@ -1,0 +1,96 @@
+
+.post-detail-page {
+    padding: 20px;
+    background-color: #f0f2f5;
+  }
+  
+  /* Styling for the Card component */
+  .post-detail-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  /* Styling for the Form component */
+  .post-detail-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .post-detail-form .ant-form-item {
+    margin-bottom: 16px;
+  }
+  
+  .post-detail-form .ant-input,
+  .post-detail-form .ql-container {
+    border-radius: 5px;
+  }
+  
+  /* Styling for the buttons */
+  .post-detail-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .post-detail-spin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .post-detail-title {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  .button {
+    font-weight: bold;
+    color: white;
+    border-radius: 2rem;
+    cursor: pointer;
+    width: 95.02px;
+    height: 42.66px;
+    border: none;
+    background-color:  #1C3554;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .button .span-mother, .button .span-mother2 {
+    display: flex;
+  }
+  
+  .button .span-mother span, .button .span-mother2 span {
+    display: block;
+    transition: transform 0.3s ease;
+  }
+  
+  .button .span-mother2 {
+    position: absolute;
+    top: 0;
+  }
+  
+  .button .span-mother2 span {
+    transform: translateY(-100%);
+  }
+  
+  .button:hover .span-mother span {
+    transform: translateY(100%);
+  }
+  
+  .button:hover .span-mother2 span {
+    transform: translateY(0);
+  }
+
+  .button-cancel {
+    background-color: #f0b233;
+  }
+  

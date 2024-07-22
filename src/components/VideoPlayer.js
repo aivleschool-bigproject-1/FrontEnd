@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import Hls from 'hls.js';
+import './CCTVGrid_ex.css'; 
 
 const VideoPlayer = ({ url }) => {
   const videoRef = useRef(null);
@@ -82,7 +83,7 @@ const VideoPlayer = ({ url }) => {
     };
   }, [url]);
 
-  return <video ref={videoRef} style={{ width: '1000px' }} controls />;
+  return <video ref={videoRef} className="video-player" />;
 };
 
 export default VideoPlayer;
