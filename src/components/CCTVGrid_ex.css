@@ -1,6 +1,7 @@
 /* 기존 스타일 */
 .grid-container {
   display: flex;
+  margin-top : 20px;
   justify-content: center;
   align-items: center; 
   border: none;

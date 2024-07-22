@@ -24,7 +24,7 @@
     position: absolute;
     top: -9px;
     left: 14px;
-    width: 30px;
+    width: 40px;
     height: auto;
     z-index: 1;
 }
@@ -225,8 +225,8 @@
     }
 }
 .navbar .navbar-logo .boda-image {
-    width: 70px !important;
+    width: 90px !important;
     height: auto !important; 
     display: block; 
-    margin-top : -7px;
+    margin-top : -10px;
 }
