@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './Internal2.css';
+import userIcon from './user.png';
 
 const Internal2 = () => {
     const [users, setUsers] = useState([]);
@@ -20,7 +21,8 @@ const Internal2 = () => {
                         'Authorization': `${token}`
                     }
                 });
-                setUsers(response.data);
+                const filteredUsers = response.data.filter(user => user.name && user.email);
+                setUsers(filteredUsers);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -41,7 +43,21 @@ const Internal2 = () => {
                 <tbody>
                     {users.map((user, index) => (
                         <tr key={index} onClick={() => handleRowClick(user.username)} style={{ cursor: 'pointer' }}>
-                            <td>{user.name}</td>
+                            <td className="name-cell">
+                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <img 
+                                        src={userIcon} 
+                                        alt="User icon" 
+                                        style={{ 
+                                            marginRight: '20px',
+                                            width: '25px',
+                                            height: '25px',
+                                            verticalAlign: 'middle'
+                                        }} 
+                                    />
+                                    <span>{user.name}</span>
+                                </div>
+                            </td>
                             <td>{user.email}</td>
                         </tr>
                     ))}
