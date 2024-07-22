@@ -34,7 +34,7 @@
 }
 
 .sidebar-link:hover, .sidebar-link.active {
-    background-color: #e2e6ea;
+    color: #3f75b7;
 }
 
 .main-content {
