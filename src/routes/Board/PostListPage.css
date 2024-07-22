@@ -1,70 +1,104 @@
 /* General styling for the PostListPage component */
 .post-list-page {
-    padding: 20px;
-    background-color: #f0f2f5;
-  }
-  
-  /* Styling for the Card component */
-  .post-list-card {
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-  }
-  
-  /* Styling for the table */
-  .post-list-table {
-    margin-top: 20px;
-  }
-  
-  .post-list-table .ant-table {
-    border-radius: 10px;
-    overflow: hidden;
-  }
-  
-  .post-list-table .ant-table-thead > tr > th {
-    background-color: #fafafa;
-    font-weight: bold;
-  }
-  
-  .post-list-table .ant-table-tbody > tr > td {
-    background-color: #fff;
-  }
-  
-  /* Styling for the title link */
-  .post-title-link {
-    color: #1890ff;
-    font-weight: bold;
-    text-decoration: none;
-  }
-  
-  .post-title-link:hover {
-    text-decoration: underline;
-  }
-  
-  /* Styling for the create post button */
-  .create-post-button {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 20px;
-  }
-  
+  padding: 20px;
+  background-color: #f0f2f5;
+}
 
-  .ant-pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  
-  .ant-pagination .ant-pagination-item {
-    border-radius: 5px;
-  }
-  
-  .ant-pagination .ant-pagination-item-active {
-    background-color:#FDBD40;
-  }
-  
-  .ant-pagination .ant-pagination-item-link {
-    border-radius: 5px;
-  }
-  
+/* Styling for the Card component */
+.post-list-card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+/* Styling for the table */
+.post-list-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.post-list-table th, .post-list-table td {
+  padding: 12px;
+  text-align: center; /* 모든 셀을 중앙 정렬 */
+  border-bottom: 1px solid #ddd;
+}
+
+.post-list-table th {
+  background-color: #fafafa;
+  font-weight: bold;
+}
+
+.post-list-table td {
+  background-color: #fff;
+}
+
+/* Styling for the title link */
+.post-title-link {
+  color: #1890ff;
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block;
+  max-width: 200px; /* 원하는 최대 너비 설정 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.post-title-link:hover {
+  text-decoration: underline;
+  color: #63b4ff;
+}
+
+.image-icon {
+  margin-left: 8px;
+  font-size: 14px;
+}
+
+/* Styling for the create post button */
+.create-post-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: #1890ff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+}
+
+.create-post-button:hover {
+  background-color: #40a9ff;
+}
+
+/* Styling for pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.page-button {
+  padding: 8px 16px;
+  margin: 0 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #fff;
+  border: none; /* 테두리 없음 */
+}
+
+.page-button.active {
+  border: 2px solid #333333; /* 검정색 테두리 */
+}
+
+.page-button:hover {
+  background-color: #f0f2f5;
+}
