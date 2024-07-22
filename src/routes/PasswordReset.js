@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './PasswordReset.css';
 
@@ -11,6 +12,7 @@ const PasswordReset = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -56,15 +58,16 @@ const PasswordReset = () => {
                 withCredentials: true,
             });
 
-            setSuccess('Password changed successfully');
-            console.log('Password changed successfully:', response.data);
+            setSuccess('비밀번호가 변경되었습니다.');
+            navigate('/profile');
+            // console.log('Password changed successfully:', response.data);
         } catch (error) {
             if (error.response && error.response.data) {
                 setError(`Error: ${JSON.stringify(error.response.data)}`); // Log detailed error
             } else {
-                setError('Failed to change password. Please check your input and try again.');
+                setError('현재 비밀번호를 확인해주세요.');
             }
-            console.error('Failed to change password:', error.response ? error.response.data : error.message);
+            // console.error('Failed to change password:', error.response ? error.response.data : error.message);
         } finally {
             setLoading(false);
         }
