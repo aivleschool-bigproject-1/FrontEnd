@@ -5,6 +5,7 @@ import {Button, Card, Form, Input, message, Space, Spin, Typography} from "antd"
 import Comments from "./Comment";
 import ReactQuill from "react-quill";
 import Editor from "./Editor";
+import "./PostDetailPage.css";  // Import the CSS file
 
 const EditMode = {
     CREATE: 'CREATE', READ: 'READ', UPDATE: 'UPDATE',
@@ -143,10 +144,10 @@ const PostDetailPage = () => {
                     </Form.Item>
                 </Form>
                 <Space direction='horizontal' align={'center'}>
-                    <Button type="primary" onClick={onSave}>
+                    <Button type="primary" className="custom-button-primary" onClick={onSave}>
                         저장
                     </Button>
-                    <Button danger={true} onClick={onCancel}>
+                    <Button className="custom-button-danger" onClick={onCancel}>
                         취소
                     </Button>
                 </Space>
@@ -159,11 +160,10 @@ const PostDetailPage = () => {
                     <div>
                         {post.writerId === localStorage.getItem('Username') ?
                             <Space direction='horizontal' align={'center'}>
-                                <Button type="primary" onClick={() => onEdit(EditMode.UPDATE)}>
+                                <Button type="primary" className="custom-button-primary" onClick={() => onEdit(EditMode.UPDATE)}>
                                     수정
                                 </Button>
-                                <Button danger={true} onClick={onDelete}
-                                >
+                                <Button className="custom-button-danger" onClick={onDelete}>
                                     삭제
                                 </Button>
                             </Space> : <div/>}
@@ -171,7 +171,7 @@ const PostDetailPage = () => {
                     <Comments postId={post.id}/>
                 </Card>}
         <div style={{ marginTop: '20px', textAlign: 'center' }}>
-            <Button type="default" onClick={() => navigate('/posts')}>
+            <Button type="default" className="custom-button-default" onClick={() => navigate('/posts')}>
                 목록
             </Button>
         </div>

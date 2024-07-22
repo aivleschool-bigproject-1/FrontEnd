@@ -63,7 +63,7 @@
 }
 
 .post-title-link {
-  color: #1890ff;
+  color: #3f75b7;
   font-weight: bold;
   text-decoration: none;
   max-width: 300px;
@@ -74,7 +74,7 @@
 
 .post-title-link:hover {
   text-decoration: underline;
-  color: #63b4ff;
+  color: #1C3554;
 }
 
 .image-icon {
@@ -89,7 +89,7 @@
   right: 20px;
   width: 60px;
   height: 60px;
-  background-color: #1890ff;
+  background-color: #3f75b7;
   color: white;
   border: none;
   border-radius: 50%;
@@ -102,7 +102,7 @@
 }
 
 .create-post-button:hover {
-  background-color: #40a9ff;
+  background-color: #1C3554;
 }
 
 /* Styling for pagination */
@@ -121,10 +121,26 @@
   border: none;
 }
 
-.page-button.active {
-  border: 2px solid #333333;
-}
-
 .page-button:hover {
   background-color: #f0f2f5;
+}
+
+/* Custom CSS for Ant Design buttons */
+.custom-button-primary {
+  background-color: transparent!important;
+  border-color: #3f75b7 !important;
+  color: #3f75b7 !important;
+}
+
+.custom-button-danger {
+  background-color: transparent !important;
+  border-color: #3f75b7 !important;
+  color: #3f75b7 !important;
+}
+
+.custom-button-default {
+  background-color: transparent !important;
+  border-color: #3f75b7 !important;
+  color: #3f75b7 !important;
+  margin-bottom : 20px;
 }

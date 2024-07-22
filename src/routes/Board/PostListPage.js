@@ -84,7 +84,7 @@ const PostListPage = () => {
                 </div>
             </div>
             {token && (
-                <button className="create-post-button" onClick={handlePostCreate}>+</button>
+                <button className="create-post-button" onClick={handlePostCreate}>🖋️</button>
             )}
         </div>
     );
