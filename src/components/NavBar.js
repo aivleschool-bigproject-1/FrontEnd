@@ -14,7 +14,7 @@ const Navbar = () => {
         localStorage.removeItem('Username');
         localStorage.removeItem('Authorization');
         await logout();
-        navigate('/');
+        navigate('/BigProject');
     };
 
     const fetchUser = async () => {
