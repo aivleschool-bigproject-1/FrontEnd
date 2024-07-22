@@ -8,6 +8,7 @@ const PasswordReset = () => {
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
+        setNotification('비밀번호 재설정 링크가 이메일로 전송되었습니다.');
         
         try {
             const response = await axios.post('/password', { email }, {
@@ -16,10 +17,9 @@ const PasswordReset = () => {
                 }
             });
 
-            console.log('Server response:', response.data);
-            setNotification('비밀번호 재설정 링크가 이메일로 전송되었습니다.');
+            // console.log('Server response:', response.data);
         } catch (error) {
-            console.error('Failed to send password reset link:', error);
+            // console.error('Failed to send password reset link:', error);
             setNotification('비밀번호 재설정 링크 전송에 실패했습니다.');
         }
         
