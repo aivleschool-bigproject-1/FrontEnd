@@ -1,8 +1,8 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useEffect, useContext } from 'react';
 import './Home.css';
 import { motion } from 'framer-motion';
-import Modal from 'react-modal';
 import Footer from '../components/Footer';
+import { AuthContext } from '../Context/AuthContext';
 
 const images1 = [
   { src: "images/1.jpg", description: ["24/7 실시간 모니터링", "사고 발생 시 즉각 알림"] },
@@ -16,33 +16,22 @@ const images2 = [
   { src: "images/6.jpg", description: ["사무실 내 건강 관리", "스트레스 모니터링", "피로도 측정"] }
 ];
 
-
 const Home = () => {
-  const containerRef = useRef(null);
-  const [username, setUsername] = useState('');
-  const [token, setToken] = useState('');
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const { login } = useContext(AuthContext);
 
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
     const tokenFromUrl = queryParams.get('token');
     const usernameFromUrl = queryParams.get('username');
-    console.log('Token from URL:', tokenFromUrl);
-    console.log('Username from URL:', usernameFromUrl);
+
     if (tokenFromUrl && usernameFromUrl) {
-      localStorage.setItem('Authorization', tokenFromUrl);
-      localStorage.setItem('Username', usernameFromUrl);
-      setToken(tokenFromUrl);
-      setUsername(usernameFromUrl);
+      console.log('Token from URL:', tokenFromUrl);
+      console.log('Username from URL:', usernameFromUrl);
+      login(usernameFromUrl, tokenFromUrl);
+    } else {
+      console.warn('Token or username not found in URL');
     }
-
-    const timer = setTimeout(() => {
-      setModalIsOpen(true);
-    }, 3000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
+  }, [login]);
 
   const splitText = (text) => {
     return text.split('').map((char, index) => (

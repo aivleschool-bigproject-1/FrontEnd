@@ -38,5 +38,9 @@
 .event-logs-container,
 .card,
 .box {
-  pointer-events: none; /* Disable all hover effects */
+  pointer-events: none; 
+}
+
+.ant-card, .ant-table {
+  font-family:  'GmarketSansMedium', sans-serif;
 }

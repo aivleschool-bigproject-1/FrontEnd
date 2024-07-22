@@ -41,13 +41,13 @@ const EventLogs = ({ cameraId }) => {
       dataIndex: 'eventType',
       key: 'eventType',
       align: 'center',
-      width: 200, // 너비 설정
+      width: 200, 
     },
     {
       title: '작성일시',
       key: 'eventTime',
       align: 'center',
-      width: 200, // 너비 설정
+      width: 200, 
       render: (post) => {
         const koreanTime = moment.tz(post.eventTime, "Asia/Seoul").format('YYYY-MM-DD HH:mm:ss');
         return <div>{koreanTime}</div>;
@@ -74,7 +74,7 @@ const EventLogs = ({ cameraId }) => {
             showSizeChanger: false,
           }}
           onChange={handleTableChange}
-          scroll={{ x: 400 }} // 가로 스크롤 설정
+          scroll={{ x: 400 }} 
         />
       </Card>
     </div>
