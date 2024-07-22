@@ -21,6 +21,7 @@ const Internal2 = () => {
                     }
                 });
                 setUsers(response.data);
+                console.log(response.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -40,11 +41,13 @@ const Internal2 = () => {
                 </thead>
                 <tbody>
                     {users.map((user, index) => (
-                        <tr key={index} onClick={() => handleRowClick(user.username)} style={{ cursor: 'pointer' }}>
-                            <td>{user.name}</td>
-                            <td>{user.email}</td>
-                        </tr>
-                    ))}
+                        user.name && (
+                            <tr key={index} onClick={() => handleRowClick(user.username)} style={{ cursor: 'pointer' }}>
+                                <td>{user.name}</td>
+                                <td>{user.email}</td>
+                            </tr>
+                )
+            ))}
                 </tbody>
             </table>
         </div>
