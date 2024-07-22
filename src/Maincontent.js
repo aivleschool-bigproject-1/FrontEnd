@@ -28,7 +28,7 @@ const AnimatedRoutes = ({currentUser}) => {
         <TransitionGroup>
             <CSSTransition key={location.key} classNames="fade" timeout={500}>
                 <Routes location={location}>
-                    <Route path="/" element={<Home/>}/>
+                    <Route path="/BigProject" element={<Home/>}/>
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/signup" element={<SignUp/>}/>
                     <Route path="/posts" element={<PostListPage/>}/>

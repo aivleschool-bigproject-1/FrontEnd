@@ -46,14 +46,14 @@ const Navbar = () => {
     return (
         <nav className="navbar">
             <div className="navbar-logo">
-                <Link to="/">
+                <Link to="/BigProject">
                     <img src={`${process.env.PUBLIC_URL}/images/icon.png`} className="boda-image" />
                 </Link>
             </div>
             <div className={`navbar-menu ${isMenuOpen ? 'open' : ''}`}>
                 {isMenuOpen && <span className="close-icon" onClick={toggleMenu}>&times;</span>}
                 <div className="navbar-links">
-                    <NavLink to="/" onClick={toggleMenu}>홈</NavLink>
+                    <NavLink to="/BigProject" onClick={toggleMenu}>홈</NavLink>
                     <NavLink to="/external" onClick={toggleMenu}>현장</NavLink>
                     <NavLink to="/internal" onClick={toggleMenu}>사무실</NavLink>
                     <NavLink to="/posts" onClick={toggleMenu}>게시판</NavLink>
