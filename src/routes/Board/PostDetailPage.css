@@ -1,96 +1,130 @@
+/* General styling for the PostListPage component */
+.post-list-page {
+  padding: 20px;
+  background-color: #f0f2f5;
+}
 
-.post-detail-page {
-    padding: 20px;
-    background-color: #f0f2f5;
-  }
-  
-  /* Styling for the Card component */
-  .post-detail-card {
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin-bottom: 20px;
-  }
-  
-  /* Styling for the Form component */
-  .post-detail-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .post-detail-form .ant-form-item {
-    margin-bottom: 16px;
-  }
-  
-  .post-detail-form .ant-input,
-  .post-detail-form .ql-container {
-    border-radius: 5px;
-  }
-  
-  /* Styling for the buttons */
-  .post-detail-buttons {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-  }
-  
-  .post-detail-spin {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
-  .post-detail-title {
-    font-size: 2rem;
-    font-weight: bold;
-  }
-  
-  .button {
-    font-weight: bold;
-    color: white;
-    border-radius: 2rem;
-    cursor: pointer;
-    width: 95.02px;
-    height: 42.66px;
-    border: none;
-    background-color:  #1C3554;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .button .span-mother, .button .span-mother2 {
-    display: flex;
-  }
-  
-  .button .span-mother span, .button .span-mother2 span {
-    display: block;
-    transition: transform 0.3s ease;
-  }
-  
-  .button .span-mother2 {
-    position: absolute;
-    top: 0;
-  }
-  
-  .button .span-mother2 span {
-    transform: translateY(-100%);
-  }
-  
-  .button:hover .span-mother span {
-    transform: translateY(100%);
-  }
-  
-  .button:hover .span-mother2 span {
-    transform: translateY(0);
-  }
+/* Styling for the Card component */
+.post-list-card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
 
-  .button-cancel {
-    background-color: #f0b233;
-  }
-  
+/* Styling for the table */
+.post-list-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.post-list-table th, .post-list-table td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.post-list-table th {
+  background-color: #fafafa;
+  font-weight: bold;
+}
+
+.post-list-table td {
+  background-color: #fff;
+}
+
+/* Column widths */
+.post-list-table th:nth-child(1),
+.post-list-table td:nth-child(1) {
+  width: 10%;
+}
+
+.post-list-table th:nth-child(2),
+.post-list-table td:nth-child(2) {
+  width: 50%;
+}
+
+.post-list-table th:nth-child(3),
+.post-list-table td:nth-child(3) {
+  width: 20%;
+}
+
+.post-list-table th:nth-child(4),
+.post-list-table td:nth-child(4) {
+  width: 20%;
+}
+
+/* Styling for the title link */
+.post-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.post-title-link {
+  color: #1890ff;
+  font-weight: bold;
+  text-decoration: none;
+  max-width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.post-title-link:hover {
+  text-decoration: underline;
+  color: #63b4ff;
+}
+
+.image-icon {
+  margin-left: 8px;
+  font-size: 14px;
+}
+
+/* Styling for the create post button */
+.create-post-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: #1890ff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+}
+
+.create-post-button:hover {
+  background-color: #40a9ff;
+}
+
+/* Styling for pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.page-button {
+  padding: 8px 16px;
+  margin: 0 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #fff;
+  border: none;
+}
+
+.page-button.active {
+  border: 2px solid #333333;
+}
+
+.page-button:hover {
+  background-color: #f0f2f5;
+}

@@ -2,8 +2,7 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import './Comment.css';
 import {FaPaperPlane, FaTimes} from 'react-icons/fa';
-import {Card, Space} from "antd";
-import moment from "moment";
+import moment from 'moment';
 import 'moment-timezone';
 
 const Comments = ({postId}) => {
@@ -68,41 +67,49 @@ const Comments = ({postId}) => {
         }
     };
 
-  return (
-    <div className="comments-container">
-        {token && (
-            <form onSubmit={handleCreateComment} className="create-comment-form">
-                <div className="textarea-wrapper">
-                    <textarea
-                        className='textarea-inner'
-                        name="content"
-                        placeholder="자유롭게 의견을 작성해주세요"
-                        value={newComment.content}
-                        onChange={handleInputChange}
-                        required
-                    />
-                    <button type="submit" className="submit-comment">
-                        <FaPaperPlane/>
-                    </button>
-                </div>
-            </form>
-        )}
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handleCreateComment(e);
+        }
+    };
+
+    return (
+        <div className="comments-container">
+            {token && (
+                <form onSubmit={handleCreateComment} className="create-comment-form">
+                    <div className="textarea-wrapper">
+                        <textarea
+                            className='textarea-inner'
+                            name="content"
+                            placeholder="자유롭게 의견을 작성해주세요"
+                            value={newComment.content}
+                            onChange={handleInputChange}
+                            onKeyPress={handleKeyPress}
+                            required
+                        />
+                        <button type="submit" className="submit-comment">
+                            <FaPaperPlane/>
+                        </button>
+                    </div>
+                </form>
+            )}
             {comments.length > 0 ? (
                 <ul className="comments-list">
                     {comments.map(comment => (
                         <li key={comment.id} className="comment-item">
-                            <Card>
-                                <Space direction={'horizontal'}>
+                            <div className="comment-card">
+                                <div className="comment-header">
                                     <p>{moment.tz(comment.createdAt, "Asia/Seoul").format('YYYY-MM-DD HH:mm:ss')}</p>
                                     <p>{comment.writerId}</p>
-                                </Space>
+                                </div>
                                 <p className="comment-content">{comment.content}</p>
-                            </Card>
-                            {comment.writerId === username && (
-                                <span className="delete-icon" onClick={() => handleDeleteComment(comment.id)}>
-                  <FaTimes/>
-                </span>
-                            )}
+                                {comment.writerId === username && (
+                                    <span className="delete-icon" onClick={() => handleDeleteComment(comment.id)}>
+                                        <FaTimes/>
+                                    </span>
+                                )}
+                            </div>
                         </li>
                     ))}
                 </ul>

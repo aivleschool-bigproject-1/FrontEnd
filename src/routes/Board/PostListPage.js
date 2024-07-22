@@ -1,16 +1,12 @@
-import {Button, Card, Divider, Space, Table, Typography} from "antd";
-import {PictureOutlined} from '@ant-design/icons';
-import axios from 'axios';
 import React, {useCallback, useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
 import moment from "moment";
 import 'moment-timezone';
+import './PostListPage.css';
 
 const PostListPage = () => {
     const [posts, setPosts] = useState([]);
     const [totalSize, setTotalSize] = useState(0);
     const [pageNo, setPageNo] = useState(0);
-    const navigate = useNavigate();
     const token = localStorage.getItem('Authorization');
 
     useEffect(() => {
@@ -19,94 +15,79 @@ const PostListPage = () => {
 
     const fetchPosts = useCallback(async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/posts?pageNumber=${pageNo}&pageSize=10`, {
+            const response = await fetch(`http://localhost:8080/posts?pageNumber=${pageNo}&pageSize=10`, {
                 headers: {
                     Authorization: localStorage.getItem('Authorization'),
                 },
             });
-            if (response.data && response.data.content) {
-                setPosts(response.data.content);
-                setTotalSize(response.data.totalElements);
+            const data = await response.json();
+            if (data && data.content) {
+                setPosts(data.content);
+                setTotalSize(data.totalElements);
             } else {
-                console.error('Invalid response structure:', response.data);
+                console.error('Invalid response structure:', data);
             }
         } catch (error) {
             console.error('Error fetching posts:', error);
         }
     }, [pageNo]);
 
-    const postColumns = [
-        {
-            title: 'ID',
-            dataIndex: 'id',
-            key: 'id',
-            align: 'center'
-        },
-        {
-            title: '제목',
-            key: 'title',
-            align: 'center',
-            render: (post) => {
-                // 내용에 이미지가 있으면 아이콘 추가
-                const imgTagPattern = /<img\s+src\s*=\s*["'][^"']*["'][^>]*>/i;
-                const hasImage = imgTagPattern.test(post.content);
-                return <Space direction={'horizontal'}>
-                    <Typography.Link href={`/posts/${post.id}`}>{post.title}</Typography.Link>
-                    {hasImage ? <PictureOutlined/> : <></>}
-                    <span>({post?.commentCount || 0})</span>
-                </Space>
-            }
-        },
-        {
-            title: '작성자',
-            dataIndex: 'writerId',
-            key: 'writerId',
-            align: 'center'
-        },
-        {
-            title: '작성일시',
-            key: 'createdAt',
-            align: 'center',
-            render: (post) => {
-                const koreanTime = moment.tz(post.createdAt, "Asia/Seoul").format('YYYY-MM-DD HH:mm:ss');
-                return <div>{koreanTime}</div>
-            }
-        },
-    ]
-
-    // 페이지 선택시 동작
-    const handleTableChange = useCallback((pagination) => {
-        setPageNo(pagination.current - 1)
+    const handleTableChange = useCallback((newPageNo) => {
+        setPageNo(newPageNo);
     }, []);
 
-    // 게시글 작성 버튼 클릭 핸들러
     const handlePostCreate = useCallback(() => {
-        navigate('/posts/new');
+        window.location.href = '/posts/new';
     }, []);
 
-    return <Card>
-        {/* todo - 배너 이미지 추가하면 좋을듯*/}
-        <Divider/>
-        <Table
-            columns={postColumns}
-            dataSource={posts}
-            style={{marginTop: 100}}
-            pagination={{
-                pageSize: 10,
-                current: pageNo + 1,
-                total: totalSize,
-                showSizeChanger: false
-            }}
-            onChange={handleTableChange}
-            title={() => (
-                <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-                    {token && (
-                            <Button type="primary" onClick={handlePostCreate}>게시글 작성하기</Button>
-                        )}
-                </div>)
-            }
-        />
-    </Card>
+    return (
+        <div className="post-list-page">
+            <div className="post-list-card">
+                <table className="post-list-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>제목</th>
+                            <th>작성자</th>
+                            <th>작성일시</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {posts.map(post => (
+                            <tr key={post.id}>
+                                <td>{post.id}</td>
+                                <td>
+                                    <div className="post-title">
+                                        <a href={`/posts/${post.id}`} className="post-title-link">
+                                            {post.title}
+                                        </a>
+                                        {/<img\s+src\s*=\s*["'][^"']*["'][^>]*>/i.test(post.content) && <span className="image-icon">🖼️</span>}
+                                        <span>({post.commentCount || 0})</span>
+                                    </div>
+                                </td>
+                                <td>{post.writerId}</td>
+                                <td>{moment.tz(post.createdAt, "Asia/Seoul").format('YYYY-MM-DD HH:mm:ss')}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+                <div className="pagination">
+                    {[...Array(Math.ceil(totalSize / 10)).keys()].map(page =>
+                        <button
+                            key={page}
+                            className={`page-button ${pageNo === page ? 'active' : ''}`}
+                            onClick={() => handleTableChange(page)}
+                        >
+                            {page + 1}
+                        </button>
+                    )}
+                </div>
+            </div>
+            {token && (
+                <button className="create-post-button" onClick={handlePostCreate}>+</button>
+            )}
+        </div>
+    );
 }
 
 export default PostListPage;
