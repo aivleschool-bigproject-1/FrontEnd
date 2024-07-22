@@ -15,13 +15,23 @@ const Sidebar = () => {
     <div className={isInternal ? "sidebar-in" : "sidebar"}>
       {isInternal && (
         <>
-          <Link to="/internal/section1" className="sidebar-link">전체 CCTV</Link>
-          <Link to="/internal/section2" className="sidebar-link">개인별 모니터링</Link>
+          <Link 
+            to="/internal/section1" 
+            className={`sidebar-link ${location.pathname === '/internal/section1' ? 'active' : ''}`}
+          >CCTV</Link>
+          <Link 
+            to="/internal/section2" 
+            className={`sidebar-link ${location.pathname === '/internal/section2' ? 'active' : ''}`}
+          >Health Care</Link>
         </>
       )}
       {isExternal && (
         <>
-          <Link to="/external/section1" className="sidebar-link">전체 CCTV</Link>
+          <Link 
+            to="/external/section1" 
+            className={`sidebar-link ${location.pathname === '/external/section1' ? 'active' : ''}`}
+          >
+          CCTV</Link>
         </>
       )}
     </div>

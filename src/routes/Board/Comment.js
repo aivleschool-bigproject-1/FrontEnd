@@ -70,21 +70,23 @@ const Comments = ({postId}) => {
 
   return (
     <div className="comments-container">
-      <form onSubmit={handleCreateComment} className="create-comment-form">
-        <div className="textarea-wrapper">
-          <textarea
-          className='textarea-inner'
-            name="content"
-            placeholder="자유롭게 의견을 작성해주세요"
-            value={newComment.content}
-            onChange={handleInputChange}
-            required
-          />
+        {token && (
+            <form onSubmit={handleCreateComment} className="create-comment-form">
+                <div className="textarea-wrapper">
+                    <textarea
+                        className='textarea-inner'
+                        name="content"
+                        placeholder="자유롭게 의견을 작성해주세요"
+                        value={newComment.content}
+                        onChange={handleInputChange}
+                        required
+                    />
                     <button type="submit" className="submit-comment">
                         <FaPaperPlane/>
                     </button>
                 </div>
             </form>
+        )}
             {comments.length > 0 ? (
                 <ul className="comments-list">
                     {comments.map(comment => (

@@ -9,9 +9,10 @@ const Navbar = () => {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
         localStorage.removeItem('Username');
-        logout();
+        localStorage.removeItem('Authorization');
+        await logout(); // logout이 비동기 작업을 포함하는 경우를 대비하여 await 추가
         navigate('/');
     };
 

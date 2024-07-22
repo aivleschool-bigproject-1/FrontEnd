@@ -1,7 +1,7 @@
 import {Button, Card, Divider, Space, Table, Typography} from "antd";
 import {PictureOutlined} from '@ant-design/icons';
+import axios from 'axios';
 import React, {useCallback, useEffect, useState} from "react";
-import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import moment from "moment";
 import 'moment-timezone';
@@ -11,6 +11,7 @@ const PostListPage = () => {
     const [totalSize, setTotalSize] = useState(0);
     const [pageNo, setPageNo] = useState(0);
     const navigate = useNavigate();
+    const token = localStorage.getItem('Authorization');
 
     useEffect(() => {
         fetchPosts(pageNo);
@@ -79,7 +80,7 @@ const PostListPage = () => {
     }, []);
 
     // 게시글 작성 버튼 클릭 핸들러
-    const handlePostCreat = useCallback(() => {
+    const handlePostCreate = useCallback(() => {
         navigate('/posts/new');
     }, []);
 
@@ -99,7 +100,9 @@ const PostListPage = () => {
             onChange={handleTableChange}
             title={() => (
                 <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-                    <Button type="primary" onClick={handlePostCreat}>게시글 작성하기</Button>
+                    {token && (
+                            <Button type="primary" onClick={handlePostCreate}>게시글 작성하기</Button>
+                        )}
                 </div>)
             }
         />
