@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../Context/AuthContext';
 import './NavBar.css';
@@ -8,11 +8,12 @@ const Navbar = () => {
     const { isLoggedIn, logout } = useContext(AuthContext);
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const handleLogout = async () => {
         localStorage.removeItem('Username');
         localStorage.removeItem('Authorization');
-        await logout(); // logout이 비동기 작업을 포함하는 경우를 대비하여 await 추가
+        await logout();
         navigate('/');
     };
 
@@ -25,7 +26,6 @@ const Navbar = () => {
                 }
             });
             setUser(response.data);
-            console.log(response.data);
         } catch (error) {
             console.error('Error fetching user data:', error);
         }
@@ -39,6 +39,10 @@ const Navbar = () => {
         }
     }, [isLoggedIn]);
 
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
+
     return (
         <nav className="navbar">
             <div className="navbar-logo">
@@ -46,30 +50,36 @@ const Navbar = () => {
                     <img src={`${process.env.PUBLIC_URL}/images/boda.png`} alt="Hat" className="boda-image"/>
                 </Link>
             </div>
-            <div className="navbar-links">
-                <Link to="/">홈</Link>
-                <Link to="/external">현장</Link>
-                <Link to="/internal">사무실</Link>
-                <Link to="/posts">게시판</Link>
+            <div className={`navbar-menu ${isMenuOpen ? 'open' : ''}`}>
+                {isMenuOpen && <span className="close-icon" onClick={toggleMenu}>&times;</span>}
+                <div className="navbar-links">
+                    <NavLink to="/" onClick={toggleMenu}>홈</NavLink>
+                    <NavLink to="/external" onClick={toggleMenu}>현장</NavLink>
+                    <NavLink to="/internal" onClick={toggleMenu}>사무실</NavLink>
+                    <NavLink to="/posts" onClick={toggleMenu}>게시판</NavLink>
+                </div>
+                <div className="navbar-actions">
+                    {isLoggedIn ? (
+                        <>
+                            {user && user.role === 'ROLE_ADMIN' && (
+                                <button className="navbar-admin" onClick={toggleMenu}>Admin</button>
+                            )}
+                            <Link onClick={() => { handleLogout(); toggleMenu(); }} className="navbar-logout">Logout</Link>
+                            <NavLink to="/profile" onClick={toggleMenu} className="navbar-profile">My Profile</NavLink>
+                        </>
+                    ) : (
+                        <>
+                            <NavLink to="/login" onClick={toggleMenu} className="navbar-login">Login</NavLink>
+                            <NavLink to="/signup" onClick={toggleMenu} className="navbar-signup">Sign Up</NavLink>
+                        </>
+                    )}
+                </div>
             </div>
-            <div className="navbar-actions">
-                {isLoggedIn ? (
-                    <>
-                        {user && user.role === 'ROLE_ADMIN' ? (
-                            <button className="navbar-admin">Admin</button>
-                        ) : (
-                            <Link className="navbar-username">{user && `${user.name}님`}</Link>
-                        )}
-                        <Link onClick={handleLogout} className="navbar-logout">Logout</Link>
-                        <Link to="/profile" className="navbar-profile">My Profile</Link>
-                    </>
-                ) : (
-                    <>
-                        <Link to="/login" className="navbar-login">Login</Link>
-                        <Link to="/signup" className="navbar-signup">Sign Up</Link>
-                    </>
-                )}
-            </div>
+            <button className={`hamburger-menu ${isMenuOpen ? 'hidden' : ''}`} onClick={toggleMenu}>
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </nav>
     );
 };
