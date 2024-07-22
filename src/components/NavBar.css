@@ -2,13 +2,16 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    padding: 20px 30px;
     background-color: #fff;
-    /* flex-wrap: wrap;  */
+}
+
+.navbar-logo {
+    flex: 0 0 auto;
 }
 
 .navbar-logo a {
-    font-size: 1.5em;
+    font-size: 1.8em;
     font-weight: bold;
     color: #1C3554;
     text-decoration: none;
@@ -26,150 +29,172 @@
     z-index: 1;
 }
 
+.navbar-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+    margin-left: 20px;
+}
+
 .navbar-links {
     display: flex;
-    align-items: center;
-    flex-wrap: nowrap; 
+    justify-content: center;
+    flex: 1;
+}
+
+.close-icon {
+    display: none;
 }
 
 .navbar-links a {
-    margin: 0 50px; 
+    margin: 0 15px;
     color: #1C3554;
     text-decoration: none;
     font-weight: bold;
     transition: transform 0.3s ease, color 0.3s ease;
-    font-size: 16px; 
-    padding: 5px 10px; /* Match the padding of buttons */
+    font-size: 16px;
+    padding: 5px 10px;
     border-radius: 5px;
-    background-color: #fff; /* Ensure background is the same */
+    background-color: #fff;
     line-height: 1.5;
 }
 
+.navbar-links a:hover {
+    color: #3f75b7;
+}
+
+.navbar-links a.active {
+    color: #3f75b7;
+}
 
 .navbar-actions {
     display: flex;
-    align-items: center;
-    flex-wrap: nowrap; 
+    align-items: flex-start;
+    flex: 0 0 auto;
 }
 
-.navbar-login,
-.navbar-logout,
-.navbar-profile,
 .navbar-actions a,
 .navbar-actions button {
-    margin-left: 25px; /* Default margin */
-    padding: 5px 10px; /* Match the padding of links */
+    margin-left: 15px;
+    padding: 5px 10px;
     border-radius: 5px;
     text-decoration: none;
     color: #000;
     font-weight: bold;
-    font-size: 16px; /* Ensure consistent font size */
+    font-size: 16px;
     line-height: 1.5;
     transition: background-color 0.3s ease, color 0.3s ease;
-    border: none; 
-    cursor: pointer;
-    background-color: #fff; /* Ensure background is the same */
-}
-
-
-
-.search-bar {
-    display: flex;
-    align-items: center;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 5px 10px;
-}
-
-.search-bar input {
     border: none;
-    outline: none;
-    padding: 5px;
-}
-
-.search-bar input::placeholder {
-    color: #bbb;
-}
-
-.search-bar button {
-    background: none;
-    border: none;
-    outline: none;
     cursor: pointer;
-    padding: 5px;
-    color: #bbb;
+    background-color: #fff;
 }
 
-.search-bar button:hover {
-    color: #1C3554;
+.navbar-actions a:hover {
+    color: #3f75b7;
 }
 
-/* Aspect ratio based media queries */
-@media (aspect-ratio: 16/9) {
-    .navbar-links a,
-    .navbar-login,
-    .navbar-logout,
-    .navbar-profile,
-    .navbar-actions a,
+.hamburger-menu {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 2rem;
+    height: 2rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 10;
+}
+
+.hamburger-menu span {
+    width: 2rem;
+    height: 0.25rem;
+    background: #1C3554;
+    border-radius: 10px;
+    transition: all 0.3s linear;
+    position: relative;
+    transform-origin: 1px;
+}
+
+.hamburger-menu.hidden {
+    display: none;
+}
+
+@media (max-width: 1000px) {
+    .navbar-links a {
+        font-size: 1em;
+    }
+    .navbar-actions a {
+        font-size: 1em;
+    }
     .navbar-actions button {
-        margin: 0 20px; /* Adjust margin for 16:9 aspect ratio */
+        font-size: 1em;
     }
 }
 
-@media (aspect-ratio: 4/3) {
+@media (max-width: 845px) {
+    .hamburger-menu {
+        display: flex;
+    }
+
+    .navbar-menu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 150px;
+        flex-direction: column;
+        background-color: #fff;
+        padding: 2rem;
+        transition: right 0.3s ease-in-out;
+        z-index: 9;
+    }
+
+    .navbar-menu.open {
+        right: 0;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        height: 91vh;
+    }
+
+    .close-icon {
+        display: block;
+        position: absolute;
+        top: 10px;
+        left: 20px;
+        font-size: 1.5em;
+        cursor: pointer;
+    }
+
+    .navbar-links,
+    .navbar-actions {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
     .navbar-links a,
-    .navbar-login,
-    .navbar-logout,
-    .navbar-profile,
     .navbar-actions a,
     .navbar-actions button {
-        margin: 0 15px; /* Adjust margin for 4:3 aspect ratio */
+        margin: 10px 0;
+        text-align: center;
+        width: 100%;
+    }
+
+    .navbar-actions {
+        margin-top: 20px;
     }
 }
-
-@media (aspect-ratio: 1/1) {
-    .navbar-links a,
-    .navbar-login,
-    .navbar-logout,
-    .navbar-profile,
-    .navbar-actions a,
-    .navbar-actions button {
-        margin: 0 10px; /* Adjust margin for 1:1 aspect ratio */
-    }
-}
-
-@media (aspect-ratio: 21/9) {
-    .navbar-links a,
-    .navbar-login,
-    .navbar-logout,
-    .navbar-profile,
-    .navbar-actions a,
-    .navbar-actions button {
-        margin: 0 30px; /* Adjust margin for 21:9 aspect ratio */
-    }
-}
-
-
 
 @media (max-width: 768px) {
-    .navbar-links a {
-        margin: 0 10px; /* Adjust margin for smaller screens */
-        font-size: 14px;
-        padding: 5px; /* Match padding for smaller screens */
-    }
-
+    .navbar-links a,
     .navbar-actions a,
-    .navbar-actions button,
-    .navbar-login,
-    .navbar-logout,
-    .navbar-profile {
-        margin-left: 10px; /* Adjust margin for smaller screens */
+    .navbar-actions button {
         font-size: 14px;
-        padding: 5px; /* Match padding for smaller screens */
     }
 
     .navbar-logo a {
-        font-size: 1.2em;
+        font-size: 1em;
     }
 
     .navbar-logo img {
@@ -180,29 +205,9 @@
 }
 
 @media (max-width: 516px) {
-    .navbar-links a {
-        margin: 0 5px; /* Adjust margin for smaller screens */
-        font-size: 8px;
-        padding: 5px; /* Match padding for smaller screens */
-    }
-
+    .navbar-links a,
     .navbar-actions a,
-    .navbar-actions button,
-    .navbar-login,
-    .navbar-logout,
-    .navbar-profile {
-        margin-left: 5px; /* Adjust margin for smaller screens */
-        font-size:8px;
-        padding: 5px; /* Match padding for smaller screens */
-    }
-
-    .navbar-logo a {
-        font-size: 1.2em;
-    }
-
-    .navbar-logo img {
-        top: -6px;
-        left: 10px;
-        width: 25px;
+    .navbar-actions button {
+        font-size: 12px;
     }
 }
