@@ -21,7 +21,7 @@
   height: 100%; 
 }
 
-.card {
+.card-log {
   width: 100%;
   height: 100%; 
   padding: 10px; 
@@ -36,7 +36,7 @@
 .grid-container,
 .video-player,
 .event-logs-container,
-.card,
+.card-log,
 .box {
   pointer-events: none; 
 }

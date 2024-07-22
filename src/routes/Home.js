@@ -27,6 +27,10 @@ const Home = () => {
     if (tokenFromUrl && usernameFromUrl) {
       console.log('Token from URL:', tokenFromUrl);
       console.log('Username from URL:', usernameFromUrl);
+      
+      localStorage.setItem('Authorization', tokenFromUrl);
+      localStorage.setItem('Username', usernameFromUrl);
+
       login(usernameFromUrl, tokenFromUrl);
     } else {
       console.warn('Token or username not found in URL');

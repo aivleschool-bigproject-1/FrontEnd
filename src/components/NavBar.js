@@ -64,8 +64,13 @@ const Navbar = () => {
                             {user && user.role === 'ROLE_ADMIN' && (
                                 <button className="navbar-admin" onClick={toggleMenu}>Admin</button>
                             )}
+                            {user && (
+                                <button className="navbar-username" onClick={toggleMenu}>
+                                    {`${user.name}님`}
+                                </button>
+                            )}
                             <Link onClick={() => { handleLogout(); toggleMenu(); }} className="navbar-logout">Logout</Link>
-                            <NavLink to="/profile" onClick={toggleMenu} className="navbar-profile">My Profile</NavLink>
+                            <NavLink to="/profile" onClick={toggleMenu} className="navbar-profile">My Profile</NavLink> 
                         </>
                     ) : (
                         <>

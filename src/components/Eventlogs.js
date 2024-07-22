@@ -63,7 +63,7 @@ const EventLogs = ({ cameraId }) => {
 
   return (
     <div className="event-logs-container">
-      <Card className="card">
+      <Card className="card-log">
         <Table
           columns={eventLogColumns}
           dataSource={logs}
