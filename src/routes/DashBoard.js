@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { Line, Bar } from 'react-chartjs-2'; // react-chartjs-2에서 Line과 Bar 가져오기
-import { Chart as ChartJS, registerables } from 'chart.js'; // chart.js에서 Chart 객체 가져오기
+import { Line, Bar } from 'react-chartjs-2';
+import { Chart as ChartJS, registerables } from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
 import moment from 'moment';
-import 'chartjs-adapter-moment'; // 어댑터를 임포트합니다.
-import Modal from '../routes/Modal'; // 경로 수정
+import 'chartjs-adapter-moment';
+import Modal from '../routes/Modal';
 import VideoPlayer_Profile from '../components/VideoPlayer_profile';
-import CustomCalendar from '../components/CustomCalendar'; // 추가
+import CustomCalendar from '../components/CustomCalendar';
 import '../routes/DashBoard.css';
 
 ChartJS.register(...registerables, annotationPlugin);
@@ -61,7 +61,6 @@ const Dashboard = () => {
                 return timestamp.toDateString() === today.toDateString();
             });
         };
-        
 
         const fetchData = async () => {
             if (!token) {
@@ -125,13 +124,13 @@ const Dashboard = () => {
                 const minStresses = groupDataByHour(filteredHealthData, 'minStress');
 
                 const getColorForValue = (value, range) => {
-                    const ratio = value / range; // Assuming max value is 100
+                    const ratio = value / range;
                     const r = Math.floor(255 * ratio);
                     const g = Math.floor(255 * (1 - ratio));
                     return `rgb(${r},${g},0)`;
                 };
 
-                const stressColors = stressIndices.map(value => getColorForValue(value));
+                const stressColors = stressIndices.map(value => getColorForValue(value, 100));
         
                 setHealthChartData1({
                     labels: stressLabels,
@@ -176,7 +175,45 @@ const Dashboard = () => {
                 setLoading(false);
             }
         };
-        
+
+        const updateStressData = async () => {
+            try {
+                const stressResponse = await axios.get(`/stress/${username}`, {
+                    headers: { 'Authorization': `${token}` }
+                });
+
+                console.log("실시간 스트레스 응답 데이터:", stressResponse.data);
+
+                const now = new Date();
+                const recentData = stressResponse.data.filter(item => {
+                    const timestamp = new Date(item.logTimestamp);
+                    return timestamp >= startDate && timestamp <= endDate && timestamp.getMinutes() === now.getMinutes();
+                });
+
+                if (recentData.length > 0) {
+                    const recentStressIndex = recentData.reduce((max, item) => item.stressIndex > max ? item.stressIndex : max, 0);
+                    const timestamp = new Date(recentData[0].logTimestamp);
+
+                    setStressChartData(prevData => {
+                        const updatedLabels = [...prevData.labels, timestamp.toLocaleTimeString()];
+                        const updatedData = [...prevData.datasets[0].data, recentStressIndex];
+
+                        return {
+                            ...prevData,
+                            labels: updatedLabels,
+                            datasets: [
+                                {
+                                    ...prevData.datasets[0],
+                                    data: updatedData
+                                }
+                            ]
+                        };
+                    });
+                }
+            } catch (error) {
+                console.error('실시간 데이터를 가져오는 데 실패했습니다:', error);
+            }
+        };
 
         if (username) {
             fetchData();
@@ -187,46 +224,6 @@ const Dashboard = () => {
 
         return () => clearInterval(intervalId); // 컴포넌트 언마운트 시 인터벌 정리
     }, [username, token, startDate, endDate]); // 여기에 startDate와 endDate 추가
-
-    // 데이터 업데이트 함수 추가
-    const updateStressData = async () => {
-        try {
-            const stressResponse = await axios.get(`/stress/${username}`, {
-                headers: { 'Authorization': `${token}` }
-            });
-
-            console.log("실시간 스트레스 응답 데이터:", stressResponse.data);
-
-            const now = new Date();
-            const recentData = stressResponse.data.filter(item => {
-                const timestamp = new Date(item.logTimestamp);
-                return timestamp >= startDate && timestamp <= endDate && timestamp.getMinutes() === now.getMinutes();
-            });
-
-            if (recentData.length > 0) {
-                const recentStressIndex = recentData.reduce((max, item) => item.stressIndex > max ? item.stressIndex : max, 0);
-                const timestamp = new Date(recentData[0].logTimestamp);
-
-                setStressChartData(prevData => {
-                    const updatedLabels = [...prevData.labels, timestamp.toLocaleTimeString()];
-                    const updatedData = [...prevData.datasets[0].data, recentStressIndex];
-
-                    return {
-                        ...prevData,
-                        labels: updatedLabels,
-                        datasets: [
-                            {
-                                ...prevData.datasets[0],
-                                data: updatedData
-                            }
-                        ]
-                    };
-                });
-            }
-        } catch (error) {
-            console.error('실시간 데이터를 가져오는 데 실패했습니다:', error);
-        }
-    };
 
     const handleChartClick = (chartData, chartType) => {
         setModalContent(chartData);
@@ -259,8 +256,8 @@ const Dashboard = () => {
                         return '';
                     },
                     autoSkip: false,
-                    maxRotation: 0, // 최대 회전 각도를 0으로 설정하여 수평으로 표시
-                    minRotation: 0  // 최소 회전 각도를 0으로 설정하여 수평으로 표시
+                    maxRotation: 0,
+                    minRotation: 0
                 },
                 grid: {
                     display: false
@@ -275,7 +272,7 @@ const Dashboard = () => {
         },
         plugins: {
             legend: {
-                display: false  // 범례를 숨깁니다.
+                display: false
             },
             annotation: {
                 annotations: {
@@ -283,17 +280,17 @@ const Dashboard = () => {
                         type: 'line',
                         yMin: 25,
                         yMax: 25,
-                        borderColor: 'rgba(169, 169, 169, 0.5)', // 옅은 회색
+                        borderColor: 'rgba(169, 169, 169, 0.5)',
                         borderWidth: 1,
                         label: {
                             content: '낮음',
                             enabled: true,
                             position: 'start',
-                            backgroundColor: 'rgba(0, 0, 0, 0.7)', // 더 진한 배경색
-                            color: 'black', // 글자색 흰색
+                            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                            color: 'black',
                             font: {
-                                size: 12, // 글자 크기 조정
-                                weight: 'bold' // 글자 두께 조정
+                                size: 12,
+                                weight: 'bold'
                             }
                         }
                     },
@@ -301,17 +298,17 @@ const Dashboard = () => {
                         type: 'line',
                         yMin: 50,
                         yMax: 50,
-                        borderColor: 'rgba(169, 169, 169, 0.5)', // 옅은 회색
+                        borderColor: 'rgba(169, 169, 169, 0.5)',
                         borderWidth: 1,
                         label: {
                             content: '평균',
                             enabled: true,
                             position: 'start',
-                            backgroundColor: 'rgba(0, 0, 0, 0.7)', // 더 진한 배경색
-                            color: 'black', // 글자색 흰색
+                            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                            color: 'black',
                             font: {
-                                size: 12, // 글자 크기 조정
-                                weight: 'bold' // 글자 두께 조정
+                                size: 12,
+                                weight: 'bold'
                             }
                         }
                     },
@@ -319,17 +316,17 @@ const Dashboard = () => {
                         type: 'line',
                         yMin: 75,
                         yMax: 75,
-                        borderColor: 'rgba(169, 169, 169, 0.5)', // 옅은 회색
+                        borderColor: 'rgba(169, 169, 169, 0.5)',
                         borderWidth: 1,
                         label: {
                             content: '높음',
                             enabled: true,
                             position: 'start',
-                            backgroundColor: 'rgba(0, 0, 0, 0.7)', // 더 진한 배경색
-                            color: 'black', // 글자색 흰색
+                            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                            color: 'black',
                             font: {
-                                size: 12, // 글자 크기 조정
-                                weight: 'bold' // 글자 두께 조정
+                                size: 12,
+                                weight: 'bold'
                             }
                         }
                     }
@@ -344,7 +341,7 @@ const Dashboard = () => {
             ...commonChartOptions.scales,
             y: {
                 ...commonChartOptions.scales.y,
-                max: 60 // y축 최대값을 60으로 설정
+                max: 60
             }
         }
     };
@@ -355,7 +352,7 @@ const Dashboard = () => {
             ...commonChartOptions.scales,
             y: {
                 ...commonChartOptions.scales.y,
-                max: 100 // y축 최대값을 100으로 설정
+                max: 100 
             }
         }
     };
