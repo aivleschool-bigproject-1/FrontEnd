@@ -63,12 +63,12 @@ const EventLogs = ({ cameraId }) => {
 
   return (
     <div className="event-logs-container">
-      <Card className="card">
+      <Card className="card-log">
         <Table
           columns={eventLogColumns}
           dataSource={logs}
           pagination={{
-            pageSize: 10,
+            pageSize: 5,
             current: pageNo + 1,
             total: totalSize,
             showSizeChanger: false,

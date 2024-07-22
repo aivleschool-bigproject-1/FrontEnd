@@ -46,8 +46,8 @@ const Navbar = () => {
     return (
         <nav className="navbar">
             <div className="navbar-logo">
-                <Link to="/">BODA
-                    <img src={`${process.env.PUBLIC_URL}/images/boda.png`} alt="Hat" className="boda-image"/>
+                <Link to="/">
+                    <img src={`${process.env.PUBLIC_URL}/images/icon.png`} className="boda-image" />
                 </Link>
             </div>
             <div className={`navbar-menu ${isMenuOpen ? 'open' : ''}`}>
@@ -64,8 +64,13 @@ const Navbar = () => {
                             {user && user.role === 'ROLE_ADMIN' && (
                                 <button className="navbar-admin" onClick={toggleMenu}>Admin</button>
                             )}
+                            {user && (
+                                <button className="navbar-username" onClick={toggleMenu}>
+                                    {`${user.name}님`}
+                                </button>
+                            )}
                             <Link onClick={() => { handleLogout(); toggleMenu(); }} className="navbar-logout">Logout</Link>
-                            <NavLink to="/profile" onClick={toggleMenu} className="navbar-profile">My Profile</NavLink>
+                            <NavLink to="/profile" onClick={toggleMenu} className="navbar-profile">My Profile</NavLink> 
                         </>
                     ) : (
                         <>

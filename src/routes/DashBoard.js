@@ -54,14 +54,6 @@ const Dashboard = () => {
             }
         };
 
-        const filterStressDataByToday = (data) => {
-            const today = new Date();
-            return data.filter(item => {
-                const timestamp = new Date(item.logTimestamp);
-                return timestamp.toDateString() === today.toDateString();
-            });
-        };
-
         const fetchData = async () => {
             if (!token) {
                 setError('Authorization token not found');
@@ -99,7 +91,7 @@ const Dashboard = () => {
                     return groupedData;
                 };
         
-                const filteredStressData = filterStressDataByToday(stressResponse.data); // 오늘 날짜로 필터링
+                const filteredStressData = stressResponse.data; // 전체 데이터
                 const filteredHealthData = filterDataByDateRange(healthResponse.data);
         
                 // 스트레스 데이터 처리
@@ -110,9 +102,9 @@ const Dashboard = () => {
                     labels: stressLabels,
                     datasets: [
                         {
-                            data: stressIndices,  // label을 제거합니다.
+                            data: stressIndices,
                             borderColor: 'rgb(75, 192, 192)',
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)', // 고정된 색상
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
                             tension: 0.4
                         }
                     ]
@@ -129,8 +121,6 @@ const Dashboard = () => {
                     const g = Math.floor(255 * (1 - ratio));
                     return `rgb(${r},${g},0)`;
                 };
-
-                const stressColors = stressIndices.map(value => getColorForValue(value, 100));
         
                 setHealthChartData1({
                     labels: stressLabels,
@@ -187,7 +177,7 @@ const Dashboard = () => {
                 const now = new Date();
                 const recentData = stressResponse.data.filter(item => {
                     const timestamp = new Date(item.logTimestamp);
-                    return timestamp >= startDate && timestamp <= endDate && timestamp.getMinutes() === now.getMinutes();
+                    return timestamp >= moment().subtract(50, 'minutes').toDate();
                 });
 
                 if (recentData.length > 0) {
@@ -195,8 +185,8 @@ const Dashboard = () => {
                     const timestamp = new Date(recentData[0].logTimestamp);
 
                     setStressChartData(prevData => {
-                        const updatedLabels = [...prevData.labels, timestamp.toLocaleTimeString()];
-                        const updatedData = [...prevData.datasets[0].data, recentStressIndex];
+                        const updatedLabels = [...prevData.labels, timestamp.toLocaleTimeString()].slice(-50);
+                        const updatedData = [...prevData.datasets[0].data, recentStressIndex].slice(-50);
 
                         return {
                             ...prevData,
@@ -238,26 +228,10 @@ const Dashboard = () => {
                 time: {
                     parser: 'HH',
                     unit: 'hour',
-                    stepSize: 1,
                     displayFormats: {
                         hour: 'HH:mm'
                     },
                     tooltipFormat: 'HH:mm',
-                    min: '00:00',
-                    max: '23:59',
-                },
-                ticks: {
-                    callback: function(value, index, values) {
-                        const hour = moment(value).hour();
-                        if (hour === 0) return '오전 12시';
-                        if (hour === 6) return '오후 6시';
-                        if (hour === 12) return '오후 12시';
-                        if (hour === 18) return '오후 6시';
-                        return '';
-                    },
-                    autoSkip: false,
-                    maxRotation: 0,
-                    minRotation: 0
                 },
                 grid: {
                     display: false
@@ -335,24 +309,35 @@ const Dashboard = () => {
         }
     };
 
-    const postureChartOptions = {
-        ...commonChartOptions,
-        scales: {
-            ...commonChartOptions.scales,
-            y: {
-                ...commonChartOptions.scales.y,
-                max: 60
-            }
-        }
-    };
-
     const stressChartOptions = {
         ...commonChartOptions,
         scales: {
-            ...commonChartOptions.scales,
+            x: {
+                type: 'time',
+                time: {
+                    parser: 'HH:mm',
+                    unit: 'minute',
+                    stepSize: 1,
+                    displayFormats: {
+                        minute: 'HH:mm'
+                    },
+                    tooltipFormat: 'HH:mm',
+                    min: moment().subtract(50, 'minutes').toDate(),
+                    max: moment().toDate(),
+                },
+                ticks: {
+                    autoSkip: true,
+                    maxTicksLimit: 10
+                },
+                grid: {
+                    display: false
+                }
+            },
             y: {
-                ...commonChartOptions.scales.y,
-                max: 100 
+                beginAtZero: true,
+                grid: {
+                    display: false
+                }
             }
         }
     };
@@ -377,19 +362,19 @@ const Dashboard = () => {
                     <>
                         <div className="chart" onClick={() => handleChartClick(stressChartData, 'line')}>
                             <h3>Stress</h3>
-                            <Line data={stressChartData} options={commonChartOptions} />
+                            <Line data={stressChartData} options={stressChartOptions} />
                         </div>
                         <div className="chart" onClick={() => handleChartClick(healthChartData1, 'bar')}>
                             <h3>Bad Posture</h3>
-                            <Bar data={healthChartData1} options={postureChartOptions} />
+                            <Bar data={healthChartData1} options={commonChartOptions} />
                         </div>
                         <div className="chart" onClick={() => handleChartClick(healthChartData2, 'bar')}>
                             <h3>Max Stress</h3>
-                            <Bar data={healthChartData2} options={stressChartOptions} />
+                            <Bar data={healthChartData2} options={commonChartOptions} />
                         </div>
                         <div className="chart" onClick={() => handleChartClick(healthChartData3, 'bar')}>
                             <h3>Min Stress</h3>
-                            <Bar data={healthChartData3} options={stressChartOptions} />
+                            <Bar data={healthChartData3} options={commonChartOptions} />
                         </div>
                     </>
                 )}
