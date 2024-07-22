@@ -52,3 +52,10 @@
 .signup-button:hover {
     background-color: #0c1723;
 }
+
+.error-message {
+    color: red;
+    width: 60%; /* 입력 필드와 동일한 너비 */
+    margin: 0 auto 10px auto; /* 중앙 정렬 */
+    display: block; /* 블록 요소로 설정 */
+}
