@@ -12,12 +12,12 @@ const EventLogs = ({ cameraId }) => {
 
   const fetchEventLogs = useCallback(async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/event-logs/${cameraId}?pageNumber=${pageNo}&pageSize=10`, {
+      const response = await axios.get(`http://localhost:8080/event-logs/${cameraId}?pageNumber=${pageNo}&pageSize=5`, {
         headers: {
           Authorization: localStorage.getItem('Authorization'),
         },
       });
-      console.log(`API URL: http://localhost:8080/event-logs/${cameraId}?pageNumber=${pageNo}&pageSize=10`);
+      console.log(`API URL: http://localhost:8080/event-logs/${cameraId}?pageNumber=${pageNo}&pageSize=5`);
       console.log('API Response:', response.data);
       if (response.data && Array.isArray(response.data)) {
         const logsWithKey = response.data.map((log, index) => ({ ...log, key: log.id || index }));

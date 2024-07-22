@@ -47,7 +47,7 @@
 }
 
 .ant-card, .ant-table {
-  font-family: 'GmarketSansMedium', sans-serif;
+  font-family: 'GmarketSansMedium', sans-serif !important;
 }
 
 /* 반응형 스타일 추가 */
