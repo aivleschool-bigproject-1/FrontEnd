@@ -54,7 +54,11 @@ const SignUpForm = () => {
             if (error.response) {
                 if (error.response.status === 409) {
                     setErrorMessage('이미 가입된 사용자입니다.');
-                } else {
+                } 
+                else if (error.response.status === 422) {
+                    setErrorMessage('중복된 이메일입니다.');
+                }
+                else {
                     setErrorMessage('Internal server error');
                 }
             } else {
