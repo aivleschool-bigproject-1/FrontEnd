@@ -54,14 +54,6 @@ const Dashboard = () => {
             }
         };
 
-        const filterStressDataByToday = (data) => {
-            const today = new Date();
-            return data.filter(item => {
-                const timestamp = new Date(item.logTimestamp);
-                return timestamp.toDateString() === today.toDateString();
-            });
-        };
-
         const fetchData = async () => {
             if (!token) {
                 setError('Authorization token not found');
@@ -99,7 +91,7 @@ const Dashboard = () => {
                     return groupedData;
                 };
         
-                const filteredStressData = filterStressDataByToday(stressResponse.data); // 오늘 날짜로 필터링
+                const filteredStressData = stressResponse.data; // 전체 데이터
                 const filteredHealthData = filterDataByDateRange(healthResponse.data);
         
                 // 스트레스 데이터 처리
@@ -110,9 +102,9 @@ const Dashboard = () => {
                     labels: stressLabels,
                     datasets: [
                         {
-                            data: stressIndices,  // label을 제거합니다.
+                            data: stressIndices,
                             borderColor: 'rgb(75, 192, 192)',
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)', // 고정된 색상
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
                             tension: 0.4
                         }
                     ]
@@ -129,8 +121,6 @@ const Dashboard = () => {
                     const g = Math.floor(255 * (1 - ratio));
                     return `rgb(${r},${g},0)`;
                 };
-
-                const stressColors = stressIndices.map(value => getColorForValue(value, 100));
         
                 setHealthChartData1({
                     labels: stressLabels,
@@ -195,8 +185,8 @@ const Dashboard = () => {
                     const timestamp = new Date(recentData[0].logTimestamp);
 
                     setStressChartData(prevData => {
-                        const updatedLabels = [...prevData.labels, timestamp.toLocaleTimeString()];
-                        const updatedData = [...prevData.datasets[0].data, recentStressIndex];
+                        const updatedLabels = [...prevData.labels, timestamp.toLocaleTimeString()].slice(-50);
+                        const updatedData = [...prevData.datasets[0].data, recentStressIndex].slice(-50);
 
                         return {
                             ...prevData,
@@ -236,28 +226,19 @@ const Dashboard = () => {
             x: {
                 type: 'time',
                 time: {
-                    parser: 'HH',
-                    unit: 'hour',
+                    parser: 'HH:mm',
+                    unit: 'minute',
                     stepSize: 1,
                     displayFormats: {
-                        hour: 'HH:mm'
+                        minute: 'HH:mm'
                     },
                     tooltipFormat: 'HH:mm',
-                    min: '00:00',
-                    max: '23:59',
+                    min: moment().subtract(50, 'minutes').toDate(),
+                    max: moment().toDate(),
                 },
                 ticks: {
-                    callback: function(value, index, values) {
-                        const hour = moment(value).hour();
-                        if (hour === 0) return '오전 12시';
-                        if (hour === 6) return '오후 6시';
-                        if (hour === 12) return '오후 12시';
-                        if (hour === 18) return '오후 6시';
-                        return '';
-                    },
-                    autoSkip: false,
-                    maxRotation: 0,
-                    minRotation: 0
+                    autoSkip: true,
+                    maxTicksLimit: 10
                 },
                 grid: {
                     display: false
