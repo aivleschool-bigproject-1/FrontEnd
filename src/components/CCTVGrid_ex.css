@@ -1,3 +1,4 @@
+/* 기존 스타일 */
 .grid-container {
   display: flex;
   justify-content: center;
@@ -42,5 +43,21 @@
 }
 
 .ant-card, .ant-table {
-  font-family:  'GmarketSansMedium', sans-serif;
+  font-family:  'GmarketSansMedium', sans-serif !important;
 }
+
+.ant-pagination-item {
+  border-color: #1C3554 !important; /* 기본 버튼 테두리 색상 */
+  border-width : 2px !important;
+}
+
+
+.ant-pagination-item-active {
+  border-color: #1C3554 !important; /* 활성화된 버튼 테두리 색상 */
+}
+
+.ant-pagination-item-active a {
+  color: #1C3554 !important; /* 활성화된 버튼 텍스트 색상 */
+}
+
+

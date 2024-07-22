@@ -1,13 +1,13 @@
 .navbar {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 20px 30px;
-    background-color: #fff;
+    align-items: center; 
+    padding: 10px 20px;
+    color: #fff;
 }
-
 .navbar-logo {
     flex: 0 0 auto;
+    align-items: center;
 }
 
 .navbar-logo a {
@@ -41,6 +41,18 @@
     display: flex;
     justify-content: center;
     flex: 1;
+    align-items: center;
+}
+
+.navbar-links .centered-image-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar-links .centered-image {
+    width: 30px;
+    height: auto;
 }
 
 .close-icon {
@@ -70,8 +82,8 @@
 
 .navbar-actions {
     display: flex;
-    align-items: flex-start;
     flex: 0 0 auto;
+    align-items: center;
 }
 
 .navbar-actions a,
@@ -88,6 +100,7 @@
     border: none;
     cursor: pointer;
     background-color: #fff;
+    align-items: center;
 }
 
 .navbar-actions a:hover {
@@ -210,4 +223,10 @@
     .navbar-actions button {
         font-size: 12px;
     }
+}
+.navbar .navbar-logo .boda-image {
+    width: 70px !important;
+    height: auto !important; 
+    display: block; 
+    margin-top : -7px;
 }
