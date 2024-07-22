@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import './PasswordReset.css';
 
 const PasswordReset = () => {
@@ -11,6 +12,7 @@ const PasswordReset = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
+    const navigate = useNavigate(); // useNavigate 훅을 사용하여 네비게이션
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -77,8 +79,6 @@ const PasswordReset = () => {
                 jwt: jwt
             };
 
-            // console.log('Sending request with data:', JSON.stringify(requestData));
-
             const response = await axios.post('/edit', requestData, {
                 headers: {
                     'Content-Type': 'application/json',
@@ -88,13 +88,13 @@ const PasswordReset = () => {
             });
 
             setSuccess('Password changed successfully');
+            navigate('/profile'); // 성공 시 /profile 페이지로 이동
         } catch (error) {
             if (error.response && error.response.data) {
                 setError(`Error: ${JSON.stringify(error.response.data)}`); // Log detailed error
-            } else if(error.response.status === 401){
+            } else if (error.response && error.response.status === 401) {
                 setError('현재 비밀번호를 확인해주세요.');
-            }
-            else {
+            } else {
                 setError('Internal Server Error');
             }
             console.error('Failed to change password:', error.response ? error.response.data : error.message);
