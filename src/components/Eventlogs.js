@@ -19,10 +19,10 @@ const EventLogs = ({ cameraId }) => {
       });
       console.log(`API URL: http://localhost:8080/event-logs/${cameraId}?pageNumber=${pageNo}&pageSize=5`);
       console.log('API Response:', response.data);
-      if (response.data && Array.isArray(response.data)) {
-        const logsWithKey = response.data.map((log, index) => ({ ...log, key: log.id || index }));
+      if (response.data && response.data.content && Array.isArray(response.data.content)) {
+        const logsWithKey = response.data.content.map((log, index) => ({ ...log, key: log.id || index }));
         setEventLogs(logsWithKey);
-        setTotalSize(response.data.length);  // totalSize를 설정합니다.
+        setTotalSize(response.data.totalElements);  // totalSize를 전체 로그 개수로 설정
       } else {
         console.error('Invalid response structure:', response.data);
       }

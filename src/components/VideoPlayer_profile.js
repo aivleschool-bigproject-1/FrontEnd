@@ -8,12 +8,6 @@ const VideoPlayer_Profile = ({ url }) => {
     const video = videoRef.current;
     let hls;
 
-    const handleInteraction = () => {
-      video.play().catch((error) => {
-        console.error('Error attempting to play video:', error);
-      });
-    };
-
     if (Hls.isSupported()) {
       hls = new Hls({
         liveSyncDurationCount: 3,
@@ -29,8 +23,10 @@ const VideoPlayer_Profile = ({ url }) => {
 
       hls.on(Hls.Events.MEDIA_ATTACHED, () => {
         console.log('Video and HLS.js are now bound together!');
-        document.addEventListener('click', handleInteraction, { once: true });
-        document.addEventListener('keydown', handleInteraction, { once: true });
+        video.muted = true;
+        video.play().catch((error) => {
+          console.error('Error attempting to play video:', error);
+        });
       });
 
       hls.on(Hls.Events.LEVEL_LOADED, (event, data) => {
@@ -62,15 +58,15 @@ const VideoPlayer_Profile = ({ url }) => {
         if (hls) {
           hls.destroy();
         }
-        document.removeEventListener('click', handleInteraction);
-        document.removeEventListener('keydown', handleInteraction);
       };
     } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
       video.src = url;
       video.autoplay = true;
+      video.muted = true;
       video.addEventListener('loadedmetadata', () => {
-        document.addEventListener('click', handleInteraction, { once: true });
-        document.addEventListener('keydown', handleInteraction, { once: true });
+        video.play().catch((error) => {
+          console.error('Error attempting to play video:', error);
+        });
       });
     }
 
@@ -78,12 +74,10 @@ const VideoPlayer_Profile = ({ url }) => {
       if (hls) {
         hls.destroy();
       }
-      document.removeEventListener('click', handleInteraction);
-      document.removeEventListener('keydown', handleInteraction);
     };
   }, [url]);
 
-  return <video ref={videoRef} style={{ width: '800px', height: '450px' }} controls />;
+  return <video ref={videoRef} style={{ width: '800px', height: '450px' }} />;
 };
 
 export default VideoPlayer_Profile;

@@ -44,18 +44,13 @@ const Login = () => {
                 localStorage.setItem('Authorization', token);
                 localStorage.setItem('Username', username);
                 login();
-                navigate('/');
+                navigate('/BigProject');
             } else {
                 throw new Error('Token or username not found in response headers');
             }
         } catch (error) {
             console.error('로그인 실패:', error);
             setError('아이디 또는 비밀번호가 올바르지 않습니다.');
-        } finally {
-            setFormData({
-                username: '',
-                password: ''
-            });
         }
     };
 
