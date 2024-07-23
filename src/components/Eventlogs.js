@@ -40,14 +40,12 @@ const EventLogs = ({ cameraId }) => {
       title: '사고 내용',
       dataIndex: 'eventType',
       key: 'eventType',
-      align: 'center',
-      width: 200, 
+      align: 'center'
     },
     {
-      title: '작성일시',
+      title: '발생 일시',
       key: 'eventTime',
       align: 'center',
-      width: 200, 
       render: (post) => {
         const koreanTime = moment.tz(post.eventTime, "Asia/Seoul").format('YYYY-MM-DD HH:mm:ss');
         return <div>{koreanTime}</div>;

@@ -8,10 +8,12 @@ const CCTVGrid_in = () => {
   const cameraId = 'office-cctv';
 
   return (
+    
     <div className="grid-container">
-      <VideoPlayer url={videoSource} />
-      <EventLogs_in cameraId={cameraId} />
-    </div>
+      <div className="video-player">
+        <VideoPlayer url={videoSource} />
+      </div>
+  </div>
   );
 };
 

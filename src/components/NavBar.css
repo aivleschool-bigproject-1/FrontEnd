@@ -153,7 +153,7 @@
     }
 }
 
-@media (max-width: 845px) {
+@media (max-width: 955px) {
     .hamburger-menu {
         display: flex;
     }
