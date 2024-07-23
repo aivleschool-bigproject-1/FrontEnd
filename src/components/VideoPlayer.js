@@ -1,19 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import Hls from 'hls.js';
-import './CCTVGrid_ex.css'; 
 
-const VideoPlayer = ({ url }) => {
+const VideoPlayer_Profile = ({ url }) => {
   const videoRef = useRef(null);
 
   useEffect(() => {
     const video = videoRef.current;
     let hls;
-
-    const handleInteraction = () => {
-      video.play().catch((error) => {
-        console.error('Error attempting to play video:', error);
-      });
-    };
 
     if (Hls.isSupported()) {
       hls = new Hls({
@@ -22,15 +15,18 @@ const VideoPlayer = ({ url }) => {
         lowLatencyMode: true,
         maxLiveSyncPlaybackRate: 1.5,
         enableWorker: true,
-        debug: true,
+        debug: true
       });
 
       hls.loadSource(url);
       hls.attachMedia(video);
 
       hls.on(Hls.Events.MEDIA_ATTACHED, () => {
-        document.addEventListener('click', handleInteraction, { once: true });
-        document.addEventListener('keydown', handleInteraction, { once: true });
+        console.log('Video and HLS.js are now bound together!');
+        video.muted = true;
+        video.play().catch((error) => {
+          console.error('Error attempting to play video:', error);
+        });
       });
 
       hls.on(Hls.Events.LEVEL_LOADED, (event, data) => {
@@ -62,15 +58,15 @@ const VideoPlayer = ({ url }) => {
         if (hls) {
           hls.destroy();
         }
-        document.removeEventListener('click', handleInteraction);
-        document.removeEventListener('keydown', handleInteraction);
       };
     } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
       video.src = url;
       video.autoplay = true;
+      video.muted = true;
       video.addEventListener('loadedmetadata', () => {
-        document.addEventListener('click', handleInteraction, { once: true });
-        document.addEventListener('keydown', handleInteraction, { once: true });
+        video.play().catch((error) => {
+          console.error('Error attempting to play video:', error);
+        });
       });
     }
 
@@ -78,12 +74,10 @@ const VideoPlayer = ({ url }) => {
       if (hls) {
         hls.destroy();
       }
-      document.removeEventListener('click', handleInteraction);
-      document.removeEventListener('keydown', handleInteraction);
     };
   }, [url]);
 
-  return <video ref={videoRef} className="video-player" />;
+  return <video ref={videoRef} style={{ width: '800px', height: '450px' }} />;
 };
 
-export default VideoPlayer;
+export default VideoPlayer_Profile;
