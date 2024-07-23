@@ -59,7 +59,7 @@ const Navbar = () => {
                     <NavLink to="/posts" onClick={toggleMenu}>게시판</NavLink>
                 </div>
                 <div className="navbar-actions">
-                    {isLoggedIn ? (
+                    {user ? (
                         <>
                             {user && user.role === 'ROLE_ADMIN' && (
                                 <button className="navbar-admin" onClick={toggleMenu}>Admin</button>
@@ -69,6 +69,7 @@ const Navbar = () => {
                                     {`${user.name}님`}
                                 </button>
                             )}
+                            
                             <Link onClick={() => { handleLogout(); toggleMenu(); }} className="navbar-logout">Logout</Link>
                             <NavLink to="/profile" onClick={toggleMenu} className="navbar-profile">My Profile</NavLink> 
                         </>
