@@ -59,12 +59,7 @@
 }
 
 .close-icon {
-    display: block; /* 항상 표시되도록 변경 */
-    color: #1C3554;
-}
-
-.navbar-menu.open .close-icon {
-    display: block; /* 그대로 유지 */
+    display: none;
 }
 
 .navbar-links a {
@@ -146,7 +141,19 @@
     display: none;
 }
 
-@media (max-width: 955px) {
+@media (max-width: 1000px) {
+    .navbar-links a {
+        font-size: 1em;
+    }
+    .navbar-actions a {
+        font-size: 1em;
+    }
+    .navbar-actions button {
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 845px) {
     .hamburger-menu {
         display: flex;
     }
@@ -166,7 +173,7 @@
     .navbar-menu.open {
         right: 0;
         box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        height: 92vh; /* 고정 높이 */
+        height: 91vh;
     }
 
     .close-icon {
@@ -176,6 +183,7 @@
         left: 20px;
         font-size: 1.5em;
         cursor: pointer;
+        color: #1e3654;
     }
 
     .close-icon:hover {
