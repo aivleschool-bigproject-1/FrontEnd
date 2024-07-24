@@ -36,7 +36,7 @@ const AccountDeletion = () => {
             console.log('Account deletion successful:', response.data);
             await logout();
             localStorage.removeItem('Authorization');
-            navigate('/', { replace: true });  // Only navigate after successful deletion
+            navigate('/BigProject', { replace: true });  // Only navigate after successful deletion
         } catch (error) {
             setError('Failed to delete account.');
             console.error('Failed to delete account:', error.response ? error.response.data : error.message);
