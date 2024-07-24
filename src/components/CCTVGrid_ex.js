@@ -8,6 +8,12 @@ const CCTVGrid_ex = () => {
   const cameraId = 'industrial-cctv';
 
   return (
+
+    // <div className="grid-container">
+    //   <div className="video-player-container">
+    //     <VideoPlayer url={videoSource} />
+    //   </div>
+    // </div>
       <div className="grid-container">
         <div className="video-player">
           <VideoPlayer url={videoSource} />

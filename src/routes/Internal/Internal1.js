@@ -4,7 +4,7 @@ import WebcamComponent from '../../components/CCTVGrid';
 const Ixternal1 = () => {
     return (
         <div>
-            <WebcamComponent/>
+            <CCTVGrid_in/>
         </div>
     );
 };

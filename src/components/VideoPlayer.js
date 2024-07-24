@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import Hls from 'hls.js';
+import './VideoPlayer.css';
 
 const VideoPlayer_Profile = ({ url }) => {
   const videoRef = useRef(null);
@@ -77,7 +78,7 @@ const VideoPlayer_Profile = ({ url }) => {
     };
   }, [url]);
 
-  return <video ref={videoRef} style={{ width: '800px', height: '450px' }} />;
+  return <div className="video-container"><video ref={videoRef} className="video-player" /></div>;
 };
 
 export default VideoPlayer_Profile;
