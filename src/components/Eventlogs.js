@@ -33,6 +33,8 @@ const EventLogs = ({ cameraId }) => {
 
   useEffect(() => {
     fetchEventLogs();
+    const intervalId = setInterval(fetchEventLogs, 1000); // 5초마다 fetchEventLogs 실행
+    return () => clearInterval(intervalId); // 컴포넌트 언마운트 시 interval 해제
   }, [cameraId, pageNo, fetchEventLogs]);
 
   const eventLogColumns = [
