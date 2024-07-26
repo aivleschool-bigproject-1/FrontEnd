@@ -35,6 +35,7 @@ const App = () => {
                 <div className="app-container">
                     <Sidebar/>
                     <MainContent isLoading={isLoading} currentUser={currentUser}/>
+                
                 </div>
             </Router>
         </AuthProvider>
